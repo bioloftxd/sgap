@@ -15,7 +15,7 @@ class Estoque extends Model {
     protected $table = "estoque";
 
     public function produto() {
-        return $this->hasMany(Produto::class, "id", "id_produtoo");
+        return $this->hasMany(Produto::class, "id", "id_produto");
     }
 
 }

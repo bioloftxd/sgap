@@ -8,12 +8,17 @@
 
 @section("conteudo")
 
-<form action="/cadastrarUsuario" method="POST">
+@if (session("info"))
+<p>{{session("info")}}</p>
+{{session()->forget("info")}}
+@endif
+
+<form action="{{action('ControlaUsuario@store')}}" method="POST">
 
     {{csrf_field()}}
 
     <input type="text" name="nome" id="nome" placeholder="Nome Completo"><br>
-    <input type="text" name="nomeUsuario" id="nome_usuario" placeholder="Nome de Usuário"><br>
+    <input type="text" name="usuario" id="usuario" placeholder="Nome de Usuário"><br>
     <input type="password" name="senha" id="senha" placeholder="Senha de Usuário"><br>
     <input type="password" name="senha_2" id="senha_2" placeholder="Confirme a Senha"><br><br>
 
@@ -22,6 +27,6 @@
 
 </form>
 
-<a href="../">Voltar para autenticação</a>
+<a href="{{url('/')}}">Inicio</a>
 
 @endsection

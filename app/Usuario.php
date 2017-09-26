@@ -9,10 +9,10 @@ class Usuario extends Model {
     protected $fillable = [
         "id",
         "nome",
-        "nome_usuario",
+        "usuario",
         "senha",
         "id_funcao",
-        "hora_login",
+        "data_login",
         "tentativas",
         "ativo"
     ];

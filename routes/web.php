@@ -1,11 +1,11 @@
 <?php
 
-Route::get('/', function () {
-    return view('autentica');
-});
+Route::get('/', "ControlaUsuario@index");
 
-Route::post("/autenticar", "Autenticacao@autentica");
+Route::resource("usuario", "ControlaUsuario");
 
-Route::get("/cadastrar", "ControlaUsuarios@paginaCrud");
+Route::post("usuario/autenticar", "ControlaUsuario@autenticar");
 
-Route::post("/cadastrarUsuario", "ControlaUsuarios@cadastrar");
+/*Route::get("/cadastrarUsuario", "ControlaUsuarios@paginaCrud");
+
+Route::post("/cadastrarUsuario", "ControlaUsuarios@cadastrar");*/
