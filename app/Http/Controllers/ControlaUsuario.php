@@ -15,7 +15,7 @@ class ControlaUsuario extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view("usuario/autenticarUsuario");
+        return view("index");
     }
 
     /**

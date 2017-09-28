@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        @include("includes.head")
-    </head>
-    
-    <body>
+<head>
+    @include("includes.head")
+</head>
 
-        <header>
-            @include("includes.header")
-        </header>
+<body>
 
-        <main>
-            @yield("conteudo")
-        </main>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-        <footer>
-            @yield("includes.footer")
-        </footer>
-    </body>
+    <header class="mdl-layout__header">
+        @include("includes.header")
+    </header>
+
+    <div class="mdl-layout__drawer">
+        @include("layouts.sidebar")
+    </div>
+
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            @yield("content")
+        </div>
+    </main>
+
+    <footer>
+        @include("includes.footer")
+    </footer>
+
+</div>
+</body>
 </html>

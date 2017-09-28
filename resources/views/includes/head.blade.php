@@ -6,5 +6,5 @@
 <link rel="stylesheet" href="mdl1.3.0/material.min.css">
 <script src="mdl1.3.0/material.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-<title>@yield('titulo')</title>
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-blue.min.css"/>
+<title>@yield('title')</title>
