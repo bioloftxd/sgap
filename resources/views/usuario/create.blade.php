@@ -1,32 +1,58 @@
-@extends("layouts/principal")
+@extends("layouts.principal")
 
-@section("titulo", "Usuário")
+@section("title", "SGAP - Criar Conta")
 
-@section("cabecalho")
+@section("content")
 
-@endsection
+    <div class="form-centralizado">
+        <form action="{{action('ControlaUsuario@store')}}" method="POST" class="grid">
 
-@section("conteudo")
+            <h4 class="textoCentralizado">
+                Criar Conta<br>
+                SGAP
+            </h4>
 
-    @if (session("info"))
-        <p>{{session("info")}}</p>
-        {{session()->forget("info")}}
-    @endif
 
-    <form action="{{action('ControlaUsuario@store')}}" method="POST">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label inputGrande">
+                <input class="mdl-textfield__input" type="text" id="nome" name="nome">
+                <label class="mdl-textfield__label" for="usuario">Nome Completo</label>
+            </div>
 
-        {{csrf_field()}}
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label inputGrande">
+                <input class="mdl-textfield__input" type="text" id="usuario" name="usuario">
+                <label class="mdl-textfield__label" for="usuario">Nome de Usuário</label>
+            </div>
 
-        <input type="text" name="nome" id="nome" placeholder="Nome Completo"><br>
-        <input type="text" name="usuario" id="usuario" placeholder="Nome de Usuário"><br>
-        <input type="password" name="senha" id="senha" placeholder="Senha de Usuário"><br>
-        <input type="password" name="senha_2" id="senha_2" placeholder="Confirme a Senha"><br><br>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label inputGrande">
+                <input class="mdl-textfield__input" type="password" id="senha" name="senha">
+                <label class="mdl-textfield__label" for="usuario">Senha</label>
+            </div>
 
-        <input type="submit" value="cadastrar">
-        <input type="reset" value="Limpar">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label inputGrande">
+                <input class="mdl-textfield__input" type="password" id="confirmaSenha" name="confirmaSenha">
+                <label class="mdl-textfield__label" for="senha">Confirme a Senha</label>
+            </div>
 
-    </form>
-
-    <a href="{{url('/')}}">Inicio</a>
-
-@endsection
+            <button type="submit"
+                    class="botao mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+                    data-upgraded=",MaterialButton,MaterialRipple">
+                <i class="material-icons">done</i>
+                Criar Conta
+                <span class="mdl-button__ripple-container">
+                    <span class="mdl-ripple is-animating">
+                    </span>
+                </span>
+            </button>
+            <a href="action('ControlaUsuario@create')"
+               class="botao mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+               data-upgraded=",MaterialButton,MaterialRipple">
+                <i class="material-icons">reply</i>
+                Voltar
+                <span class="mdl-button__ripple-container">
+                    <span class="mdl-ripple is-animating">
+                    </span>
+                </span>
+            </a>
+        </form>
+    </div>
+@stop

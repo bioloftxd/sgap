@@ -1,13 +1,41 @@
-*{
+* {
     box-sizing: border-box;
 }
-body, head, html{
+
+body, head, html {
     margin: 0;
     padding: 0;
     border: 0;
 }
-.container{
-    margin-left: 2%;
-    margin-right: 2%;
-    background-color: yellow;
+
+.containerr {
+    margin: auto;
+}
+
+.form-centralizado {
+    padding: 1%;
+    max-width: 500px;
+    width: 70%;
+    margin: auto;
+    margin-top: 4%;
+    border: #e75515 solid 4px;
+    border-radius: 10px;
+}
+
+.textoCentralizado {
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+}
+
+.botao {
+    margin: 2px !important;
+}
+
+.inputGrande {
+    width: 98% !important;
+    margin: auto !important;
+
 }

@@ -7,14 +7,17 @@ use \Illuminate\Support\Facades\Session;
 use App\Usuario;
 use App\Funcao;
 
-class ControlaUsuario extends Controller {
+class ControlaUsuario extends Controller
+{
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
+        //session()->put("usuario", ['nome' => 'Lucas', "senha" => '123']);
         return view("index");
     }
 
@@ -23,23 +26,25 @@ class ControlaUsuario extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         return view("usuario/create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $dados) {
+    public function store(Request $dados)
+    {
         $usuario = new Usuario(
-                [
-            "nome" => $dados->get("nome"),
-            "senha" => md5($dados->get("senha")),
-            "usuario" => strtolower($dados->get("usuario"))
-        ]);
+            [
+                "nome" => $dados->get("nome"),
+                "senha" => md5($dados->get("senha")),
+                "usuario" => strtolower($dados->get("usuario"))
+            ]);
 
         try {
             $usuario->save();
@@ -59,45 +64,50 @@ class ControlaUsuario extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         //
     }
 
-    public function autenticar(Request $dados) {
+    public function autenticar(Request $dados)
+    {
         $autentica = new Usuario([
             "usuario" => strtolower($dados["usuario"]),
             "senha" => md5($dados["senha"])

@@ -12,14 +12,16 @@
         @include("includes.header")
     </header>
 
-    <div class="mdl-layout__drawer">
-        @include("layouts.sidebar")
-    </div>
+    @if(session()->exists("usuario"))
+        <div class="mdl-layout__drawer">
+            @include("layouts.sidebar")
+        </div>
+    @endif
 
     <main class="mdl-layout__content">
-        <div class="page-content">
-            @yield("content")
-        </div>
+
+        @yield("content")
+
     </main>
 
     <footer>
