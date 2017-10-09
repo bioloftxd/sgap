@@ -1,4 +1,4 @@
-@extends("layouts.principal")
+@extends("_layouts.principal")
 
 @section("title", "SGAP - Início")
 

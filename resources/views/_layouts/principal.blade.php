@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @include("includes.head")
+    @include("_includes.head")
 </head>
 
 <body>
@@ -9,12 +9,12 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
     <header class="mdl-layout__header">
-        @include("includes.header")
+        @include("_includes.header")
     </header>
 
     @if(session()->exists("usuario"))
         <div class="mdl-layout__drawer">
-            @include("layouts.sidebar")
+            @include("_layouts.sidebar")
         </div>
     @endif
 
@@ -25,7 +25,7 @@
     </main>
 
     <footer>
-        @include("includes.footer")
+        @include("_includes.footer")
     </footer>
 
 </div>
