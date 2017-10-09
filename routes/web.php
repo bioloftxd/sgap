@@ -1,10 +1,11 @@
 <?php
-//->middleware("logado") Verifica autenticação, redireciona para login;
-
 Route::get('/', "ControlaUsuario@index");
 
-Route::resource("usuario", "ControlaUsuario")->middleware("logado");
+Route::group(['prefix' => 'usuario'], function () {
+    Route::resource('/', 'ControlaUsuario');
+});
 
-/*Route::get("/cadastrarUsuario", "ControlaUsuarios@paginaCrud");
-
-Route::post("/cadastrarUsuario", "ControlaUsuarios@cadastrar");*/
+Route::group(['prefix' => 'autentica'], function () {
+    Route::resource('/', 'ControlaAutenticacao');
+    Route::get('loggout', 'ControlaAutenticacao@loggout');
+});

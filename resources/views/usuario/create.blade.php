@@ -1,58 +1,82 @@
 @extends("layouts.principal")
 
-@section("title", "SGAP - Criar Conta")
+@section("title", "SGAP - Registrar Usuário")
 
 @section("content")
 
-    <div class="form-centralizado">
-        <form action="{{action('ControlaUsuario@store')}}" method="POST" class="grid">
+    @php
+        $nomeUsuario = "";
+        $nomeCompleto = "";
+    @endphp
 
-            <h4 class="textoCentralizado">
-                Criar Conta<br>
-                SGAP
-            </h4>
+    <div class="mdl-grid">
 
+        <div class="mdl-layout-spacer"></div>
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label inputGrande">
-                <input class="mdl-textfield__input" type="text" id="nome" name="nome">
-                <label class="mdl-textfield__label" for="usuario">Nome Completo</label>
-            </div>
+        <div class="mdl-cell mdl-cell--11-col">
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label inputGrande">
-                <input class="mdl-textfield__input" type="text" id="usuario" name="usuario">
-                <label class="mdl-textfield__label" for="usuario">Nome de Usuário</label>
-            </div>
+            <form method="POST" action="{{action('ControlaUsuario@store')}}">
+                {{csrf_field()}}
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label inputGrande">
-                <input class="mdl-textfield__input" type="password" id="senha" name="senha">
-                <label class="mdl-textfield__label" for="usuario">Senha</label>
-            </div>
+                <div class="mdl-grid">
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-cell textoCentralizado">
+                        <h4>Registrar Usuário</h4>
+                    </div>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label inputGrande">
-                <input class="mdl-textfield__input" type="password" id="confirmaSenha" name="confirmaSenha">
-                <label class="mdl-textfield__label" for="senha">Confirme a Senha</label>
-            </div>
+                <div class="mdl-grid">
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
+                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" value="{{$nomeCompleto}}">
+                        <label class="mdl-textfield__label" for="nomeCompleto">Nome Completo</label>
+                    </div>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
 
-            <button type="submit"
-                    class="botao mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
-                    data-upgraded=",MaterialButton,MaterialRipple">
-                <i class="material-icons">done</i>
-                Criar Conta
-                <span class="mdl-button__ripple-container">
-                    <span class="mdl-ripple is-animating">
-                    </span>
-                </span>
-            </button>
-            <a href="action('ControlaUsuario@create')"
-               class="botao mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
-               data-upgraded=",MaterialButton,MaterialRipple">
-                <i class="material-icons">reply</i>
-                Voltar
-                <span class="mdl-button__ripple-container">
-                    <span class="mdl-ripple is-animating">
-                    </span>
-                </span>
-            </a>
-        </form>
+                <div class="mdl-grid">
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
+                        <input class="mdl-textfield__input" type="text" id="nomeUsuario" value="{{$nomeUsuario}}">
+                        <label class=" mdl-textfield__label" for="nomeUsuario">Nome de Usuário</label>
+                    </div>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
+                        <input class="mdl-textfield__input" type="password" id="senha">
+                        <label class="mdl-textfield__label" for="senha">Senha</label>
+                    </div>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
+                        <input class="mdl-textfield__input" type="password" id="senhaConfirma">
+                        <label class="mdl-textfield__label" for="senhaConfirma">Confirme a Senha</label>
+                    </div>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-layout-spacer"></div>
+                    <button type="submit"
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell--4-col-desktop mdl-cell--3-col-phone mdl-cell--5-col-tablet">
+                        Cadastrar
+                    </button>
+                    <div class="mdl-layout-spacer"></div>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="mdl-layout-spacer"></div>
+
     </div>
+
 @stop

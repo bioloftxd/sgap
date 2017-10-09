@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \Illuminate\Support\Facades\Session;
 use App\Usuario;
-use App\Funcao;
 
-class ControlaUsuario extends Controller
+class ControlaAutenticacao extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +14,7 @@ class ControlaUsuario extends Controller
      */
     public function index()
     {
-        if (session()->exists("usuario")) {
-            return view("inicio");
-        } else {
-            return view("autentica");
-        }
+        return view("inicio");
     }
 
     /**
@@ -31,7 +24,13 @@ class ControlaUsuario extends Controller
      */
     public function create()
     {
-        return view("usuario.create");
+        //
+    }
+
+    public function loggout()
+    {
+        session()->flush();
+        return redirect()->action("ControlaUsuario@index");
     }
 
     /**
@@ -40,28 +39,34 @@ class ControlaUsuario extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $dados)
+    public function store(Request $form)
     {
-        $usuario = new Usuario(
-            [
-                "nome" => $dados->get("nome"),
-                "senha" => md5($dados->get("senha")),
-                "usuario" => strtolower($dados->get("usuario"))
-            ]);
+        $autentica = new Usuario();
+        $autentica->usuario = strtolower($form->usuario);
+        $autentica->senha = md5($form->senha);
 
-        try {
-            $usuario->save();
-            Session::put("info", "Cadastro efetuado com sucesso!");
-            return redirect()->action("ControlaUsuario@index");
-        } catch (\Illuminate\Database\QueryException $e) {
-            if ($e->errorInfo[1] == "1062") {
-                Session::put("info", "Nome de usuário já utilizado!");
-                return view("usuario/create");
+        $usuarios = Usuario::all();
+
+        foreach ($usuarios as $usuario) {
+
+            if ($usuario->usuario == $autentica->usuario) {
+                if ($usuario->senha == $autentica->senha) {
+                    session()->flush();
+                    session()->put("usuario", $usuario);
+                    return redirect()->action("ControlaAutenticacao@index");
+                } else {
+                    session()->flush();
+                    session()->put("info", "Senha Incorreta!");
+                    session()->put("nomeUsuario", $usuario->usuario);
+                    return redirect()->action("ControlaUsuario@index");
+                }
             } else {
-                Session::put("info", "Erro ao cadastrar usuário, tente novamente!");
-                return view("usuario/create");
+                session()->flush();
+                session()->put("info", "Nome de Usuário Incorreto!");
             }
         }
+
+        return redirect()->action("ControlaUsuario@index");
     }
 
     /**
@@ -108,5 +113,4 @@ class ControlaUsuario extends Controller
     {
         //
     }
-
 }
