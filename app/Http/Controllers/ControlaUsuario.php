@@ -42,12 +42,11 @@ class ControlaUsuario extends Controller
      */
     public function store(Request $dados)
     {
-        $usuario = new Usuario(
-            [
-                "nome" => $dados->get("nome"),
-                "senha" => md5($dados->get("senha")),
-                "usuario" => strtolower($dados->get("usuario"))
-            ]);
+        $usuario = new Usuario;
+
+        $usuario->nome = $dados->get("nome");
+        $usuario->senha = md5($dados->get("senha"));
+        $usuario->usuario = strtolower($dados->get("usuario"));
 
         try {
             $usuario->save();
@@ -83,7 +82,8 @@ class ControlaUsuario extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = Usuario::find($id);
+        return view("usuario/edit", ['usuario' => $usuario]);
     }
 
     /**
@@ -95,7 +95,30 @@ class ControlaUsuario extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $usuario = Usuario::find($id);
+
+        if ($request->novaSenha != null) {
+
+            if ($request->senha == null) {
+                session()->put("info", "Necessário inserção da senha atual!");
+                return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
+            } else {
+                if (md5($request->senha) == $usuario->senha) {
+                    if ($request->novaSenha != $request->novaSenhaConfirma) {
+                        session()->put("info", "As novas senhas não coincidem!");
+                        $usuario->senha = $request->novaSenha;
+                        return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
+                    } else {
+                        session()->put("info", "As novas senhas coincidem!");
+                        return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
+                    }
+                } else {
+                    session()->put("info", "Senha atual incorreta!");
+                    return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
+                }
+            }
+        }
+
     }
 
     /**

@@ -16,7 +16,8 @@
         <div class="mdl-cell mdl-cell--11-col">
 
             <form method="POST" action="{{action('ControlaUsuario@store')}}">
-                {{csrf_field()}}
+                <input type="hidden" name="_method" value="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
@@ -29,7 +30,8 @@
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
-                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" value="{{$nomeCompleto}}">
+                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" name="nome"
+                               value="{{$nomeCompleto}}">
                         <label class="mdl-textfield__label" for="nomeCompleto">Nome Completo</label>
                     </div>
                     <div class="mdl-layout-spacer"></div>
@@ -38,7 +40,8 @@
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
-                        <input class="mdl-textfield__input" type="text" id="nomeUsuario" value="{{$nomeUsuario}}">
+                        <input class="mdl-textfield__input" type="text" id="nomeUsuario" name="usuario"
+                               value="{{$nomeUsuario}}">
                         <label class=" mdl-textfield__label" for="nomeUsuario">Nome de Usuário</label>
                     </div>
                     <div class="mdl-layout-spacer"></div>
@@ -47,7 +50,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
-                        <input class="mdl-textfield__input" type="password" id="senha">
+                        <input class="mdl-textfield__input" type="password" id="senha" name="senha">
                         <label class="mdl-textfield__label" for="senha">Senha</label>
                     </div>
                     <div class="mdl-layout-spacer"></div>
@@ -56,7 +59,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
-                        <input class="mdl-textfield__input" type="password" id="senhaConfirma">
+                        <input class="mdl-textfield__input" type="password" id="senhaConfirma" name="senhaConfirma">
                         <label class="mdl-textfield__label" for="senhaConfirma">Confirme a Senha</label>
                     </div>
                     <div class="mdl-layout-spacer"></div>
