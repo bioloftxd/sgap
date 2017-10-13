@@ -1,6 +1,6 @@
 @extends("_layouts.principal")
 
-@section("title", "SGAP - Registrar Usuário")
+@section("title", "Registrar Usuário")
 
 @section("content")
 

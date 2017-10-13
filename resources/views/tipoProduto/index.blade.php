@@ -1,6 +1,6 @@
 @extends("_layouts.principal")
 
-@section("title", "FORNECEDORES")
+@section("title", "TIPOS DE PRODUTO")
 
 @section("content")
 

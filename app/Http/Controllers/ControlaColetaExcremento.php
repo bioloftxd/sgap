@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Usuario;
 use Illuminate\Http\Request;
 
 class ControlaColetaExcremento extends Controller
@@ -13,7 +14,12 @@ class ControlaColetaExcremento extends Controller
      */
     public function index()
     {
-        //
+        if (session()->exists("usuario")) {
+
+            return view("coletaExcremento.index");
+        } else {
+            return view("autentica");
+        }
     }
 
     /**
@@ -23,13 +29,13 @@ class ControlaColetaExcremento extends Controller
      */
     public function create()
     {
-        //
+        return view("coletaExcremento.create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -40,7 +46,7 @@ class ControlaColetaExcremento extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,7 +57,7 @@ class ControlaColetaExcremento extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -62,8 +68,8 @@ class ControlaColetaExcremento extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +80,7 @@ class ControlaColetaExcremento extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -42,25 +42,23 @@ class ControlaUsuario extends Controller
      */
     public function store(Request $dados)
     {
+        $listaUsuarios = Usuario::all();
         $usuario = new Usuario;
 
         $usuario->nome = $dados->get("nome");
         $usuario->senha = md5($dados->get("senha"));
         $usuario->usuario = strtolower($dados->get("usuario"));
 
-        try {
-            $usuario->save();
-            Session::put("info", "Cadastro efetuado com sucesso!");
-            return redirect()->action("ControlaUsuario@index");
-        } catch (\Illuminate\Database\QueryException $e) {
-            if ($e->errorInfo[1] == "1062") {
-                Session::put("info", "Nome de usuário já utilizado!");
-                return view("usuario/create");
-            } else {
-                Session::put("info", "Erro ao cadastrar usuário, tente novamente!");
+        foreach ($listaUsuarios as $usuarioCadastrado) {
+            if ($usuarioCadastrado->usuario == $usuario->usuario) {
+                session()->put("info", "Nome de usuário já utilizado!");
                 return view("usuario/create");
             }
         }
+
+        $usuario->save();
+        session()->put("info", "Cadastro efetuado com sucesso!");
+        return redirect()->action("ControlaUsuario@index");
     }
 
     /**
@@ -96,6 +94,7 @@ class ControlaUsuario extends Controller
     public function update(Request $request, $id)
     {
         $usuario = Usuario::find($id);
+        $listaUsuarios = Usuario::all();
 
         if ($request->novaSenha != null) {
 
@@ -103,22 +102,37 @@ class ControlaUsuario extends Controller
                 session()->put("info", "Necessário inserção da senha atual!");
                 return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
             } else {
+
                 if (md5($request->senha) == $usuario->senha) {
+
                     if ($request->novaSenha != $request->novaSenhaConfirma) {
                         session()->put("info", "As novas senhas não coincidem!");
-                        $usuario->senha = $request->novaSenha;
                         return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
                     } else {
-                        session()->put("info", "As novas senhas coincidem!");
-                        return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
+                        $usuario->senha = md5($request->novaSenha);
                     }
+
                 } else {
                     session()->put("info", "Senha atual incorreta!");
                     return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
                 }
             }
+
         }
 
+        foreach ($listaUsuarios as $usuarioCadastrado) {
+            if ($usuarioCadastrado->usuario == $request->usuario && $usuarioCadastrado->usuario != $usuario->usuario) {
+                session()->put("info", "Nome de usuário já utilizado!");
+                return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
+            }
+        }
+        $usuario->nome = $request->nome;
+        $usuario->usuario = $request->usuario;
+        $usuario->save();
+
+        session()->put("usuario", $usuario);
+        session()->put("info", "Alterações salvas!");
+        return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
     }
 
     /**

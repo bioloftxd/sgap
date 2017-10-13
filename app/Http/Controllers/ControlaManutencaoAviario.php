@@ -13,7 +13,11 @@ class ControlaManutencaoAviario extends Controller
      */
     public function index()
     {
-        //
+        if (session()->exists("usuario")) {
+            return view("manutencaoAviario.index");
+        } else {
+            return view("autentica");
+        }
     }
 
     /**

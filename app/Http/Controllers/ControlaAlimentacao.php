@@ -13,7 +13,11 @@ class ControlaAlimentacao extends Controller
      */
     public function index()
     {
-        //
+        if (session()->exists("usuario")) {
+            return view("alimentacaoAve.index");
+        } else {
+            return view("autentica");
+        }
     }
 
     /**

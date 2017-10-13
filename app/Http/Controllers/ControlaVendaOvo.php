@@ -13,7 +13,11 @@ class ControlaVendaOvo extends Controller
      */
     public function index()
     {
-        //
+        if (session()->exists("usuario")) {
+            return view("vendaOvo.index");
+        } else {
+            return view("autentica");
+        }
     }
 
     /**

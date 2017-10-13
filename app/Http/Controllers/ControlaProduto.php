@@ -13,7 +13,11 @@ class ControlaProduto extends Controller
      */
     public function index()
     {
-        //
+        if (session()->exists("usuario")) {
+            return view("tipoProduto.index");
+        } else {
+            return view("autentica");
+        }
     }
 
     /**

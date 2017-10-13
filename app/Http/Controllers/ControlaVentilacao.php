@@ -13,7 +13,11 @@ class ControlaVentilacao extends Controller
      */
     public function index()
     {
-        //
+        if (session()->exists("usuario")) {
+            return view("ventilacao.index");
+        } else {
+            return view("autentica");
+        }
     }
 
     /**

@@ -1,7 +1,20 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: ZoyO
- * Date: 10/10/2017
- * Time: 10:04
- */
+@extends("_layouts.principal")
+
+@section("title", "ESTOQUE")
+
+@section("content")
+
+    <div class="mdl-grid">
+
+        <div class="mdl-layout-spacer"></div>
+
+        <div class="mdl-cell mdl-cell--11-col">
+
+
+        </div>
+
+        <div class="mdl-layout-spacer"></div>
+
+    </div>
+
+@stop

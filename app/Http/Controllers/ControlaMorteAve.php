@@ -13,7 +13,11 @@ class ControlaMorteAve extends Controller
      */
     public function index()
     {
-        //
+        if (session()->exists("usuario")) {
+            return view("morteAve.index");
+        } else {
+            return view("autentica");
+        }
     }
 
     /**
