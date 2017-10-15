@@ -1,6 +1,6 @@
 @extends("_layouts.principal")
 
-@section("title", "Editar Usuário")
+@section("title", "INFORMAÇÕES DO USUÁRIO")
 
 @section("content")
 

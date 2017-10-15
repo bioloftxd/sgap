@@ -1,6 +1,6 @@
 @extends("_layouts.principal")
 
-@section("title", "Registrar Usuário")
+@section("title", "REGISTRAR USUÁRIO")
 
 @section("content")
 
