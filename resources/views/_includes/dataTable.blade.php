@@ -1,3 +1,5 @@
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+
 <script>
     $(document).ready(function () {
         $('#tabela').DataTable({

@@ -59,9 +59,9 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
-                        <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
-                                  name="observacoes"></textarea>
-                        <label class="mdl-textfield__label" for="observacoes">Observações</label>
+                        <textarea class="mdl-textfield__input" type="text" rows="3" id="ocorrencia"
+                                  name="ocorrencia"></textarea>
+                        <label class="mdl-textfield__label" for="ocorrencia">Descrição da Ocorrência</label>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>

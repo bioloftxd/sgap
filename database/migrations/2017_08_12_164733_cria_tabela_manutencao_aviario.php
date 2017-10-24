@@ -18,8 +18,9 @@ class CriaTabelaManutencaoAviario extends Migration {
             $table->foreign("id_usuario_verifica")->references("id")->on("usuario");
             $table->integer("id_usuario_resolve")->unsigned(); //Usuário que resolveu a alteração
             $table->foreign("id_usuario_resolve")->references("id")->on("usuario");
-            $table->string("observacoes"); //Observações sobre manutenção
-            $table->boolean("resolvido")->default(0); //Marcação de resolução 
+            $table->string("ocorrencia"); //Observações sobre a ocorrência
+            $table->string("resolucao")->default(""); //Observações sobre a resolução da ocorrência
+            $table->boolean("resolvido")->default(0); //Marcação de resolução
             $table->boolean("ativo")->default(1); //Exclusão simulada
             $table->timestamps();
         });

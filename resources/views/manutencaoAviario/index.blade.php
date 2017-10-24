@@ -4,8 +4,6 @@
 
 @section("content")
 
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
-
     <div class="mdl-grid">
 
         <div class="mdl-layout-spacer"></div>
@@ -38,7 +36,8 @@
                             <th>Data Resolução</th>
                             <th>Usuário Identificador</th>
                             <th>Usuário Resolutor</th>
-                            <th>Observações</th>
+                            <th>Ocorrência</th>
+                            <th>Resolução</th>
                             <th>Resolver</th>
                             <th>Editar</th>
                             <th>Remover</th>
@@ -54,7 +53,6 @@
                                     $dataOcorrencia = date_format($dataOcorrencia, 'd/m/Y');
                                     $dataResolução = DateTime::createFromFormat('Y-m-d', $linha->data_resolve);
                                     $dataResolução = date_format($dataResolução, 'd/m/Y');
-
                                 @endphp
 
                                 <td>{{$dataOcorrencia}}</td>
@@ -63,25 +61,36 @@
                                 @else
                                     <td>{{$dataResolução}}</td>
                                 @endif
-                                <td>{{$linha->id_usuario_verifica}}</td>
+                                <td>{{$linha->usuarioVerifica->nome}}</td>
                                 @if($linha->id_usuario_resolve == 0)
-                                    <td></td>
+                                    <td>Não Resolvido</td>
                                 @else
-                                    <td>{{$linha->id_usuario_resolve}}</td>
+                                    <td>{{$linha->usuarioResolve->nome}}</td>
+                                @endif
+                                <td>{{$linha->ocorrencia}}</td>
+                                @if($linha->resolvido==0)
+                                    <td>Não Resolvido</td>
+                                @else
+                                    <td>{{$linha->resolucao}}</td>
                                 @endif
 
-                                <td>{{$linha->observacoes}}</td>
-                                <td>
-                                    <form action="{{action("ControlaManutencaoAviario@resolver", ["id" => $linha->id])}}"
-                                          method="POST">
-                                        {{csrf_field()}}
-                                        <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: black">
-                                            <i class="material-icons">done</i>
-                                        </button>
-                                    </form>
-                                </td>
+
+                                @if($linha->resolvido==0)
+                                    <td>
+                                        <form action="{{action("ControlaManutencaoAviario@resolver", ["id" => $linha->id])}}"
+                                              method="POST">
+                                            {{csrf_field()}}
+                                            <button type="submit"
+                                                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
+                                                    style="width: 30px; height: 30px; min-width: initial; background-color: black">
+                                                <i class="material-icons">done</i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                @else
+                                    <td></td>
+                                @endif
+
                                 <td>
                                     <form action="{{action("ControlaManutencaoAviario@edit", ["id" => $linha->id])}}"
                                           method="POST">

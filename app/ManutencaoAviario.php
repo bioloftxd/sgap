@@ -16,7 +16,8 @@ class ManutencaoAviario extends Model
         "numero_relatorio",
         "id_usuario_verifica",
         "id_usuario_resolve",
-        "observacoes",
+        "ocorrencia",
+        "resolucao",
         "resolvido",
         "ativo"
     ];

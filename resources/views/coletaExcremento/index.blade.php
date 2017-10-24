@@ -4,8 +4,6 @@
 
 @section("content")
 
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
-
     <div class="mdl-grid">
 
         <div class="mdl-layout-spacer"></div>

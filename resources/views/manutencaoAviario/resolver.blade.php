@@ -29,25 +29,33 @@
 
                     <div class="mdl-layout-spacer"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--4-col-phone mdl-cell--2-col-tablet">
-                        <input class="mdl-textfield__input" type="number" id="numeroRelatorio" name="numeroRelatorio">
-                        <label class="mdl-textfield__label" for="numeroRelatorio">Nº Relatório</label>
+                    <div class="mdl-cell mdl-cell--11-col-desktop mdl-cell--4-col-phone mdl-cell--7-col-tablet">
+                        <label for="ocorrencia">Ocorrência:</label>
+                        <p id="ocorrencia">{{$manutencao->ocorrencia}}</p>
                     </div>
+
+                    <div class="mdl-layout-spacer"></div>
+
+                </div>
+
+                <div class="mdl-grid">
+
+                    <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
-                        <input class="mdl-textfield__input" type="date" id="dataOcorrencia" name="dataOcorrencia"
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
+                        <input class="mdl-textfield__input" type="date" id="dataResolve" name="dataResolve"
                                value="{{date("Y-m-j")}}">
-                        <label class=" mdl-textfield__label" for="dataOcorrencia">Data Ocorrência</label>
+                        <label class=" mdl-textfield__label" for="dataResolve">Data Resolução</label>
                     </div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--2-col-tablet">
-                        <input class="mdl-textfield__input" type="time" id="horaOcorrencia" name="horaOcorrencia"
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop mdl-cell--2-col-phone mdl-cell--2-col-tablet">
+                        <input class="mdl-textfield__input" type="time" id="horaResolve" name="horaResolve"
                                value="{{date("H:i")}}">
-                        <label class="mdl-textfield__label" for="horaOcorrencia">Hora Ocorrência</label>
+                        <label class="mdl-textfield__label" for="horaResolve">Hora Resolução</label>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
@@ -59,9 +67,9 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
-                        <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
-                                  name="observacoes"></textarea>
-                        <label class="mdl-textfield__label" for="observacoes">Observações</label>
+                        <textarea class="mdl-textfield__input" type="text" rows="3" id="resolucao"
+                                  name="resolucao"></textarea>
+                        <label class="mdl-textfield__label" for="resolucao">Resolução</label>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
