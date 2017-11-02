@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ManutencaoAviario;
 use App\Usuario;
+use foo\bar;
 use Illuminate\Http\Request;
 
 class ControlaManutencaoAviario extends Controller
@@ -45,16 +46,21 @@ class ControlaManutencaoAviario extends Controller
 
         $manutencao->id_usuario_verifica = session()->get("usuario")->id;
         $manutencao->id_usuario_resolve = 0;
-        $manutencao->data_verifica = ($request->dataOcorrencia) ? $request->dataOcorrencia : date("Y-m-j");
+        $manutencao->data_verifica = ($request->dataOcorrencia) ? $request->dataOcorrencia : date("Y-m-d");
         $manutencao->hora_verifica = ($request->horaOcorrencia) ? $request->horaOcorrencia : date("H:i");
         $manutencao->data_resolve = "2001-09-11";
         $manutencao->hora_resolve = "00:00";
         $manutencao->numero_relatorio = ($request->numeroRelatorio) ? $request->numeroRelatorio : 0;
         $manutencao->ocorrencia = ($request->ocorrencia) ? $request->ocorrencia : "Sem Observações!";
-        $manutencao->save();
 
-        session()->put("info", "Registro salvo!");
+        if ($request->ocorrencia == null) {
+            session()->put("info", "Insira a ocorrência!");
+            return back();
+        }
+
+        $manutencao->save();
         $listaManutencoes = ManutencaoAviario::all()->where("ativo", "!=", 0);
+        session()->put("info", "Registro salvo!");
         return view("manutencaoAviario.index", ["listaManutencoes" => $listaManutencoes]);
     }
 
@@ -66,7 +72,8 @@ class ControlaManutencaoAviario extends Controller
      */
     public function show($id)
     {
-        //
+        $manutencao = ManutencaoAviario::find($id);
+        return view("manutencaoAviario.show", ["manutencao" => $manutencao]);
     }
 
     /**
@@ -115,12 +122,9 @@ class ControlaManutencaoAviario extends Controller
         $manutencao->ocorrencia = ($request->ocorrencia) ? $request->ocorrencia : $manutencao->ocorrencia;
         $manutencao->resolucao = ($request->resolucao) ? $request->resolucao : $manutencao->resolucao;
         $manutencao->resolvido = ($request->resolvido == 0) ? 0 : 1;
-
         $manutencao->save();
-
         $listaManutencoes = ManutencaoAviario::all()->where("ativo", "!=", 0);
-
-        session()->put("info", "Registro Salvo!");
+        session()->put("info", "Registro alterado!");
         return view("manutencaoAviario.index", ["listaManutencoes" => $listaManutencoes]);
     }
 
@@ -133,37 +137,25 @@ class ControlaManutencaoAviario extends Controller
     public function destroy($id)
     {
         $manutencao = ManutencaoAviario::find($id);
-
-        if ($manutencao->ativo == 0) {
-            session()->forget("info");
-            $listaManutencoes = ManutencaoAviario::all()->where("ativo", "!=", 0);
-            return view("manutencaoAviario.index", ["listaManutencoes" => $listaManutencoes]);
-        } else {
-            $manutencao->ativo = 0;
-            $manutencao->save();
-
-            $listaManutencoes = ManutencaoAviario::all()->where("ativo", "!=", 0);
-            session()->put("info", "Dados da ocorrência removidos!");
-            return view("manutencaoAviario.index", ["listaManutencoes" => $listaManutencoes]);
-        }
-
-
+        $manutencao->ativo = 0;
+        $manutencao->save();
+        session()->put("info", "Registro removido!");
+        $listaManutencoes = ManutencaoAviario::all()->where("ativo", "!=", 0);
+        return view("manutencaoAviario.index", ["listaManutencoes" => $listaManutencoes]);
     }
 
     public function storeResolve($id, Request $request)
     {
         $manutencao = ManutencaoAviario::find($id);
 
-        $manutencao->data_resolve = ($request->dataResolve) ? $request->dataResolve : date("Y-m-j");
+        $manutencao->data_resolve = ($request->dataResolve) ? $request->dataResolve : date("Y-m-d");
         $manutencao->hora_resolve = ($request->horaResolve) ? $request->horaResolve : date("H:i");
         $manutencao->resolucao = ($request->resolucao) ? $request->resolucao : "Sem Observações!";
         $manutencao->id_usuario_resolve = session()->get("usuario")->id;
         $manutencao->resolvido = 1;
-
         $manutencao->save();
-
         $listaManutencoes = ManutencaoAviario::all()->where("ativo", "!=", 0);
-        session()->put("info", "Registro Salvo!");
+        session()->put("info", "Registro salvo!");
         return view("manutencaoAviario.index", ["listaManutencoes" => $listaManutencoes]);
 
     }

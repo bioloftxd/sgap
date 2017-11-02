@@ -15,7 +15,6 @@ class CriaTabelaVentilacao extends Migration {
             $table->time("hora_fechamento"); //Hora de fechamento das cortinas
             $table->decimal("temperatura_maxima", 15, 2); //Temperatura máxima atingida
             $table->decimal("temperatura_minima", 15, 2); //Temperatura mínima atingida
-            $table->decimal("temperatura_atual", 15, 2); //Temperatura atual
             $table->integer("id_usuario")->unsigned(); //Usuário autenticado
             $table->foreign("id_usuario")->references("id")->on("usuario");
             $table->string("observacoes"); //Observações sobre ventilação

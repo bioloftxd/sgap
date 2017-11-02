@@ -49,15 +49,25 @@ class ControlaUsuario extends Controller
         $usuario->senha = md5($dados->get("senha"));
         $usuario->usuario = strtolower($dados->get("usuario"));
 
+        if ($dados->senha != $dados->senhaConfirma) {
+            session()->put("info", "As senhas não coincidem!");
+            return view("usuario.create", ["usuario" => $usuario]);
+        }
+
+        if ($dados->senha == null && $dados->senhaConfirma == null) {
+            session()->put("info", "Campo de senha obrigatório!");
+            return view("usuario.create", ["usuario" => $usuario]);
+        }
+
         foreach ($listaUsuarios as $usuarioCadastrado) {
             if ($usuarioCadastrado->usuario == $usuario->usuario) {
                 session()->put("info", "Nome de usuário já utilizado!");
-                return view("usuario/create");
+                return back();
             }
         }
 
         $usuario->save();
-        session()->put("info", "Cadastro efetuado com sucesso!");
+        session()->put("info", "Registro salvo!");
         return redirect()->action("ControlaUsuario@index");
     }
 
@@ -131,7 +141,7 @@ class ControlaUsuario extends Controller
         $usuario->save();
 
         session()->put("usuario", $usuario);
-        session()->put("info", "Alterações salvas!");
+        session()->put("info", "Registro alterado!");
         return redirect()->action("ControlaUsuario@edit", ['id' => $id]);
     }
 

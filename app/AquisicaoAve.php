@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AquisicaoAve extends Model {
+class AquisicaoAve extends Model
+{
 
     protected $fillable = [
         "id",
@@ -23,9 +24,10 @@ class AquisicaoAve extends Model {
         "observacoes",
         "ativo"
     ];
-    protected $table = "aquisicao_ave";
+    protected $table = "aquisicao_aves";
 
-    public function usuario() {
+    public function usuario()
+    {
         return $this->hasOne(Usuario::class, "id", "id_usuario");
     }
 

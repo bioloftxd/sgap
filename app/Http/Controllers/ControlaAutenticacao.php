@@ -53,11 +53,11 @@ class ControlaAutenticacao extends Controller
                 if ($usuario->senha == $autentica->senha) {
                     session()->flush();
                     session()->put("usuario", $usuario);
+                    echo "entrou";
                     return redirect()->action("ControlaAutenticacao@index");
                 } else {
                     session()->flush();
                     session()->put("info", "Senha Incorreta!");
-                    session()->put("nomeUsuario", $usuario->usuario);
                     return redirect()->action("ControlaUsuario@index");
                 }
             } else {

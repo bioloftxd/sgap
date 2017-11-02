@@ -14,6 +14,9 @@
 
         <div class="mdl-cell mdl-cell--11-col">
 
+            {{--route("coletaExcremento.store")--}}
+            {{--action('ControlaColetaExcremento@store')--}}
+
             <form method="POST" action="{{action('ControlaColetaExcremento@store')}}">
                 {{csrf_field()}}
 
@@ -36,9 +39,8 @@
                     </div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
-
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
-                        <input class="mdl-textfield__input" type="date" id="data" name="data" value="{{date("Y-m-j")}}">
+                        <input class="mdl-textfield__input" type="date" id="data" name="data" value="{{date("Y-m-d")}}">
                         <label class=" mdl-textfield__label" for="data">Data</label>
                     </div>
 

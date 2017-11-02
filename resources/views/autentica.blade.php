@@ -4,9 +4,6 @@
 
 @section("content")
 
-    @php
-        $usuario  = (session()->exists("nomeUsuario")) ? session()->get("nomeUsuario") : "";
-    @endphp
     <div class="mdl-grid">
 
         <div class="mdl-layout-spacer"></div>
@@ -28,7 +25,7 @@
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
                         <input class="mdl-textfield__input" type="text" id="usuario" name="usuario"
-                               value="{{$usuario}}">
+                               value="@if(session()->exists("usuario")){{session()->get("usuario")->nome}}@endisset">
                         <label class="mdl-textfield__label" for="usuario">Nome de Usuário</label>
                     </div>
                     <div class="mdl-layout-spacer"></div>

@@ -4,11 +4,6 @@
 
 @section("content")
 
-    @php
-        $nomeUsuario = "";
-        $nomeCompleto = "";
-    @endphp
-
     <div class="mdl-grid">
 
         <div class="mdl-layout-spacer"></div>
@@ -33,7 +28,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop">
                         <input class="mdl-textfield__input" type="text" id="nomeCompleto" name="nome"
-                               value="{{$nomeCompleto}}">
+                               value="@isset($usuario) {{$usuario->nome}} @endisset">
                         <label class="mdl-textfield__label" for="nomeCompleto">Nome Completo</label>
                     </div>
 
@@ -41,7 +36,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop">
                         <input class="mdl-textfield__input" type="text" id="nomeUsuario" name="usuario"
-                               value="{{$nomeUsuario}}">
+                               value="@isset($usuario) {{$usuario->usuario}} @endisset">
                         <label class=" mdl-textfield__label" for="nomeUsuario">Nome de Usuário</label>
                     </div>
 

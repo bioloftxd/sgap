@@ -4,6 +4,9 @@
     $(document).ready(function () {
         $('#tabela').DataTable({
             responsive: true,
+            "columnDefs": [
+                {"className": "dt-center", "targets": "_all"}
+            ],
             "language": {
                 "decimal": "",
                 "emptyTable": "Nenhum registros para exibir!",

@@ -44,14 +44,13 @@ class ControlaColetaExcremento extends Controller
         $coleta = new ColetaExcremento();
 
         $coleta->id_usuario = session()->get("usuario")->id;
-        $coleta->data = ($request->data) ? $request->data : date("Y-m-j");
+        $coleta->data = ($request->data) ? $request->data : date("Y-m-d");
         $coleta->hora = ($request->hora) ? $request->hora : date("H:i");
         $coleta->litros = ($request->litros) ? $request->litros : 1;
         $coleta->observacoes = ($request->observacoes) ? $request->observacoes : "Sem observações!";
-
         $coleta->save();
-        session()->put("info", "Registro Salvo!");
         $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
+        session()->put("info", "Registro salvo!");
         return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
     }
 
@@ -63,7 +62,8 @@ class ControlaColetaExcremento extends Controller
      */
     public function show($id)
     {
-        //
+        $coleta = ColetaExcremento::find($id);
+        return view("coletaExcremento.show", ["coleta" => $coleta]);
     }
 
     /**
@@ -88,17 +88,14 @@ class ControlaColetaExcremento extends Controller
     public function update(Request $request, $id)
     {
         $coleta = ColetaExcremento::find($id);
-
         $coleta->id_usuario = session()->get("usuario")->id;
-        $coleta->data = ($request->data) ? $request->data : date("Y-m-j");
+        $coleta->data = ($request->data) ? $request->data : date("Y-m-d");
         $coleta->hora = ($request->hora) ? $request->hora : date("H:i");
         $coleta->litros = ($request->litros) ? $request->litros : 1;
         $coleta->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
-
         $coleta->save();
-
-        session()->put("info", "Registro Alterado com sucesso!");
         $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
+        session()->put("info", "Registro alterado!");
         return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
     }
 
@@ -111,17 +108,11 @@ class ControlaColetaExcremento extends Controller
     public function destroy($id)
     {
         $coleta = ColetaExcremento::find($id);
-
-        if ($coleta->ativo == 0) {
-            session()->forget("info");
-            $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
-            return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
-        } else {
-            $coleta->ativo = 0;
-            $coleta->save();
-            session()->put("info", "Dados da coleta removidos!");
-            $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
-            return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
-        }
+        $coleta->ativo = 0;
+        $coleta->save();
+        session()->put("info", "Registro removido!");
+        $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
+        return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
     }
+
 }

@@ -32,9 +32,7 @@
                     <table id="tabela" class="display">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Data</th>
-                            <th>Hora</th>
+                            <th>Data/Hora</th>
                             <th>Litros</th>
                             <th>Responsável</th>
                             <th>Observações</th>
@@ -54,11 +52,9 @@
                                     $hora = date_format($hora, 'H:i');
                                 @endphp
 
-                                <td>{{$linha->id}}</td>
-                                <td>{{$data}}</td>
-                                <td>{{$hora}}h</td>
-                                <td>{{$linha->litros}}</td>
-                                <td>{{$linha->id_usuario}}</td>
+                                <td>{{$data}} {{$hora}} h</td>
+                                <td>{{number_format($linha->litros,1,',','')}} L</td>
+                                <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                                 <td>
                                     <form action="{{action("ControlaColetaExcremento@edit", ["id" => $linha->id])}}"

@@ -38,7 +38,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
                         <input class="mdl-textfield__input" type="date" id="dataOcorrencia" name="dataOcorrencia"
-                               value="{{date("Y-m-j")}}">
+                               value="{{date("Y-m-d")}}">
                         <label class=" mdl-textfield__label" for="dataOcorrencia">Data Ocorrência</label>
                     </div>
 

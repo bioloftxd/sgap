@@ -30,22 +30,19 @@
                 <div class="mdl-cell mdl-cell--11-col-desktop mdl-cell--4-col-phone mdl-cell--7-col-tablet table-responsive">
 
                     <table id="tabela" class="display">
-                        
+
                         <thead>
 
                         <tr>
-                            <th rowspan="2">Data/Hora Abertura</th>
-                            <th rowspan="2">Data/Hora Fechamento</th>
-                            <th colspan="3">Temperatura</th>
-                            <th rowspan="2">Observações</th>
-                            <th rowspan="2">Editar</th>
-                            <th rowspan="2">Remover</th>
-                        </tr>
-
-                        <tr>
-                            <th>Mínima</th>
-                            <th>Média</th>
-                            <th>Máxima</th>
+                            <th>Data/Hora Abertura</th>
+                            <th>Data/Hora Fechamento</th>
+                            <th>Temperatura Mínima</th>
+                            <th>Temperatura Média</th>
+                            <th>Temperatura Máxima</th>
+                            <th>Observações</th>
+                            <th>Responsável</th>
+                            <th>Editar</th>
+                            <th>Remover</th>
                         </tr>
 
                         </thead>
@@ -56,50 +53,28 @@
                             <tr>
 
                                 @php
-                                    $dataOcorrencia = DateTime::createFromFormat('Y-m-d', $linha->data_verifica);
-                                    $dataOcorrencia = date_format($dataOcorrencia, 'd/m/Y');
-                                    $dataResolução = DateTime::createFromFormat('Y-m-d', $linha->data_resolve);
-                                    $dataResolução = date_format($dataResolução, 'd/m/Y');
+                                    $data_abertura = DateTime::createFromFormat('Y-m-d', $linha->data_abertura);
+                                    $data_abertura = date_format($data_abertura, 'd/m/Y');
+                                    $data_fechamento = DateTime::createFromFormat('Y-m-d', $linha->data_fechamento);
+                                    $data_fechamento = date_format($data_fechamento, 'd/m/Y');
+                                    $hora_abertura = DateTime::createFromFormat('H:i:s', $linha->hora_abertura);
+                                    $hora_abertura = date_format($hora_abertura, 'H:i');
+                                    $hora_fechamento = DateTime::createFromFormat('H:i:s', $linha->hora_fechamento);
+                                    $hora_fechamento = date_format($hora_fechamento, 'H:i');
+                                    $temperatura_media = ($linha->temperatura_maxima+$linha->temperatura_minima)/2;
                                 @endphp
 
-                                <td>{{$dataOcorrencia}}</td>
-                                @if($dataResolução == "11/09/2001")
-                                    <td>Não Resolvido</td>
-                                @else
-                                    <td>{{$dataResolução}}</td>
-                                @endif
-                                <td>{{$linha->usuarioVerifica->nome}}</td>
-                                @if($linha->id_usuario_resolve == 0)
-                                    <td>Não Resolvido</td>
-                                @else
-                                    <td>{{$linha->usuarioResolve->nome}}</td>
-                                @endif
-                                <td>{{$linha->ocorrencia}}</td>
-                                @if($linha->resolvido==0)
-                                    <td>Não Resolvido</td>
-                                @else
-                                    <td>{{$linha->resolucao}}</td>
-                                @endif
+                                <td>{{$data_abertura}} {{$hora_abertura}}h</td>
+                                <td>{{$data_fechamento}} {{$hora_fechamento}}h</td>
+                                <td>{{number_format($linha->temperatura_minima,1,',','')}} Cº</td>
+                                <td>{{number_format($temperatura_media,1,',','')}} Cº</td>
+                                <td>{{number_format($linha->temperatura_maxima,1,',','')}} Cº</td>
+                                <td>{{$linha->observacoes}}</td>
+                                <td>{{$linha->usuario->nome}}</td>
 
-
-                                @if($linha->resolvido==0)
-                                    <td>
-                                        <form action="{{action("ControlaManutencaoAviario@resolver", ["id" => $linha->id])}}"
-                                              method="POST">
-                                            {{csrf_field()}}
-                                            <button type="submit"
-                                                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                    style="width: 30px; height: 30px; min-width: initial; background-color: black">
-                                                <i class="material-icons">done</i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                @else
-                                    <td></td>
-                                @endif
 
                                 <td>
-                                    <form action="{{action("ControlaManutencaoAviario@edit", ["id" => $linha->id])}}"
+                                    <form action="{{action("ControlaVentilacao@edit", ["id" => $linha->id])}}"
                                           method="POST">
                                         {{csrf_field()}}
                                         {{method_field('GET')}}
@@ -111,7 +86,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="{{action("ControlaManutencaoAviario@destroy", ["id" => $linha->id])}}"
+                                    <form action="{{action("ControlaVentilacao@destroy", ["id" => $linha->id])}}"
                                           method="POST">
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
