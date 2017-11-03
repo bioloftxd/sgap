@@ -27,7 +27,7 @@ class AlimentacaoAve extends Model
 
     public function tipo_racao()
     {
-        return $this->hasMany(TipoRacao::class, "id", "id_tipo_racao");
+        return $this->hasOne(TipoRacao::class, "id", "id_tipo_racao");
     }
 
     public function gaiola()

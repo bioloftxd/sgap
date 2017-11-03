@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ventilacao;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ControlaVentilacao extends Controller
 {
@@ -14,12 +15,8 @@ class ControlaVentilacao extends Controller
      */
     public function index()
     {
-        if (session()->exists("usuario")) {
-            $listaVentilacao = Ventilacao::all()->where("ativo", "!=", 0);
-            return view("ventilacao.index", ["listaVentilacao" => $listaVentilacao]);
-        } else {
-            return view("autentica");
-        }
+        $listaDados = Ventilacao::all()->where("ativo", "!=", 0);
+        return view("ventilacao.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -40,31 +37,36 @@ class ControlaVentilacao extends Controller
      */
     public function store(Request $request)
     {
-        $ventilacao = new Ventilacao();
-
-        $ventilacao->data_abertura = ($request->data_abertura) ? $request->data_abertura : date("Y-m-d");
-        $ventilacao->hora_abertura = ($request->hora_abertura) ? $request->hora_abertura : date("H:i");
-        $ventilacao->data_fechamento = ($request->data_fechamento) ? $request->data_fechamento : date("Y-m-d");
-        $ventilacao->hora_fechamento = ($request->hora_fechamento) ? $request->hora_fechamento : date("H:i");
-        $ventilacao->temperatura_maxima = ($request->temperatura_maxima) ? $request->temperatura_maxima : null;
-        $ventilacao->temperatura_minima = ($request->temperatura_minima) ? $request->temperatura_minima : null;
-        $ventilacao->id_usuario = session()->get("usuario")->id;
-        $ventilacao->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Oservações!";
-
+        $dados = new Ventilacao();
+        $dados->data_abertura = ($request->data_abertura) ? $request->data_abertura : date("Y-m-d");
+        $dados->hora_abertura = ($request->hora_abertura) ? $request->hora_abertura : date("H:i");
+        $dados->data_fechamento = ($request->data_fechamento) ? $request->data_fechamento : date("Y-m-d");
+        $dados->hora_fechamento = ($request->hora_fechamento) ? $request->hora_fechamento : date("H:i");
+        $dados->temperatura_maxima = ($request->temperatura_maxima) ? $request->temperatura_maxima : null;
+        $dados->temperatura_minima = ($request->temperatura_minima) ? $request->temperatura_minima : null;
+        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Oservações!";
         if ($request->temperatura_maxima == null) {
             session()->put("info", "Insira a temperatura máxima!");
-            return view("ventilacao.create", ["ventilacao" => $ventilacao]);
+            return view("ventilacao.create", ["dados" => $dados]);
         }
-
         if ($request->temperatura_minima == null) {
             session()->put("info", "Insira a temperatura mínima!");
-            return view("ventilacao.create", ["ventilacao" => $ventilacao]);
+            return view("ventilacao.create", ["dados" => $dados]);
         }
-
-        $ventilacao->save();
-        $listaVenlicao = Ventilacao::all()->where("ativo", "!=", 0);
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("ventilacao.create", ["dados" => $dados]);
+        }
+        $listaDados = Ventilacao::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro salvo!");
-        return view("ventilacao.index", ["listaVentilacao" => $listaVenlicao]);
+        return view("ventilacao.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -75,8 +77,8 @@ class ControlaVentilacao extends Controller
      */
     public function show($id)
     {
-        $ventilacao = Ventilacao::find($id);
-        return view("ventilacao.show", ["ventilacao" => $ventilacao]);
+        $dados = Ventilacao::find($id);
+        return view("ventilacao.show", ["dados" => $dados]);
     }
 
     /**
@@ -87,9 +89,8 @@ class ControlaVentilacao extends Controller
      */
     public function edit($id)
     {
-        $ventilacao = Ventilacao::find($id);
-
-        return view("ventilacao.edit", ["ventilacao" => $ventilacao]);
+        $dados = Ventilacao::find($id);
+        return view("ventilacao.edit", ["dados" => $dados]);
     }
 
     /**
@@ -101,20 +102,28 @@ class ControlaVentilacao extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ventilacao = Ventilacao::find($id);
-        $ventilacao->data_abertura = ($request->data_abertura) ? $request->data_abertura : $ventilacao->data_abertura;
-        $ventilacao->hora_abertura = ($request->hora_abertura) ? $request->hora_abertura : $ventilacao->hora_abertura;
-        $ventilacao->data_fechamento = ($request->data_fechamento) ? $request->data_fechamento : $ventilacao->data_fechamento;
-        $ventilacao->hora_fechamento = ($request->hora_fechamento) ? $request->hora_fechamento : $ventilacao->hora_fechamento;
-        $ventilacao->temperatura_maxima = ($request->temperatura_maxima) ? $request->temperatura_maxima : $ventilacao->temperatura_maxima;
-        $ventilacao->temperatura_minima = ($request->temperatura_minima) ? $request->temperatura_minima : $ventilacao->temperatura_minima;
-        $ventilacao->id_usuario = session()->get("usuario")->id;
-        $ventilacao->observacoes = ($request->observacoes) ? $request->observacoes : $ventilacao->observacoes;
-        $ventilacao->save();
-
-        $listaVentilacao = Ventilacao::all()->where("ativo", "!=", 0);
+        $dados = Ventilacao::find($id);
+        $dados->data_abertura = ($request->data_abertura) ? $request->data_abertura : $dados->data_abertura;
+        $dados->hora_abertura = ($request->hora_abertura) ? $request->hora_abertura : $dados->hora_abertura;
+        $dados->data_fechamento = ($request->data_fechamento) ? $request->data_fechamento : $dados->data_fechamento;
+        $dados->hora_fechamento = ($request->hora_fechamento) ? $request->hora_fechamento : $dados->hora_fechamento;
+        $dados->temperatura_maxima = ($request->temperatura_maxima) ? $request->temperatura_maxima : $dados->temperatura_maxima;
+        $dados->temperatura_minima = ($request->temperatura_minima) ? $request->temperatura_minima : $dados->temperatura_minima;
+        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("ventilacao.create", ["dados" => $dados]);
+        }
+        $listaDados = Ventilacao::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro alterado!");
-        return view("ventilacao.index", ["listaVentilacao" => $listaVentilacao]);
+        return view("ventilacao.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -125,12 +134,20 @@ class ControlaVentilacao extends Controller
      */
     public function destroy($id)
     {
-        $ventilacao = Ventilacao::find($id);
-        $ventilacao->ativo = 0;
-        $ventilacao->save();
-        session()->put("info", "Registro removido!");
-        $listaVentilacao = Ventilacao::all()->where("ativo", "!=", 0);
-        return view("ventilacao.index", ["listaVentilacao" => $listaVentilacao]);
+        $dados = Ventilacao::find($id);
+        $dados->ativo = 0;
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+            session()->put("info", "Registro removido!");
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+        }
+        $listaDados = Ventilacao::all()->where("ativo", "!=", 0);
+        return view("ventilacao.index", ["listaDados" => $listaDados]);
 
     }
 }

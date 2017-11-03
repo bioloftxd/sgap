@@ -42,7 +42,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach($listaColetas as $linha)
+                        @foreach($listaDados as $linha)
                             <tr>
 
                                 @php

@@ -1,13 +1,8 @@
 @extends("_layouts.principal")
 
-@section("title", "Registrar Usuário")
+@section("title", "REGISTRAR AQUISIÇÃO DE AVES")
 
 @section("content")
-
-    @php
-        $nomeUsuario = "";
-        $nomeCompleto = "";
-    @endphp
 
     <div class="mdl-grid">
 
@@ -21,7 +16,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-cell textoCentralizado">
-                        <h4>Registrar Usuário</h4>
+                        <h4>Registrar Aquisição de aves</h4>
                     </div>
                     <div class="mdl-layout-spacer"></div>
                 </div>
@@ -29,7 +24,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
-                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" value="{{$nomeCompleto}}">
+                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" >
                         <label class="mdl-textfield__label" for="nomeCompleto">Nome Completo</label>
                     </div>
                     <div class="mdl-layout-spacer"></div>
@@ -38,7 +33,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop">
-                        <input class="mdl-textfield__input" type="text" id="nomeUsuario" value="{{$nomeUsuario}}">
+                        <input class="mdl-textfield__input" type="text" id="nomeUsuario" >
                         <label class=" mdl-textfield__label" for="nomeUsuario">Nome de Usuário</label>
                     </div>
                     <div class="mdl-layout-spacer"></div>

@@ -30,24 +30,27 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--4-col-phone mdl-cell--2-col-tablet">
-                        <input class="mdl-textfield__input" type="number" id="numeroRelatorio" name="numeroRelatorio">
-                        <label class="mdl-textfield__label" for="numeroRelatorio">Nº Relatório</label>
+                        <input class="mdl-textfield__input" type="number" id="numero_relatorio" name="numero_relatorio"
+                               @isset($dados)value="{{$dados->numero_relatorio}}"@endisset>
+                        <label class="mdl-textfield__label" for="numero_relatorio">Nº Relatório</label>
                     </div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
-                        <input class="mdl-textfield__input" type="date" id="dataOcorrencia" name="dataOcorrencia"
-                               value="{{date("Y-m-d")}}">
-                        <label class=" mdl-textfield__label" for="dataOcorrencia">Data Ocorrência</label>
+                        <input class="mdl-textfield__input" type="date" id="data_verifica" name="data_verifica"
+                               @isset($dados)value="{{$dados->data_verifica}}" @endisset
+                               @empty($dados)value="{{date("Y-m-d")}}" @endempty>
+                        <label class=" mdl-textfield__label" for="data_verifica">Data Ocorrência</label>
                     </div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--2-col-tablet">
-                        <input class="mdl-textfield__input" type="time" id="horaOcorrencia" name="horaOcorrencia"
-                               value="{{date("H:i")}}">
-                        <label class="mdl-textfield__label" for="horaOcorrencia">Hora Ocorrência</label>
+                        <input class="mdl-textfield__input" type="time" id="hora_verifica" name="hora_verifica"
+                               @isset($dados)value="{{$dados->hora_verifica}}" @endisset
+                               @empty($dados)value="{{date("H:i")}}"@endempty>
+                        <label class="mdl-textfield__label" for="hora_verifica">Hora Ocorrência</label>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
@@ -60,7 +63,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="ocorrencia"
-                                  name="ocorrencia"></textarea>
+                                  name="ocorrencia">@isset($dados){{$dados->ocorrencia}}@endisset</textarea>
                         <label class="mdl-textfield__label" for="ocorrencia">Descrição da Ocorrência</label>
                     </div>
 

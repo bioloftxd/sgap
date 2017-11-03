@@ -49,7 +49,7 @@
 
                         <tbody>
 
-                        @foreach($listaVentilacao as $linha)
+                        @foreach($listaDados as $linha)
                             <tr>
 
                                 @php

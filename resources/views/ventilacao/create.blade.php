@@ -27,31 +27,33 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="date" id="data_abertura" name="data_abertura"
-                               value="@php echo(isset($ventilacao->data_abertura))?$ventilacao->data_abertura:date("Y-m-d")@endphp">
+                               @isset($dados)value="{{$dados->data_abertura}}" @endisset
+                               @empty($dados)value="{{date("Y-m-d")}}"@endempty>
                         <label class=" mdl-textfield__label" for="data_abertura">Data Abertura</label>
                     </div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--1-col-desktop mdl-cell--2-col-phone mdl-cell--2-col-tablet">
                         <input class="mdl-textfield__input" type="time" id="hora_abertura" name="hora_abertura"
-                               value="@php echo(isset($ventilacao->hora_abertura))?$ventilacao->hora_abertura:date("H:i")@endphp">
+                               @isset($dados)value="{{$dados->hora_abertura}}" @endisset
+                               @empty($dados)value="{{date("H:i")}}"@endempty>
                         <label class="mdl-textfield__label" for="hora_abertura">Hora Abertura</label>
                     </div>
 
-                    <div class="mdl-layout-spacer mdl-layout--large-screen-only"></div>
+                    <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="date" id="data_fechamento" name="data_fechamento"
-                               value="@php echo(isset($ventilacao->data_fechamento))?$ventilacao->data_fechamento:date("Y-m-d")@endphp">
+                               @isset($dados)value="{{$dados->data_fechamento}}" @endisset
+                               @empty($dados)value="{{date("Y-m-d")}}"@endempty>
                         <label class=" mdl-textfield__label" for="data_fechamento">Data Fechamento</label>
                     </div>
 
-                    <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
-
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-phone mdl-cell--2-col-tablet">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--1-col-desktop mdl-cell--2-col-phone mdl-cell--2-col-tablet">
                         <input class="mdl-textfield__input" type="time" id="hora_fechamento" name="hora_fechamento"
-                               value="@php echo(isset($ventilacao->hora_fechamento))?$ventilacao->hora_fechamento:date("H:i")@endphp">
+                               @isset($dados)value="{{$dados->hora_fechamento}}" @endisset
+                               @empty($dados)value="{{date("H:i")}}"@endempty>
                         <label class="mdl-textfield__label" for="hora_fechamento">Hora Fechamento</label>
                     </div>
 
@@ -65,14 +67,14 @@
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
                         <input class="mdl-textfield__input" type="number" id="temperatura_minima"
                                name="temperatura_minima" step="0.01"
-                               value="@isset($ventilacao->temperatura_minima){{$ventilacao->temperatura_minima}}@endisset">
+                               value="@isset($dados){{$dados->temperatura_minima}}@endisset">
                         <label class="mdl-textfield__label" for="temperatura_minima">Temperatura Mínima Cº</label>
                     </div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
                         <input class="mdl-textfield__input" type="number" id="temperatura_maxima"
                                name="temperatura_maxima" step="0.01"
-                               value="@isset($ventilacao->temperatura_maxima){{$ventilacao->temperatura_maxima}}@endisset">
+                               value="@isset($dados){{$dados->temperatura_maxima}}@endisset">
                         <label class="mdl-textfield__label" for="temperatura_maxima">Temperatura Máxima Cº</label>
                     </div>
 
@@ -86,7 +88,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
-                                  name="observacoes">@isset($ventilacao->observacoes){{$ventilacao->observacoes}}@endisset</textarea>
+                                  name="observacoes">@isset($dados){{$dados->observacoes}}@endisset</textarea>
                         <label class="mdl-textfield__label" for="observacoes">Observações</label>
                     </div>
 

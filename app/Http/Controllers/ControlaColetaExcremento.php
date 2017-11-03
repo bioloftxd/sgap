@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ColetaExcremento;
 use App\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ControlaColetaExcremento extends Controller
 {
@@ -15,12 +16,8 @@ class ControlaColetaExcremento extends Controller
      */
     public function index()
     {
-        if (session()->exists("usuario")) {
-            $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
-            return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
-        } else {
-            return view("autentica");
-        }
+        $listaDados = ColetaExcremento::all()->where("ativo", "!=", 0);
+        return view("coletaExcremento.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -41,17 +38,25 @@ class ControlaColetaExcremento extends Controller
      */
     public function store(Request $request)
     {
-        $coleta = new ColetaExcremento();
-
-        $coleta->id_usuario = session()->get("usuario")->id;
-        $coleta->data = ($request->data) ? $request->data : date("Y-m-d");
-        $coleta->hora = ($request->hora) ? $request->hora : date("H:i");
-        $coleta->litros = ($request->litros) ? $request->litros : 1;
-        $coleta->observacoes = ($request->observacoes) ? $request->observacoes : "Sem observações!";
-        $coleta->save();
-        $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
+        $dados = new ColetaExcremento();
+        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->data = ($request->data) ? $request->data : date("Y-m-d");
+        $dados->hora = ($request->hora) ? $request->hora : date("H:i");
+        $dados->litros = ($request->litros) ? $request->litros : 1;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem observações!";
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("coletaExcremento.create", ["dados" => $dados]);
+        }
+        $listaDados = ColetaExcremento::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro salvo!");
-        return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
+        return view("coletaExcremento.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -62,8 +67,8 @@ class ControlaColetaExcremento extends Controller
      */
     public function show($id)
     {
-        $coleta = ColetaExcremento::find($id);
-        return view("coletaExcremento.show", ["coleta" => $coleta]);
+        $dados = ColetaExcremento::find($id);
+        return view("coletaExcremento.show", ["dados" => $dados]);
     }
 
     /**
@@ -74,8 +79,8 @@ class ControlaColetaExcremento extends Controller
      */
     public function edit($id)
     {
-        $coleta = ColetaExcremento::find($id);
-        return view("coletaExcremento.edit", ["coleta" => $coleta]);
+        $dados = ColetaExcremento::find($id);
+        return view("coletaExcremento.edit", ["dados" => $dados]);
     }
 
     /**
@@ -87,16 +92,25 @@ class ControlaColetaExcremento extends Controller
      */
     public function update(Request $request, $id)
     {
-        $coleta = ColetaExcremento::find($id);
-        $coleta->id_usuario = session()->get("usuario")->id;
-        $coleta->data = ($request->data) ? $request->data : date("Y-m-d");
-        $coleta->hora = ($request->hora) ? $request->hora : date("H:i");
-        $coleta->litros = ($request->litros) ? $request->litros : 1;
-        $coleta->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
-        $coleta->save();
-        $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
+        $dados = ColetaExcremento::find($id);
+        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->data = ($request->data) ? $request->data : date("Y-m-d");
+        $dados->hora = ($request->hora) ? $request->hora : date("H:i");
+        $dados->litros = ($request->litros) ? $request->litros : 1;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("coletaExcremento.create", ["dados" => $dados]);
+        }
+        $listaDados = ColetaExcremento::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro alterado!");
-        return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
+        return view("coletaExcremento.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -107,12 +121,20 @@ class ControlaColetaExcremento extends Controller
      */
     public function destroy($id)
     {
-        $coleta = ColetaExcremento::find($id);
-        $coleta->ativo = 0;
-        $coleta->save();
-        session()->put("info", "Registro removido!");
-        $listaColetas = ColetaExcremento::all()->where("ativo", "!=", 0);
-        return view("coletaExcremento.index", ["listaColetas" => $listaColetas]);
+        $dados = ColetaExcremento::find($id);
+        $dados->ativo = 0;
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+            session()->put("info", "Registro removido!");
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+        }
+        $listaDados = ColetaExcremento::all()->where("ativo", "!=", 0);
+        return view("coletaExcremento.index", ["listaDados" => $listaDados]);
     }
 
 }

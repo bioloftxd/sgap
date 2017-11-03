@@ -55,7 +55,9 @@
                                 @endphp
 
                                 <td>{{$data}} {{$hora}} h</td>
-                                <td>{{number_format($linha->litros,1,',','')}} L</td>
+                                <td>Tenho que pensar...</td>
+                                <td>{{number_format($linha->quantidade_alimento,1,',','')}} L</td>
+                                <td>{{$linha->tipo_racao->tipo}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                                 <td>

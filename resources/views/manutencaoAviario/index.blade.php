@@ -45,7 +45,7 @@
                         </thead>
 
                         <tbody>
-                        @foreach($listaManutencoes as $linha)
+                        @foreach($listaDados as $linha)
                             <tr>
 
                                 @php

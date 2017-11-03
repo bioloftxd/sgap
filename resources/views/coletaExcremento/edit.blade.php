@@ -10,7 +10,7 @@
 
         <div class="mdl-cell mdl-cell--11-col">
 
-            <form method="POST" action="{{action('ControlaColetaExcremento@update',["id"=>$coleta->id])}}">
+            <form method="POST" action="{{action('ControlaColetaExcremento@update',["id"=>$dados->id])}}">
                 {{csrf_field()}}
                 {{method_field("PUT")}}
 
@@ -28,21 +28,21 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-phone mdl-cell--1-col-tablet">
                         <input class="mdl-textfield__input" type="number" id="litros" name="litros"
-                               value="{{$coleta->litros}}" step="0.01">
+                               value="{{$dados->litros}}" step="0.01">
                         <label class="mdl-textfield__label" for="hora">Litros</label>
                     </div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--6-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
-                        <input class="mdl-textfield__input" type="date" id="data" name="data" value="{{$coleta->data}}">
+                        <input class="mdl-textfield__input" type="date" id="data" name="data" value="{{$dados->data}}">
                         <label class=" mdl-textfield__label" for="data">Data</label>
                     </div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop mdl-cell--1-col-phone mdl-cell--2-col-tablet">
-                        <input class="mdl-textfield__input" type="time" id="hora" name="hora" value="{{$coleta->hora}}">
+                        <input class="mdl-textfield__input" type="time" id="hora" name="hora" value="{{$dados->hora}}">
                         <label class="mdl-textfield__label" for="hora">Hora</label>
                     </div>
 
@@ -56,7 +56,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
-                                  name="observacoes">{{$coleta->observacoes}}</textarea>
+                                  name="observacoes">{{$dados->observacoes}}</textarea>
                         <label class="mdl-textfield__label" for="observacoes">Observações</label>
                     </div>
 

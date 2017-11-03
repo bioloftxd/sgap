@@ -8,6 +8,8 @@
         date_default_timezone_set("America/Campo_Grande");
     @endphp
 
+    <link rel="stylesheet" href="/css/select.css"/>
+
     <div class="mdl-grid" xmlns="http://www.w3.org/1999/html">
 
         <div class="mdl-layout-spacer"></div>
@@ -35,21 +37,26 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
-                        <input class="mdl-textfield__input" type="date" id="data" name="data" value="{{date("Y-m-d")}}">
+                        <input class="mdl-textfield__input" type="date" id="data" name="data"
+                               @isset($alimentacao)value="{{$alimentacao->data}}" @endisset
+                               @empty($alimentacao)value="{{date("Y-m-d")}}"@endempty >
                         <label class=" mdl-textfield__label" for="data">Data</label>
                     </div>
 
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
-                        <input class="mdl-textfield__input" type="time" id="hora" name="hora" value="{{date("H:i")}}">
+                        <input class="mdl-textfield__input" type="time" id="hora" name="hora"
+                               @isset($alimentacao)value="{{$alimentacao->hora}}" @endisset
+                               @empty($alimentacao)value="{{date("H:i")}}"@endempty>
                         <label class="mdl-textfield__label" for="hora">Hora</label>
                     </div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="number" id="quantidade_alimento"
                                name="quantidade_alimento"
-                               value="1">
+                               @isset($alimentacao)value="{{$alimentacao->quantidade_alimento}}" @endisset
+                               @empty($alimentacao)value="1"@endempty>
                         <label class="mdl-textfield__label" for="quantidade_alimento">Quatidade alimento (Kg)</label>
                     </div>
 
@@ -73,7 +80,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
-                                  name="observacoes"></textarea>
+                                  name="observacoes">@isset($alimentacao){{$alimentacao->observacoes}}@endisset</textarea>
                         <label class="mdl-textfield__label" for="observacoes">Observações</label>
                     </div>
 

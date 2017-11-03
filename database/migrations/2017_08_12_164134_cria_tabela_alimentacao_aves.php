@@ -11,7 +11,6 @@ class CriaTabelaAlimentacaoAves extends Migration {
             $table->increments("id"); //Id de cadastro
             $table->date("data"); //Data de alimentação
             $table->time("hora"); //Hora de alimentação
-            $table->bigInteger("numero_gaiola"); //Número de gaiolas que receberam alimento
             $table->decimal("quantidade_alimento", 15, 2); //Quantidade de alimento distribuido
             $table->integer("id_tipo_racao")->unsigned(); //Tipo de alimento distribuido
             $table->foreign("id_tipo_racao")->references("id")->on("tipo_racao");
