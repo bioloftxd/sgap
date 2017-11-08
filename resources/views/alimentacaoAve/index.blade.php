@@ -44,7 +44,7 @@
                         </thead>
                         <tbody>
 
-                        @foreach($listaAlimentacao as $linha)
+                        @foreach($listaDados as $linha)
                             <tr>
 
                                 @php

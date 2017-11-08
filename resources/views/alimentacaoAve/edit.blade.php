@@ -16,7 +16,7 @@
 
         <div class="mdl-cell mdl-cell--11-col">
 
-            <form method="POST" action="{{action('ControlaAlimentacao@update',["id"=>$alimentacao->id])}}">
+            <form method="POST" action="{{action('ControlaAlimentacao@update',["id"=>$dados->id])}}">
                 {{method_field("PUT")}}
                 {{csrf_field()}}
 
@@ -39,7 +39,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="date" id="data" name="data"
-                               value="{{$alimentacao->data}}">
+                               value="{{$dados->data}}">
                         <label class=" mdl-textfield__label" for="data">Data</label>
                     </div>
 
@@ -47,14 +47,14 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
                         <input class="mdl-textfield__input" type="time" id="hora" name="hora"
-                               value="{{$alimentacao->hora}}">
+                               value="{{$dados->hora}}">
                         <label class="mdl-textfield__label" for="hora">Hora</label>
                     </div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="number" id="quantidade_alimento"
                                name="quantidade_alimento"
-                               value="{{$alimentacao->quantidade_alimento}}">
+                               value="{{$dados->quantidade_alimento}}">
                         <label class="mdl-textfield__label" for="quantidade_alimento">Quatidade alimento (Kg)</label>
                     </div>
 
@@ -62,8 +62,8 @@
 
                     <select class="form-control mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
                             name="id_tipo_racao" id="id_tipo_racao">
-                        @foreach($listaTipoRacao as $linha)
-                            @if($linha->id == $alimentacao->id_tipo_racao)
+                        @foreach($listaDados as $linha)
+                            @if($linha->id == $dados->id_tipo_racao)
                                 <option value="{{$linha->id}}" selected>{{$linha->tipo}}</option>
                             @else
                                 <option value="{{$linha->id}}">{{$linha->tipo}}</option>
@@ -81,7 +81,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
-                                  name="observacoes">{{$alimentacao->observacoes}}</textarea>
+                                  name="observacoes">{{$dados->observacoes}}</textarea>
                         <label class="mdl-textfield__label" for="observacoes">Observações</label>
                     </div>
 

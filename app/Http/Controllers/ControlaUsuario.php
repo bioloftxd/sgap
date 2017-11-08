@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use \Illuminate\Support\Facades\Session;
 use App\Usuario;
-use App\Funcao;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class ControlaUsuario extends Controller
 {
@@ -44,7 +44,6 @@ class ControlaUsuario extends Controller
     {
         $listaUsuarios = Usuario::all();
         $usuario = new Usuario;
-
         $usuario->nome = $dados->get("nome");
         $usuario->senha = md5($dados->get("senha"));
         $usuario->usuario = strtolower($dados->get("usuario"));
@@ -53,20 +52,26 @@ class ControlaUsuario extends Controller
             session()->put("info", "As senhas não coincidem!");
             return view("usuario.create", ["usuario" => $usuario]);
         }
-
         if ($dados->senha == null && $dados->senhaConfirma == null) {
             session()->put("info", "Campo de senha obrigatório!");
             return view("usuario.create", ["usuario" => $usuario]);
         }
-
         foreach ($listaUsuarios as $usuarioCadastrado) {
-            if ($usuarioCadastrado->usuario == $usuario->usuario) {
+            if ($usuarioCadastrado->usuario == $dados->usuario) {
                 session()->put("info", "Nome de usuário já utilizado!");
                 return back();
             }
         }
-
-        $usuario->save();
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("vendaOvo.create", ["dados" => $dados]);
+        }
         session()->put("info", "Registro salvo!");
         return redirect()->action("ControlaUsuario@index");
     }

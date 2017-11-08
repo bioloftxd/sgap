@@ -104,11 +104,11 @@ class ControlaManutencaoAviario extends Controller
         $usuarioVerifica = Usuario::find($request->id_usuario_verifica);
         $usuarioResolve = Usuario::find($request->id_usuario_resolve);
         if ($usuarioVerifica == null) {
-            session()->put("info", "Usuário que identificador inexistente!");
+            session()->put("info", "Usuário identificador inexistente!");
             return back();
         }
         if ($usuarioResolve == null) {
-            session()->put("info", "Usuário que resolutor inexistente!");
+            session()->put("info", "Usuário resolutor inexistente!");
             return back();
         }
         $dados->data_verifica = ($request->data_verifica) ? $request->data_verifica : $dados->data_verifica;

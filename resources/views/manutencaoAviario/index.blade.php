@@ -56,20 +56,25 @@
                                 @endphp
 
                                 <td>{{$dataOcorrencia}}</td>
+
                                 @if($dataResolução == "11/09/2001")
-                                    <td>Não Resolvido</td>
+                                    <td>-</td>
                                 @else
                                     <td>{{$dataResolução}}</td>
                                 @endif
+
                                 <td>{{$linha->usuarioVerifica->nome}}</td>
+
                                 @if($linha->id_usuario_resolve == 0)
-                                    <td>Não Resolvido</td>
+                                    <td>-</td>
                                 @else
                                     <td>{{$linha->usuarioResolve->nome}}</td>
                                 @endif
+
                                 <td>{{$linha->ocorrencia}}</td>
+
                                 @if($linha->resolvido==0)
-                                    <td>Não Resolvido</td>
+                                    <td>-</td>
                                 @else
                                     <td>{{$linha->resolucao}}</td>
                                 @endif

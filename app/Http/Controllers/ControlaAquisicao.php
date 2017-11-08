@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\AquisicaoAve;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Mockery\Exception;
 
 class ControlaAquisicao extends Controller
 {
@@ -16,8 +15,8 @@ class ControlaAquisicao extends Controller
      */
     public function index()
     {
-        $listaAquisicao = AquisicaoAve::all()->where("ativo", "!=", 0);
-        return view("aquisicaoAve.index", ["listaAquisicao" => $listaAquisicao]);
+        $listaDados = AquisicaoAve::all()->where("ativo", "!=", 0);
+        return view("aquisicaoAve.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -38,7 +37,19 @@ class ControlaAquisicao extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("aquisicaoAve.create", ["dados" => $dados]);
+        }
+        $listaDados = AquisicaoAve::all()->where("ativo", "!=", 0);
+        session()->put("info", "Registro Salvo!");
+        return view("aquisicaoAve.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -49,8 +60,8 @@ class ControlaAquisicao extends Controller
      */
     public function show($id)
     {
-        $aquisicao = AquisicaoAve::find($id);
-        return view("aquisicaoAve.show", ["aquisicao" => $aquisicao]);
+        $dados = AquisicaoAve::find($id);
+        return view("aquisicaoAve.show", ["dados" => $dados]);
     }
 
     /**
@@ -61,8 +72,8 @@ class ControlaAquisicao extends Controller
      */
     public function edit($id)
     {
-        $aquisicao = AquisicaoAve::find($id);
-        return view("aquisicao.show", ["aquisicao" => $aquisicao]);
+        $dados = AquisicaoAve::find($id);
+        return view("aquisicaoAve.show", ["dados" => $dados]);
     }
 
     /**
@@ -74,7 +85,19 @@ class ControlaAquisicao extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("aquisicaoAve.edit", ["dados" => $dados]);
+        }
+        $listaDados = AquisicaoAve::all()->where("ativo", "!=", 0);
+        session()->put("info", "Registro alterado!");
+        return view("aquisicaoAve.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -85,22 +108,21 @@ class ControlaAquisicao extends Controller
      */
     public function destroy($id)
     {
-        $aquisicao = AquisicaoAve::find($id);
-        $aquisicao->ativo = 0;
+        $dados = AquisicaoAve::find($id);
+        $dados->ativo = 0;
         DB::beginTransaction();
         try {
-            $aquisicao->save();
+            $dados->save();
             DB::commit();
+            session()->put("info", "Registro Removido!");
         } catch (\Throwable $e) {
             DB::rollback();
-            session()->put("info", "Erro - $e !");
-            $listaAquisicao = AquisicaoAve::all()->where("ativo", "!=", 0);
-            return view("aquisicaoAve.index", ["listaAquisicao" => $listaAquisicao]);
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar!($erro)");
+            $listaDados = AquisicaoAve::all()->where("ativo", "!=", 0);
+            return view("aquisicaoAve.index", ["listaDados" => $listaDados]);
         }
-
-
-        session()->put("info", "Registro Removido!");
-        $listaAquisicao = AquisicaoAve::all()->where("ativo", "!=", 0);
-        return view("aquisicaoAve.index", ["listaAquisicao" => $listaAquisicao]);
+        $listaDados = AquisicaoAve::all()->where("ativo", "!=", 0);
+        return view("aquisicaoAve.index", ["listaDados" => $listaDados]);
     }
 }

@@ -119,7 +119,7 @@ class ControlaVentilacao extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("ventilacao.create", ["dados" => $dados]);
+            return view("ventilacao.edit", ["dados" => $dados]);
         }
         $listaDados = Ventilacao::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro alterado!");

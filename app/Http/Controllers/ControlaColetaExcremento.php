@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\ColetaExcremento;
-use App\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -106,7 +105,7 @@ class ControlaColetaExcremento extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("coletaExcremento.create", ["dados" => $dados]);
+            return view("coletaExcremento.edit", ["dados" => $dados]);
         }
         $listaDados = ColetaExcremento::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro alterado!");
@@ -136,5 +135,4 @@ class ControlaColetaExcremento extends Controller
         $listaDados = ColetaExcremento::all()->where("ativo", "!=", 0);
         return view("coletaExcremento.index", ["listaDados" => $listaDados]);
     }
-
 }
