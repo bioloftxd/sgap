@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Funcao;
 use App\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,21 +41,28 @@ class ControlaUsuario extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $dados)
+    public function store(Request $request)
     {
         $listaUsuarios = Usuario::all();
-        $usuario = new Usuario;
-        $usuario->nome = $dados->get("nome");
-        $usuario->senha = md5($dados->get("senha"));
-        $usuario->usuario = strtolower($dados->get("usuario"));
+        $dados = new Usuario;
+        $dados->nome = $request->nome;
+        $dados->senha = md5($request->senha);
+        $dados->usuario = strtolower($request->usuario);
 
-        if ($dados->senha != $dados->senhaConfirma) {
+        if ($request->senha != $request->senhaConfirma) {
             session()->put("info", "As senhas não coincidem!");
-            return view("usuario.create", ["usuario" => $usuario]);
+            return view("usuario.create", ["dados" => $dados]);
         }
-        if ($dados->senha == null && $dados->senhaConfirma == null) {
+        if ($request->senha == null || $request->senhaConfirma == null) {
             session()->put("info", "Campo de senha obrigatório!");
-            return view("usuario.create", ["usuario" => $usuario]);
+            return view("usuario.create", ["dados" => $dados]);
+        }
+        if (sizeof($listaUsuarios) == 0) {
+            $funcao = Funcao::find(1);
+            $dados->funcao()->associate($funcao);
+        } else {
+            $funcao = Funcao::find(2);
+            $dados->funcao()->associate($funcao);
         }
         foreach ($listaUsuarios as $usuarioCadastrado) {
             if ($usuarioCadastrado->usuario == $dados->usuario) {
@@ -70,7 +78,7 @@ class ControlaUsuario extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("vendaOvo.create", ["dados" => $dados]);
+            return view("usuario.create", ["dados" => $dados]);
         }
         session()->put("info", "Registro salvo!");
         return redirect()->action("ControlaUsuario@index");

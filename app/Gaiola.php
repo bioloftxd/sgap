@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Gaiola extends Model {
+class Gaiola extends Model
+{
 
     protected $fillable = [
         "id",

@@ -27,7 +27,7 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop">
-                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" value="{{$usuario->nome}}"
+                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" autofocus value="{{$usuario->nome}}"
                                name="nome">
                         <label class="mdl-textfield__label" for="nomeCompleto">Nome Completo</label>
                     </div>

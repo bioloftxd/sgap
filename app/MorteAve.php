@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MorteAve extends Model {
+class MorteAve extends Model
+{
 
     protected $fillable = [
         "id",
@@ -19,11 +20,13 @@ class MorteAve extends Model {
     ];
     protected $table = "morte_ave";
 
-    public function usuario() {
-        return $this->hasOne(Usuario::class, "id", "id_usuario");
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, "id", "id_usuario");
     }
 
-    public function gaiola() {
+    public function gaiola()
+    {
         return $this->hasMany(Gaiola::class, "id", "id_gaiola");
     }
 

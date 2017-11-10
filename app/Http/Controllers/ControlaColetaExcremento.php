@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ColetaExcremento;
+use App\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,8 @@ class ControlaColetaExcremento extends Controller
      */
     public function create()
     {
-        return view("coletaExcremento.create");
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("coletaExcremento.create", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -38,7 +40,7 @@ class ControlaColetaExcremento extends Controller
     public function store(Request $request)
     {
         $dados = new ColetaExcremento();
-        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
         $dados->data = ($request->data) ? $request->data : date("Y-m-d");
         $dados->hora = ($request->hora) ? $request->hora : date("H:i");
         $dados->litros = ($request->litros) ? $request->litros : 1;
@@ -79,7 +81,8 @@ class ControlaColetaExcremento extends Controller
     public function edit($id)
     {
         $dados = ColetaExcremento::find($id);
-        return view("coletaExcremento.edit", ["dados" => $dados]);
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("coletaExcremento.edit", ["dados" => $dados, "listaDados" => $listaDados]);
     }
 
     /**
@@ -92,7 +95,7 @@ class ControlaColetaExcremento extends Controller
     public function update(Request $request, $id)
     {
         $dados = ColetaExcremento::find($id);
-        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
         $dados->data = ($request->data) ? $request->data : date("Y-m-d");
         $dados->hora = ($request->hora) ? $request->hora : date("H:i");
         $dados->litros = ($request->litros) ? $request->litros : 1;

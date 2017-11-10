@@ -51,16 +51,20 @@
                                 @php
                                     $dataOcorrencia = DateTime::createFromFormat('Y-m-d', $linha->data_verifica);
                                     $dataOcorrencia = date_format($dataOcorrencia, 'd/m/Y');
+                                    $horaOcorrencia = DateTime::createFromFormat('H:i:s',$linha->hora_verifica);
+                                    $horaOcorrencia = date_format($horaOcorrencia, 'H:i');
                                     $dataResolução = DateTime::createFromFormat('Y-m-d', $linha->data_resolve);
                                     $dataResolução = date_format($dataResolução, 'd/m/Y');
+                                    $horaResolução = DateTime::createFromFormat('H:i:s',$linha->hora_resolve);
+                                    $horaResolução = date_format($horaResolução, 'H:i');
                                 @endphp
 
-                                <td>{{$dataOcorrencia}}</td>
+                                <td>{{$dataOcorrencia}} {{$horaOcorrencia}} h</td>
 
                                 @if($dataResolução == "11/09/2001")
                                     <td>-</td>
                                 @else
-                                    <td>{{$dataResolução}}</td>
+                                    <td>{{$dataResolução}} {{$horaResolução}}h</td>
                                 @endif
 
                                 <td>{{$linha->usuarioVerifica->nome}}</td>

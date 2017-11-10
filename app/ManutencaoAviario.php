@@ -25,12 +25,12 @@ class ManutencaoAviario extends Model
 
     public function usuarioVerifica()
     {
-        return $this->hasOne(Usuario::class, "id", "id_usuario_verifica");
+        return $this->belongsTo(Usuario::class, "id_usuario_verifica", "id");
     }
 
     public function usuarioResolve()
     {
-        return $this->hasOne(Usuario::class, "id", "id_usuario_resolve");
+        return $this->belongsTo(Usuario::class, "id_usuario_resolve", "id");
     }
 
 }

@@ -4,10 +4,6 @@
 
 @section("content")
 
-    @php
-        date_default_timezone_set("America/Campo_Grande");
-    @endphp
-
     <link rel="stylesheet" href="/css/select.css"/>
 
     <div class="mdl-grid" xmlns="http://www.w3.org/1999/html">
@@ -38,7 +34,7 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
-                        <input class="mdl-textfield__input" type="date" id="data" name="data"
+                        <input class="mdl-textfield__input" type="date" autofocus id="data" name="data"
                                value="{{$dados->data}}">
                         <label class=" mdl-textfield__label" for="data">Data</label>
                     </div>

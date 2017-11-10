@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Usuario extends Model {
+class Usuario extends Model
+{
 
     protected $fillable = [
         "id",
@@ -18,8 +19,8 @@ class Usuario extends Model {
     ];
     protected $table = "usuario";
 
-    public function funcao() {
-        return $this->hasOne(Funcao::class, "id", "id_funcao");
+    public function funcao()
+    {
+        return $this->belongsTo(Funcao::class, "id_funcao", "id");
     }
-
 }

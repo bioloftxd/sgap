@@ -4,9 +4,7 @@
 
 @section("content")
 
-    @php
-        date_default_timezone_set("America/Campo_Grande");
-    @endphp
+    <link rel="stylesheet" href="/css/select.css"/>
 
     <div class="mdl-grid">
 
@@ -30,7 +28,7 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-phone mdl-cell--1-col-tablet">
-                        <input class="mdl-textfield__input" type="number" id="litros" name="litros"
+                        <input class="mdl-textfield__input" type="number" id="litros" autofocus name="litros"
                                @isset($dados)value="{{$dados->litros}}" @endisset
                                @empty($dados)value="1" @endempty
                                step="0.01">
@@ -62,11 +60,19 @@
 
                     <div class="mdl-layout-spacer"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--7-col-desktop mdl-cell--4-col-phone mdl-cell--7-col-tablet">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
                                   name="observacoes">@isset($dados){{$dados->observacoes}}@endisset</textarea>
                         <label class="mdl-textfield__label" for="observacoes">Observações</label>
                     </div>
+
+                    <select class="form-control mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-phone mdl-cell--7-col-tablet"
+                            name="id_usuario" id="id_usuario">
+                        <option selected disabled value="null">Usuário Responsável</option>
+                        @foreach($listaDados as $linha)
+                            <option value="{{$linha->id}}">{{$linha->nome}}</option>
+                        @endforeach
+                    </select>
 
                     <div class="mdl-layout-spacer"></div>
 

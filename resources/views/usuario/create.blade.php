@@ -27,8 +27,8 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop">
-                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" name="nome"
-                               value="@isset($usuario) {{$usuario->nome}} @endisset">
+                        <input class="mdl-textfield__input" type="text" id="nomeCompleto" autofocus name="nome"
+                               value="@isset($dados){{$dados->nome}}@endisset">
                         <label class="mdl-textfield__label" for="nomeCompleto">Nome Completo</label>
                     </div>
 
@@ -36,7 +36,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop">
                         <input class="mdl-textfield__input" type="text" id="nomeUsuario" name="usuario"
-                               value="@isset($usuario) {{$usuario->usuario}} @endisset">
+                               value="@isset($dados){{$dados->usuario}}@endisset">
                         <label class=" mdl-textfield__label" for="nomeUsuario">Nome de Usuário</label>
                     </div>
 

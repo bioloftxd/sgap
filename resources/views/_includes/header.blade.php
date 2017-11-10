@@ -12,7 +12,7 @@
             </nav>
 
             <a id="usuario" class="mdl-navigation__link">
-                Olá {{explode(" ", strtoupper(session()->get("usuario")->nome))[0]}} !
+                Olá {{explode(" ", session()->get("usuario")->nome)[0]}} !
                 <i class="material-icons">keyboard_arrow_down</i>
             </a>
 

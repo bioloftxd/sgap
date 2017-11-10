@@ -27,7 +27,8 @@ class ControlaManutencaoAviario extends Controller
      */
     public function create()
     {
-        return view("manutencaoAviario.create");
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("manutencaoAviario.create", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -39,7 +40,7 @@ class ControlaManutencaoAviario extends Controller
     public function store(Request $request)
     {
         $dados = new ManutencaoAviario();
-        $dados->id_usuario_verifica = session()->get("usuario")->id;
+        $dados->id_usuario_verifica = ($request->id_usuario_verifica) ? $request->id_usuario_verifica : session()->get("usuario")->id;
         $dados->id_usuario_resolve = 0;
         $dados->data_verifica = ($request->data_verifica) ? $request->data_verifica : date("Y-m-d");
         $dados->hora_verifica = ($request->hora_verifica) ? $request->hora_verifica : date("H:i");
@@ -49,7 +50,8 @@ class ControlaManutencaoAviario extends Controller
         $dados->ocorrencia = ($request->ocorrencia) ? $request->ocorrencia : "Sem Observações!";
         if ($request->ocorrencia == null) {
             session()->put("info", "Insira a ocorrência!");
-            return view("manutencaoAviario.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("manutencaoAviario.create", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         DB::beginTransaction();
         try {
@@ -59,7 +61,8 @@ class ControlaManutencaoAviario extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("manutencaoAviario.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("manutencaoAviario.create", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         $listaDados = ManutencaoAviario::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro salvo!");
@@ -87,8 +90,8 @@ class ControlaManutencaoAviario extends Controller
     public function edit($id)
     {
         $dados = ManutencaoAviario::find($id);
-        $usuarios = Usuario::all()->where("ativo", "!=", 0);
-        return view("manutencaoAviario.edit", ["dados" => $dados, "usuarios" => $usuarios]);
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("manutencaoAviario.edit", ["dados" => $dados, "listaDados" => $listaDados]);
     }
 
     /**

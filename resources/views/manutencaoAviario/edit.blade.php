@@ -4,10 +4,6 @@
 
 @section("content")
 
-    @php
-        date_default_timezone_set("America/Campo_Grande");
-    @endphp
-
     <link rel="stylesheet" href="/css/select.css"/>
 
     <div class="mdl-grid">
@@ -33,7 +29,8 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-phone mdl-cell--2-col-tablet">
-                        <input class="mdl-textfield__input" type="number" id="numero_relatorio" name="numero_relatorio"
+                        <input class="mdl-textfield__input" type="number" id="numero_relatorio" autofocus
+                               name="numero_relatorio"
                                value="{{$dados->numero_relatorio}}">
                         <label class="mdl-textfield__label" for="numero_relatorio">Nº Relatório</label>
                     </div>
@@ -78,10 +75,18 @@
 
                     <div class="mdl-layout-spacer"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop mdl-cell--4-col-phone mdl-cell--3-col-tablet">
                         <textarea class="mdl-textfield__input" type="text" id="ocorrencia"
                                   name="ocorrencia">{{$dados->ocorrencia}}</textarea>
                         <label class="mdl-textfield__label" for="ocorrencia">Descrição da Ocorrência</label>
+                    </div>
+
+                    <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet"></div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop mdl-cell--4-col-phone mdl-cell--3-col-tablet">
+                        <textarea class="mdl-textfield__input" type="text" id="resolucao"
+                                  name="resolucao">{{$dados->resolucao}}</textarea>
+                        <label class="mdl-textfield__label" for="resolucao">Descrição da Resolução</label>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
@@ -92,13 +97,7 @@
 
                     <div class="mdl-layout-spacer"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col-desktop">
-                        <textarea class="mdl-textfield__input" type="text" id="resolucao"
-                                  name="resolucao">{{$dados->resolucao}}</textarea>
-                        <label class="mdl-textfield__label" for="resolucao">Descrição da Resolução</label>
-                    </div>
-
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--5-col-desktop">
                         <table>
                             <tr>
                                 <td>Status</td>
@@ -126,36 +125,30 @@
                         </table>
                     </div>
 
-                    <div class="mdl-layout-spacer"></div>
+                    <div class="mdl-cell--2-col-tablet"></div>
 
-                </div>
-
-                <div class="mdl-grid">
-
-                    <div class="mdl-layout-spacer"></div>
-
-                    <select class="form-control mdl-cell mdl-cell--5-col-desktop mdl-cell--4-col-phone mdl-cell--3-col-tablet"
+                    <select class="form-control mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-phone mdl-cell--3-col-tablet"
                             name="id_usuario_verifica" id="id_usuario_verifica">
                         <option selected disabled value="null">Usuário que Verificou Ocorrência</option>
-                        @foreach($usuarios as $usuario)
-                            @if($usuario->id == $dados->id_usuario_verifica)
-                                <option value="{{$usuario->id}}" selected>{{$usuario->nome}}</option>
+                        @foreach($listaDados as $linha)
+                            @if($linha->id == $dados->id_usuario_verifica)
+                                <option value="{{$linha->id}}" selected>{{$linha->nome}}</option>
                             @else
-                                <option value="{{$usuario->id}}">{{$usuario->nome}}</option>
+                                <option value="{{$linha->id}}">{{$linha->nome}}</option>
                             @endif
                         @endforeach
                     </select>
 
-                    <div class="mdl-layout--large-screen-only mdl-cell--1-col-desktop"></div>
+                    <div class="mdl-cell--1-col-tablet"></div>
 
-                    <select class="form-control mdl-cell mdl-cell--5-col-desktop mdl-cell--4-col-phone mdl-cell--3-col-tablet"
+                    <select class="form-control mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-phone mdl-cell--3-col-tablet"
                             name="id_usuario_resolve" id="id_usuario_resolve">
                         <option selected disabled value="null">Usuário que Resolucionou Ocorrência</option>
-                        @foreach($usuarios as $usuario)
-                            @if($usuario->id == $dados->id_usuario_resolve)
-                                <option value="{{$usuario->id}}" selected>{{$usuario->nome}}</option>
+                        @foreach($listaDados as $linha)
+                            @if($linha->id == $dados->id_usuario_resolve)
+                                <option value="{{$linha->id}}" selected>{{$linha->nome}}</option>
                             @else
-                                <option value="{{$usuario->id}}">{{$usuario->nome}}</option>
+                                <option value="{{$linha->id}}">{{$linha->nome}}</option>
                             @endif
                         @endforeach
                     </select>

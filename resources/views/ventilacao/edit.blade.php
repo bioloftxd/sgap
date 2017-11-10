@@ -27,7 +27,7 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
-                        <input class="mdl-textfield__input" type="date" id="data_abertura" name="data_abertura"
+                        <input class="mdl-textfield__input" type="date" id="data_abertura" autofocus name="data_abertura"
                                value="{{$dados->data_abertura}}">
                         <label class=" mdl-textfield__label" for="data_abertura">Data Abertura</label>
                     </div>

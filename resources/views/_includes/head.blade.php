@@ -16,3 +16,7 @@
 <meta name="msapplication-navbutton-color" content="rgb(0, 0, 0)">
 
 <title>@yield('title') - SGAP</title>
+
+@php
+    date_default_timezone_set("America/Campo_Grande");
+@endphp
