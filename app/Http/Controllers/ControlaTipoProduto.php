@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Produto;
+use App\TipoProduto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,7 @@ class ControlaTipoProduto extends Controller
      */
     public function create()
     {
-        //
+        return view("tipoProduto.create");
     }
 
     /**
@@ -37,7 +38,19 @@ class ControlaTipoProduto extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::begginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("tipoProduto", ["dados" => $dados]);
+        }
+        $listaDados = TipoProduto::all()->where("ativo", "!=", 0);
+        session()->put("info", "Registro salvo!");
+        return view("tipoProduto.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -48,7 +61,8 @@ class ControlaTipoProduto extends Controller
      */
     public function show($id)
     {
-        //
+        $dados = TipoProduto::find($id);
+        return view("tipoProduto.show", ["dados" => $dados]);
     }
 
     /**
@@ -59,7 +73,8 @@ class ControlaTipoProduto extends Controller
      */
     public function edit($id)
     {
-        //
+        $dados = TipoProduto::find($id);
+        return view("tipoProduto.edit", ["dados" => $dados]);
     }
 
     /**
@@ -71,7 +86,19 @@ class ControlaTipoProduto extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::begginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+            return view("tipoProduto.edit", ["dados" => $dados]);
+        }
+        $listaDados = TipoProduto::all()->where("ativo", "!=", 0);
+        session()->put("info", "Registro alterado!");
+        return view("tipoProduto.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -82,6 +109,19 @@ class ControlaTipoProduto extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dados = TipoProduto::find($id);
+        $dados->ativo = 0;
+        DB::begginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+            session()->put("info", "Registro removido!");
+        } catch (\Throwable $e) {
+            DB::rollback();
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao salvar! ($erro)");
+        }
+        $listaDados = TipoProduto::all()->where("ativo", "!=", 0);
+        return view("tipoProduto.index", ["listaDados" => $listaDados]);
     }
 }

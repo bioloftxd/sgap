@@ -11,9 +11,15 @@ class Produto extends Model
         "id",
         "nome",
         "marca",
+        "id_tipo_produto",
         "observacoes",
         "ativo"
     ];
     protected $table = "produto";
+
+    public function tipoProduto()
+    {
+        return $this->belongsTo(TipoProduto::class, "id_tipo_produto", "id");
+    }
 
 }
