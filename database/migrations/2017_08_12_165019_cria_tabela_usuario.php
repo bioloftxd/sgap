@@ -16,9 +16,6 @@ class CriaTabelaUsuario extends Migration
             $table->string("senha"); //Senha de autenticação
             $table->integer("id_funcao")->unsigned(); //Id de função do usuário
             $table->foreign("id_funcao")->references("id")->on("funcao");
-            $table->timestamp("data_login")->default(date("Y-m-d H:i:s")); //Data de tentativa de autenticação;
-            $table->integer("tentativas")->default("0"); //Número de tentativas de autenticação 
-            //"UPDATE usuario SET tentativas = 0 WHERE hora < CURRENT_TIME;"
             $table->boolean("ativo")->default(1); //Exclusão simulada
             $table->timestamps();
         });

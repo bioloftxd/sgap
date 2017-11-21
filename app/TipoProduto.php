@@ -9,7 +9,6 @@ class TipoProduto extends Model
     protected $fillable = [
         "id",
         "tipo",
-        "observacoes",
         "ativo"
     ];
 

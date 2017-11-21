@@ -10,6 +10,7 @@ class Estoque extends Model {
         "id",
         "quantidade",
         "ativo",
+        "preco",
         "id_produto"
     ];
     protected $table = "estoque";

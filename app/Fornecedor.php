@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Fornecedor extends Model {
+class Fornecedor extends Model
+{
 
     protected $fillable = [
         "id",
@@ -12,5 +13,10 @@ class Fornecedor extends Model {
         "cpf_cnpj"
     ];
     protected $table = "fornecedor";
+
+    public function fornecimento()
+    {
+        return $this->belongsTo(Fornecimento::class, "id_fornecedor", "id");
+    }
 
 }

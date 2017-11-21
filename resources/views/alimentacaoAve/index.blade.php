@@ -33,7 +33,6 @@
                         <thead>
                         <tr>
                             <th>Data/Hora</th>
-                            <th>Gaiola</th>
                             <th>Quantidade Ração</th>
                             <th>Tipo Ração</th>
                             <th>Responsável</th>
@@ -55,9 +54,8 @@
                                 @endphp
 
                                 <td>{{$data}} {{$hora}} h</td>
-                                <td>Tenho que pensar...</td>
-                                <td>{{number_format($linha->quantidade_alimento,1,',','')}} L</td>
-                                <td>{{$linha->tipo_racao->tipo}}</td>
+                                <td>{{number_format($linha->quantidade_alimento,1,',','')}} Kg</td>
+                                <td>{{$linha->tipo_racao}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                                 <td>

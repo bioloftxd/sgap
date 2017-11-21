@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="/css/select.css"/>
 
-    <div class="mdl-grid" xmlns="http://www.w3.org/1999/html">
+    <div class="mdl-grid" >
 
         <div class="mdl-layout-spacer"></div>
 

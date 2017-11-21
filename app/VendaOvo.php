@@ -14,6 +14,7 @@ class VendaOvo extends Model
         "quantidade",
         "nome_comprador",
         "lote",
+        "preco",
         "id_tipo_embalagem",
         "id_usuario",
         "observacoes",

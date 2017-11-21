@@ -13,8 +13,7 @@ class CriaTabelaProduto extends Migration
             $table->increments('id'); //Id de cadastro
             $table->string("nome"); //Nome do produto
             $table->string("marca"); //Marca do produto
-            $table->integer("id_tipo_produto")->unsigned(); //Tipo de produto
-            $table->foreign("id_tipo_produto")->refences("id")->on("tipo_produto");
+            $table->string("tipo_produto"); //Tipo de produto
             $table->string("observacoes"); //Observações sobre produto
             $table->boolean("ativo")->default(1); //Exclusão simulada
             $table->timestamps();

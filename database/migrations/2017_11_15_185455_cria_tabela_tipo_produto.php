@@ -16,7 +16,6 @@ class CriaTabelaTipoProduto extends Migration
         Schema::create('TipoProduto', function (Blueprint $table) {
             $table->increments('id'); //Id de cadastro
             $table->string('tipo'); //Tipo de produto
-            $table->string('observacoes'); //Observações sobre o tipo de produto
             $table->boolean("ativo")->default(1); //Exclusão simulada
             $table->timestamps();
         });

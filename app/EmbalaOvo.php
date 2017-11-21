@@ -4,14 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmbalaOvo extends Model {
+class EmbalaOvo extends Model
+{
 
     protected $fillable = [
         "id",
         "data",
         "hora",
         "lote",
-        "quantidade",
+        "quantidade_embalada",
+        "quantidade_quebrada",
         "id_tipo_embalagem",
         "id_usuario",
         "observacoes",
@@ -19,11 +21,13 @@ class EmbalaOvo extends Model {
     ];
     protected $table = "embala_ovo";
 
-    public function usuario() {
+    public function usuario()
+    {
         return $this->hasOne(Usuario::class, "id", "id_usuario");
     }
 
-    public function tipo_embalagem() {
+    public function tipo_embalagem()
+    {
         return $this->hasOne(TipoEmbalagem::class, "id", "id_tipo_embalagem");
     }
 

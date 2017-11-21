@@ -20,6 +20,7 @@ class AquisicaoAve extends Model
         "raca",
         "vacinas",
         "idade",
+        "preco",
         "id_usuario",
         "observacoes",
         "ativo"

@@ -1,18 +1,18 @@
 @extends("_layouts.principal")
 
-@section("title", "EDITAR ALIMENTAÇÃO DAS AVES")
+@section("title", "EDITAR AQUISIÇÃO DE AVES")
 
 @section("content")
 
     <link rel="stylesheet" href="/css/select.css"/>
 
-    <div class="mdl-grid" xmlns="http://www.w3.org/1999/html">
+    <div class="mdl-grid">
 
         <div class="mdl-layout-spacer"></div>
 
         <div class="mdl-cell mdl-cell--11-col">
 
-            <form method="POST" action="{{action('ControlaAlimentacao@update',["id"=>$dados->id])}}">
+            <form method="POST" action="{{action('ControlaAquisicao@update',["id"=>$dados->id])}}">
                 {{method_field("PUT")}}
                 {{csrf_field()}}
 
@@ -20,10 +20,10 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-cell textoCentralizado mdl-layout--small-screen-only" style="white-space: nowrap">
-                        <h5>Editar Alimentação das Aves</h5>
+                        <h5>Editar Aquisição de Aves</h5>
                     </div>
                     <div class="mdl-cell textoCentralizado mdl-layout--large-screen-only">
-                        <h4>Editar Alimentação das Aves</h4>
+                        <h4>Editar Aquisição de Aves</h4>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>

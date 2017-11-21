@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="/css/select.css"/>
 
-    <div class="mdl-grid" xmlns="http://www.w3.org/1999/html">
+    <div class="mdl-grid">
 
         <div class="mdl-layout-spacer"></div>
 
@@ -57,14 +57,25 @@
                     <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
 
                     <select class="form-control mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
-                            name="id_tipo_racao" id="id_tipo_racao">
-                        @foreach($listaDados as $linha)
-                            @if($linha->id == $dados->id_tipo_racao)
-                                <option value="{{$linha->id}}" selected>{{$linha->tipo}}</option>
-                            @else
-                                <option value="{{$linha->id}}">{{$linha->tipo}}</option>
-                            @endif
-                        @endforeach
+                            name="tipo_racao" id="tipo_racao">
+                        <option value="Inicial"
+                                @isset($dados)@if($dados->tipo_racao == "Inicial") selected @endif @endisset>Inicial
+                        </option>
+                        <option value="Engorda"
+                                @isset($dados)@if($dados->tipo_racao == "Engorda") selected @endif @endisset>Engorda
+                        </option>
+                        <option value="Experimental"
+                                @isset($dados)@if($dados->tipo_racao == "Experimental") selected @endif @endisset>
+                            Experimental
+                        </option>
+                        <option value="Postura"
+                                @isset($dados)@if($dados->tipo_racao == "Postura") selected @endif @endisset>
+                            Postura
+                        </option>
+                        <option value="Recria"
+                                @isset($dados)@if($dados->tipo_racao == "Recria") selected @endif @endisset>
+                            Recria
+                        </option>
                     </select>
 
                     <div class="mdl-layout-spacer"></div>

@@ -13,8 +13,6 @@ class Usuario extends Model
         "usuario",
         "senha",
         "id_funcao",
-        "data_login",
-        "tentativas",
         "ativo"
     ];
     protected $table = "usuario";

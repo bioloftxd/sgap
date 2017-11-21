@@ -18,6 +18,7 @@ class CriaTabelaAquisicaoAves extends Migration {
             $table->bigInteger("quantidade_total"); //Quantidade de aves no transporte
             $table->bigInteger("quantidade_morta"); //Quantidade de aves mortas no transporte
             $table->string("raca"); //Raça de aves transportadas
+            $table->decimal("preco",15,2); //Preço total da aquisição
             $table->string("vacinas"); //Vacinas aplicadas nas aves
             $table->integer("idade"); //Vacinas aplicadas nas aves
             $table->integer("id_usuario")->unsigned(); //Usuário autenticado

@@ -4,18 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CriaTabelaAlimentacaoAves extends Migration {
+class CriaTabelaAlimentacaoAves extends Migration
+{
 
-    public function up() {
+    public function up()
+    {
         Schema::create("alimentacao_aves", function (Blueprint $table) {
             $table->increments("id"); //Id de cadastro
             $table->date("data"); //Data de alimentação
             $table->time("hora"); //Hora de alimentação
             $table->decimal("quantidade_alimento", 15, 2); //Quantidade de alimento distribuido
-            $table->integer("id_tipo_racao")->unsigned(); //Tipo de alimento distribuido
-            $table->foreign("id_tipo_racao")->references("id")->on("tipo_racao");
-            $table->integer("id_gaiola")->unsigned(); //Id da gaiola que recebeu alimento
-            $table->foreign("id_gaiola")->references("id")->on("gaiola");
+            $table->string("tipo_racao"); //Tipo de alimento distribuido
             $table->integer("id_usuario")->unsigned(); //Id de usuário autenticado
             $table->foreign("id_usuario")->references("id")->on("usuario");
             $table->string("observacoes"); //Observações sobre alimentação
@@ -24,7 +23,8 @@ class CriaTabelaAlimentacaoAves extends Migration {
         });
     }
 
-    public function down() {
+    public function down()
+    {
         Schema::dropIfExists("alimentacao_aves");
     }
 

@@ -11,9 +11,8 @@ class AlimentacaoAve extends Model
         "id",
         "data",
         "hora",
-        "id_gaiola",
         "quantidade_alimento",
-        "id_tipo_racao",
+        "tipo_racao",
         "id_usuario",
         "observacoes",
         "ativo"
@@ -23,16 +22,6 @@ class AlimentacaoAve extends Model
     public function usuario()
     {
         return $this->hasOne(Usuario::class, "id", "id_usuario");
-    }
-
-    public function tipo_racao()
-    {
-        return $this->hasOne(TipoRacao::class, "id", "id_tipo_racao");
-    }
-
-    public function gaiola()
-    {
-        return $this->hasMany(Gaiola::class, "id", "id_gaiola");
     }
 
 }

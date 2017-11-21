@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\AlimentacaoAve;
-use App\TipoRacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,8 +26,7 @@ class ControlaAlimentacao extends Controller
      */
     public function create()
     {
-        $listaDados = TipoRacao::all()->where("ativo", "!=", 0);
-        return view("alimentacaoAve.create", ["listaDados" => $listaDados]);
+        return view("alimentacaoAve.create");
     }
 
     /**
@@ -42,15 +40,13 @@ class ControlaAlimentacao extends Controller
         $dados = new AlimentacaoAve();
         $dados->data = ($request->data) ? $request->data : date("Y-m-d");
         $dados->hora = ($request->hora) ? $request->hora : date("H:i");
-        $dados->id_gaiola = ($request->id_gaiola) ? $request->id_gaiola : 0;
-        $dados->id_tipo_racao = ($request->id_tipo_racao) ? $request->id_tipo_racao : 0;
+        $dados->tipo_racao = ($request->tipo_racao) ? $request->tipo_racao : "-";
         $dados->id_usuario = session()->get("usuario")->id;
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
         $dados->quantidade_alimento = ($request->quantidade_alimento > 0) ? $request->quantidade_alimento : 1;
-        if ($request->id_tipo_racao == null) {
-            $listaDados = TipoRacao::all()->where("ativo", "!=", 0);
+        if ($request->tipo_racao == null) {
             session()->put("info", "Selecione o tipo de ração!");
-            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
+            return view("alimentacaoAve.create", ["dados" => $dados]);
         }
         DB::beginTransaction();
         try {
@@ -88,8 +84,7 @@ class ControlaAlimentacao extends Controller
     public function edit($id)
     {
         $dados = AlimentacaoAve::find($id);
-        $listaDados = TipoRacao::all()->where("ativo", "!=", 0);
-        return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados]);
+        return view("alimentacaoAve.edit", ["dados" => $dados]);
     }
 
     /**
@@ -105,14 +100,13 @@ class ControlaAlimentacao extends Controller
         $dados->data = ($request->data) ? $request->data : $dados->data;
         $dados->hora = ($request->hora) ? $request->hora : $dados->hora;
         $dados->id_gaiola = ($request->id_gaiola) ? $request->id_gaiola : $dados->id_gaiola;
-        $dados->id_tipo_racao = ($request->id_tipo_racao) ? $request->id_tipo_racao : $dados->id_tipo_racao;
+        $dados->tipo_racao = ($request->tipo_racao) ? $request->tipo_racao : $dados->tipo_racao;
         $dados->id_usuario = session()->get("usuario")->id;
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
         $dados->quantidade_alimento = ($request->quantidade_alimento > 0) ? $request->quantidade_alimento : $dados->quantidade_alimento;
-        $listaDados = TipoRacao::all()->where("ativo", "!=", 0);
-        if ($request->id_tipo_racao == null) {
+        if ($request->tipo_racao == null) {
             session()->put("info", "Selecione o tipo de ração!");
-            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
+            return view("alimentacaoAve.create", ["dados" => $dados]);
         }
         DB::beginTransaction();
         try {
