@@ -32,20 +32,26 @@
                     <table id="tabela" class="display">
                         <thead>
                         <tr>
-                            <th>Data/Hora Chegada</th>
-                            <th>Data/Hora Saida</th>
-                            <th>Quantidade</th>
+                            <th>Data/Hora Recebimento</th>
+                            <th>Data/Hora Saída</th>
+                            <th>Nº GTA</th>
+                            <th>Nº NF</th>
+                            <th>Total de Aves</th>
+                            <th>Aves Mortas</th>
+                            <th>Raça</th>
+                            <th>Vacinas</th>
+                            <th>Idade</th>
+                            <th>Preço</th>
                             <th>Responsável</th>
                             <th>Observações</th>
-                            <th>Editar</th>
-                            <th>Remover</th>
+                            <th data-orderable="false">Editar</th>
+                            <th data-orderable="false">Remover</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         @foreach($listaDados as $linha)
                             <tr>
-
                                 @php
                                     $data_chegada = DateTime::createFromFormat('Y-m-d', $linha->data_chegada);
                                     $data_chegada = date_format($data_chegada, 'd/m/Y');
@@ -59,7 +65,44 @@
 
                                 <td>{{$data_chegada}} {{$hora_chegada}} h</td>
                                 <td>{{$data_saida}} {{$hora_saida}} h</td>
-                                <td>{{$linha->quantidade_total - $linha->quantidade_morta}}</td>
+                                <td>{{$linha->numero_gta}}</td>
+                                <td>{{$linha->numero_nf}}</td>
+                                <td>{{$linha->quantidade_total}}</td>
+                                <td>{{$linha->quantidade_morta}}</td>
+                                <td>{{$linha->raca}}</td>
+                                <td>{{$linha->vacinas}}</td>
+
+                                @if ($linha->idade < 30)
+                                    @php
+                                        $dias = $linha->idade;
+                                    @endphp
+                                    <td>{{$dias}}d</td>
+
+                                @elseif ($linha->idade > 30 && $linha->idade < 365)
+                                    @php
+                                        $meses = intdiv($linha->idade, 30);
+                                        $dias = $linha->idade % 30;
+                                    @endphp
+                                    @if($dias ==0)
+                                        <td>{{$meses}}m</td>
+                                    @endif
+                                    <td>{{$dias}}d.{{$meses}}m</td>
+
+                                @else ($linha->idade > 365)
+                                    @php
+                                        $anos = intdiv($linha->idade, 365);
+                                        $meses = ($linha->idade) - ($anos * 365);
+                                        $meses = intdiv($meses, 30);
+                                        $dias = $linha->idade % 365;
+                                        $dias = $dias % 30;
+                                    @endphp
+                                    @if($dias ==0)
+                                        <td>{{$meses}}m.{{$anos}}a</td>
+                                    @endif
+                                    <td>{{$dias}}d.{{$meses}}m.{{$anos}}a</td>
+                                @endif
+
+                                <td>R${{number_format($linha->preco,2,',','')}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                                 <td>
@@ -68,9 +111,8 @@
                                         {{csrf_field()}}
                                         {{method_field('GET')}}
                                         <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: black">
-                                            <i class="material-icons">mode_edit</i>
+                                                class="mdl-button mdl-js-button mdl-button--raised">
+                                            Editar
                                         </button>
                                     </form>
                                 </td>
@@ -80,9 +122,8 @@
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
                                         <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: red">
-                                            <i class="material-icons">clear</i>
+                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                            Remover
                                         </button>
                                     </form>
                                 </td>

@@ -22,9 +22,7 @@ Route::group(['middleware' => ['logado']], function () {
     Route::resource('morteAve', 'ControlaMorteAve');
     Route::resource('produto', 'ControlaProduto');
     Route::resource('relatorios', 'ControlaRelatorios');
-    Route::resource('tipoProduto', 'ControlaTipoEmbalagem');
     Route::resource('tipoProduto', 'ControlaTipoProduto');
-    Route::resource('tipoRacao', 'ControlaTipoRacao');
     Route::resource('vendaOvo', 'ControlaVendaOvo');
     Route::resource('ventilacao', 'ControlaVentilacao');
 });

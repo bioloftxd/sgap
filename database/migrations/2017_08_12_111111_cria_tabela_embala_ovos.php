@@ -13,11 +13,9 @@ class CriaTabelaEmbalaOvos extends Migration
             $table->increments("id"); //Id de cadastro
             $table->date("data"); //Data de embalagem
             $table->time("hora"); //Hora de embalagem
-            $table->integer("lote"); //Lote de embalagem
-            $table->integer("quantidade_embalada"); //Quantidade de ovos embalados
-            $table->integer("quantidade_quebrada"); //Quantidade de ovos quebrados na embalagem
-            $table->integer("id_tipo_embalagem")->unsigned(); //Tipo de embalagem
-            $table->foreign("id_tipo_embalagem")->references("id")->on("tipo_embalagem");
+            $table->string("lote"); //Lote de embalagem
+            $table->integer("quantidade_embalada"); //Quantidade de embalagens
+            $table->string("tipo_embalagem"); //Tipo de embalagem
             $table->integer("id_usuario")->unsigned(); //Id usuário autenticado
             $table->foreign("id_usuario")->references("id")->on("usuario");
             $table->string("observacoes"); //Observações sobre embalagem de ovos

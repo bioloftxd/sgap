@@ -88,7 +88,7 @@
                     <div class="mdl-layout-spacer"></div>
                     <button type="submit"
                             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--5-col-tablet">
-                        Registrar
+                        Salvar
                     </button>
 
                     <div class="mdl-layout-spacer"></div>

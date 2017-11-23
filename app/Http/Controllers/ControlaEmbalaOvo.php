@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\ColetaOvo;
 use App\EmbalaOvo;
+use App\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +28,8 @@ class ControlaEmbalaOvo extends Controller
      */
     public function create()
     {
-        return view("embalaOvo.create");
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("embalaOvo.create", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -37,6 +40,29 @@ class ControlaEmbalaOvo extends Controller
      */
     public function store(Request $request)
     {
+        $dados = new EmbalaOvo();
+        $dados->data = ($request->data) ? $request->data : date("Y-m-d");
+        $dados->hora = ($request->hora) ? $request->hora : date("H:i");
+        $dados->lote = ($request->lote) ? $request->lote : null;
+        $dados->tipo_embalagem = ($request->tipo_embalagem) ? $request->tipo_embalagem : null;
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
+        $dados->quantidade_embalada = ($request->quantidade_embalada) ? $request->quantidade_embalada : null;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
+        if ($request->lote == null) {
+            session()->put("info", "Insira o lote da embalagem!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("embalaOvo.create", ["dados" => $dados, "listaDados" => $listaDados]);
+        }
+        if ($request->tipo_embalagem == null) {
+            session()->put("info", "Insira o tipo de embalagem!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("embalaOvo.create", ["dados" => $dados, "listaDados" => $listaDados]);
+        }
+        if ($request->quantidade_embalada == null) {
+            session()->put("info", "Insira o quantidade de embalagens!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("embalaOvo.create", ["dados" => $dados, "listaDados" => $listaDados]);
+        }
         DB::beginTransaction();
         try {
             $dados->save();
@@ -45,7 +71,8 @@ class ControlaEmbalaOvo extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("embalaOvo.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("embalaOvo.create", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         $listaDados = EmbalaOvo::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro salvo!");
@@ -73,7 +100,8 @@ class ControlaEmbalaOvo extends Controller
     public function edit($id)
     {
         $dados = EmbalaOvo::find($id);
-        return view("embalaOvo.edit", ["dados" => $dados]);
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("embalaOvo.edit", ["dados" => $dados, "listaDados" => $listaDados]);
     }
 
     /**
@@ -85,6 +113,29 @@ class ControlaEmbalaOvo extends Controller
      */
     public function update(Request $request, $id)
     {
+        $dados = EmbalaOvo::find($id);
+        $dados->data = ($request->data) ? $request->data : $dados->data;
+        $dados->hora = ($request->hora) ? $request->hora : $dados->hora;
+        $dados->lote = ($request->lote) ? $request->lote : $dados->lote;
+        $dados->tipo_embalagem = ($request->tipo_embalagem) ? $request->tipo_embalagem : $dados->tipo_embalagem;
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : $dados->id_usuario;
+        $dados->quantidade_embalada = ($request->quantidade_embalada) ? $request->quantidade_embalada : $dados->quantidade_embalada;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : $dados->observacoes;
+        if ($request->lote == null) {
+            session()->put("info", "Insira o lote da embalagem!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("embalaOvo.edit", ["dados" => $dados, "listaDados" => $listaDados]);
+        }
+        if ($request->tipo_embalagem == null) {
+            session()->put("info", "Insira o tipo de embalagem!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("embalaOvo.edit", ["dados" => $dados, "listaDados" => $listaDados]);
+        }
+        if ($request->quantidade_embalada == null) {
+            session()->put("info", "Insira o quantidade de embalagens!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("embalaOvo.edit", ["dados" => $dados, "listaDados" => $listaDados]);
+        }
         DB::beginTransaction();
         try {
             $dados->save();

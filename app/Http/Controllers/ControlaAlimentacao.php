@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AlimentacaoAve;
+use App\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,8 @@ class ControlaAlimentacao extends Controller
      */
     public function create()
     {
-        return view("alimentacaoAve.create");
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("alimentacaoAve.create", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -41,12 +43,13 @@ class ControlaAlimentacao extends Controller
         $dados->data = ($request->data) ? $request->data : date("Y-m-d");
         $dados->hora = ($request->hora) ? $request->hora : date("H:i");
         $dados->tipo_racao = ($request->tipo_racao) ? $request->tipo_racao : "-";
-        $dados->id_usuario = session()->get("usuario")->id;
-        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         $dados->quantidade_alimento = ($request->quantidade_alimento > 0) ? $request->quantidade_alimento : 1;
         if ($request->tipo_racao == null) {
             session()->put("info", "Selecione o tipo de ração!");
-            return view("alimentacaoAve.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         DB::beginTransaction();
         try {
@@ -56,7 +59,8 @@ class ControlaAlimentacao extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("alimentacaoAve.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro salvo!");
@@ -84,7 +88,8 @@ class ControlaAlimentacao extends Controller
     public function edit($id)
     {
         $dados = AlimentacaoAve::find($id);
-        return view("alimentacaoAve.edit", ["dados" => $dados]);
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados]);
     }
 
     /**
@@ -99,14 +104,13 @@ class ControlaAlimentacao extends Controller
         $dados = AlimentacaoAve::find($id);
         $dados->data = ($request->data) ? $request->data : $dados->data;
         $dados->hora = ($request->hora) ? $request->hora : $dados->hora;
-        $dados->id_gaiola = ($request->id_gaiola) ? $request->id_gaiola : $dados->id_gaiola;
         $dados->tipo_racao = ($request->tipo_racao) ? $request->tipo_racao : $dados->tipo_racao;
-        $dados->id_usuario = session()->get("usuario")->id;
-        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         $dados->quantidade_alimento = ($request->quantidade_alimento > 0) ? $request->quantidade_alimento : $dados->quantidade_alimento;
         if ($request->tipo_racao == null) {
             session()->put("info", "Selecione o tipo de ração!");
-            return view("alimentacaoAve.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         DB::beginTransaction();
         try {
@@ -116,8 +120,10 @@ class ControlaAlimentacao extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
             return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados]);
         }
+
         $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro alterado!");
         return view("alimentacaoAve.index", ["listaDados" => $listaDados]);

@@ -44,7 +44,7 @@ class ControlaColetaExcremento extends Controller
         $dados->data = ($request->data) ? $request->data : date("Y-m-d");
         $dados->hora = ($request->hora) ? $request->hora : date("H:i");
         $dados->litros = ($request->litros) ? $request->litros : 1;
-        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem observações!";
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         DB::beginTransaction();
         try {
             $dados->save();
@@ -53,7 +53,8 @@ class ControlaColetaExcremento extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("coletaExcremento.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("coletaExcremento.create", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         $listaDados = ColetaExcremento::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro salvo!");
@@ -99,7 +100,7 @@ class ControlaColetaExcremento extends Controller
         $dados->data = ($request->data) ? $request->data : date("Y-m-d");
         $dados->hora = ($request->hora) ? $request->hora : date("H:i");
         $dados->litros = ($request->litros) ? $request->litros : 1;
-        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "Sem Observações!";
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         DB::beginTransaction();
         try {
             $dados->save();
@@ -108,7 +109,8 @@ class ControlaColetaExcremento extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("coletaExcremento.edit", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("coletaExcremento.edit", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         $listaDados = ColetaExcremento::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro alterado!");

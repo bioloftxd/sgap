@@ -22,7 +22,7 @@
                         <h5>Registrar Alimentação das Aves</h5>
                     </div>
                     <div class="mdl-cell textoCentralizado mdl-layout--large-screen-only">
-                        <h4>Registrar Alimentação das Aves</h4>
+                        <h5>Registrar Alimentação das Aves</h5>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--2-col-tablet">
-                        <input class="mdl-textfield__input" type="number" id="quantidade_alimento"
+                        <input class="mdl-textfield__input" type="number" step="0.01" id="quantidade_alimento"
                                name="quantidade_alimento"
                                @isset($dados)value="{{$dados->quantidade_alimento}}" @endisset
                                @empty($dados)value="1"@endempty>
@@ -85,11 +85,19 @@
 
                     <div class="mdl-layout-spacer"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop mdl-cell--4-col-phone mdl-cell--8-col-tablet">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--8-col-desktop mdl-cell--4-col-phone mdl-cell--8-col-tablet">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
                                   name="observacoes">@isset($dados){{$dados->observacoes}}@endisset</textarea>
                         <label class="mdl-textfield__label" for="observacoes">Observações</label>
                     </div>
+
+                    <select class="form-control mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-phone mdl-cell--8-col-tablet"
+                            name="id_usuario" id="id_usuario">
+                        <option selected disabled value="null">Usuário Responsável</option>
+                        @foreach($listaDados as $linha)
+                            <option value="{{$linha->id}}">{{$linha->nome}}</option>
+                        @endforeach
+                    </select>
 
                     <div class="mdl-layout-spacer"></div>
 
@@ -101,7 +109,7 @@
 
                     <button type="submit"
                             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
-                        Registrar
+                        Salvar
                     </button>
 
                     <div class="mdl-layout-spacer"></div>

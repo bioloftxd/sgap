@@ -14,16 +14,16 @@ class AlimentacaoSeed extends Seeder
      */
     public function run()
     {
-        $tipo_racao = ['Inicial', 'Crescimento', 'Acabamento', 'Pintinhas', 'Frangas', 'Postura'];
+        $tipo_racao = ['Inicial', 'Engorda', 'Experimental', 'Postura', 'Recria'];
 
         DB::table('alimentacao_aves')->truncate();
-        $faker = Faker::create();
+        $faker = Faker::create('pt_BR');
         foreach (range(1, 30) as $alimentacao) {
             AlimentacaoAve::create([
                 "data" => $faker->date($format = 'Y-m-d', $max = 'now'),
                 "hora" => $faker->time($format = 'H:i', $max = 'now'),
                 "quantidade_alimento" => rand(1, 40),
-                "tipo_racao" => $tipo_racao[rand(0, 5)],
+                "tipo_racao" => $tipo_racao[rand(0, 4)],
                 "id_usuario" => rand(1, 30),
                 "observacoes" => $faker->sentence
             ]);

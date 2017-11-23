@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ColetaOvo extends Model {
+class ColetaOvo extends Model
+{
 
     protected $fillable = [
         "id",
@@ -16,9 +17,10 @@ class ColetaOvo extends Model {
         "observacoes",
         "ativo"
     ];
-    protected $table = "coleta_ovo";
+    protected $table = "coleta_ovos";
 
-    public function usuario() {
+    public function usuario()
+    {
         return $this->hasOne(Usuario::class, "id", "id_usuario");
     }
 

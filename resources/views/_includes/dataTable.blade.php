@@ -5,7 +5,6 @@
         $('#tabela').DataTable({
             responsive: true,
             "columnDefs": [
-                {"type": "date-dd-MMM-yyyy", targets: 0},
                 {"className": "dt-center", "targets": "_all"}
             ],
             dom: 'Bfrtip',

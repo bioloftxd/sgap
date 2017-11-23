@@ -37,11 +37,18 @@
                             <th>Tipo Ração</th>
                             <th>Responsável</th>
                             <th>Observações</th>
-                            <th>Editar</th>
-                            <th>Remover</th>
+                            <th data-orderable="false">Editar</th>
+                            <th data-orderable="false">Remover</th>
                         </tr>
                         </thead>
                         <tbody>
+
+                        {{--<th class="all">Name</th>--}}
+                        {{--<th class="min-phone-l">Position</th>--}}
+                        {{--<th class="min-tablet">Office</th>--}}
+                        {{--<th class="never">Start date</th>--}}
+                        {{--<th class="desktop">Salary</th>--}}
+                        {{--<th class="none">Extn.</th>--}}
 
                         @foreach($listaDados as $linha)
                             <tr>
@@ -54,7 +61,7 @@
                                 @endphp
 
                                 <td>{{$data}} {{$hora}} h</td>
-                                <td>{{number_format($linha->quantidade_alimento,1,',','')}} Kg</td>
+                                <td>{{number_format($linha->quantidade_alimento,2,',','')}} Kg</td>
                                 <td>{{$linha->tipo_racao}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
@@ -64,9 +71,8 @@
                                         {{csrf_field()}}
                                         {{method_field('GET')}}
                                         <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: black">
-                                            <i class="material-icons">mode_edit</i>
+                                                class="mdl-button mdl-js-button mdl-button--raised">
+                                            Editar
                                         </button>
                                     </form>
                                 </td>
@@ -76,9 +82,8 @@
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
                                         <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: red">
-                                            <i class="material-icons">clear</i>
+                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                            Remover
                                         </button>
                                     </form>
                                 </td>

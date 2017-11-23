@@ -47,7 +47,7 @@ class ControlaManutencaoAviario extends Controller
         $dados->data_resolve = "2001-09-11";
         $dados->hora_resolve = "00:00";
         $dados->numero_relatorio = ($request->numero_relatorio) ? $request->numero_relatorio : 0;
-        $dados->ocorrencia = ($request->ocorrencia) ? $request->ocorrencia : "Sem Observações!";
+        $dados->ocorrencia = ($request->ocorrencia) ? $request->ocorrencia : "-";
         if ($request->ocorrencia == null) {
             session()->put("info", "Insira a ocorrência!");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
@@ -168,7 +168,7 @@ class ControlaManutencaoAviario extends Controller
         $dados = ManutencaoAviario::find($id);
         $dados->data_resolve = ($request->data_resolve) ? $request->data_resolve : date("Y-m-d");
         $dados->hora_resolve = ($request->hora_resolve) ? $request->hora_resolve : date("H:i");
-        $dados->resolucao = ($request->resolucao) ? $request->resolucao : "Sem Observações!";
+        $dados->resolucao = ($request->resolucao) ? $request->resolucao : "-";
         $dados->id_usuario_resolve = session()->get("usuario")->id;
         $dados->resolvido = 1;
         DB::beginTransaction();
