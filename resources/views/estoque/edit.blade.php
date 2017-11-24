@@ -21,7 +21,7 @@
                         <h5>Editar Estoque de Produto</h5>
                     </div>
                     <div class="mdl-cell textoCentralizado mdl-layout--large-screen-only">
-                        <h5>Editar Estoque de Produto</h5>
+                        <h4>Editar Estoque de Produto</h4>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
@@ -33,14 +33,14 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="text" id="produto" name="produto" disabled
-                               @isset($dados)value="{{$dados->produto()->nome}}" @endisset
+                               @isset($dados)value="{{$dados->produto->nome}}" @endisset
                                @empty($dados)value=""@endempty >
                         <label class=" mdl-textfield__label" for="produto">Produto</label>
                     </div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="text" id="tipo_produto" name="tipo_produto" disabled
-                               @isset($dados)value="{{$dados->produto()->tipo_produto}}" @endisset
+                               @isset($dados)value="{{$dados->produto->tipo_produto}}" @endisset
                                @empty($dados)value=""@endempty >
                         <label class=" mdl-textfield__label" for="tipo_produto">Tipo Produto</label>
                     </div>
@@ -69,7 +69,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col-desktop mdl-cell--4-col-phone mdl-cell--8-col-tablet">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes" disabled
-                                  name="observacoes">@isset($dados){{$dados->produto()->observacoes}}@endisset</textarea>
+                                  name="observacoes">@isset($dados){{$dados->produto->observacoes}}@endisset</textarea>
                         <label class="mdl-textfield__label" for="observacoes">Observações</label>
                     </div>
 

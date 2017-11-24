@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Usuario;
 use App\Ventilacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,8 @@ class ControlaVentilacao extends Controller
      */
     public function create()
     {
-        return view("ventilacao.create");
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("ventilacao.create", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -44,15 +46,17 @@ class ControlaVentilacao extends Controller
         $dados->hora_fechamento = ($request->hora_fechamento) ? $request->hora_fechamento : date("H:i");
         $dados->temperatura_maxima = ($request->temperatura_maxima) ? $request->temperatura_maxima : null;
         $dados->temperatura_minima = ($request->temperatura_minima) ? $request->temperatura_minima : null;
-        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         if ($request->temperatura_maxima == null) {
             session()->put("info", "Insira a temperatura máxima!");
-            return view("ventilacao.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("ventilacao.create", ["listaDados" => $listaDados]);
         }
         if ($request->temperatura_minima == null) {
             session()->put("info", "Insira a temperatura mínima!");
-            return view("ventilacao.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("ventilacao.create", ["listaDados" => $listaDados]);
         }
         DB::beginTransaction();
         try {
@@ -62,7 +66,8 @@ class ControlaVentilacao extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("ventilacao.create", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("ventilacao.create", ["listaDados" => $listaDados]);
         }
         $listaDados = Ventilacao::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro salvo!");
@@ -90,7 +95,8 @@ class ControlaVentilacao extends Controller
     public function edit($id)
     {
         $dados = Ventilacao::find($id);
-        return view("ventilacao.edit", ["dados" => $dados]);
+        $listaDados = Usuario::all()->where("ativo", "!=", 0);
+        return view("ventilacao.edit", ["dados" => $dados, "listaDados" => $listaDados]);
     }
 
     /**
@@ -109,8 +115,18 @@ class ControlaVentilacao extends Controller
         $dados->hora_fechamento = ($request->hora_fechamento) ? $request->hora_fechamento : $dados->hora_fechamento;
         $dados->temperatura_maxima = ($request->temperatura_maxima) ? $request->temperatura_maxima : $dados->temperatura_maxima;
         $dados->temperatura_minima = ($request->temperatura_minima) ? $request->temperatura_minima : $dados->temperatura_minima;
-        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : $dados->id_usuario;
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
+        if ($request->temperatura_maxima == null) {
+            session()->put("info", "Insira a temperatura máxima!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("ventilacao.edit", ["listaDados" => $listaDados]);
+        }
+        if ($request->temperatura_minima == null) {
+            session()->put("info", "Insira a temperatura mínima!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("ventilacao.edit", ["listaDados" => $listaDados]);
+        }
         DB::beginTransaction();
         try {
             $dados->save();
@@ -119,7 +135,8 @@ class ControlaVentilacao extends Controller
             DB::rollback();
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
-            return view("ventilacao.edit", ["dados" => $dados]);
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("ventilacao.edit", ["dados" => $dados, "listaDados" => $listaDados]);
         }
         $listaDados = Ventilacao::all()->where("ativo", "!=", 0);
         session()->put("info", "Registro alterado!");

@@ -79,9 +79,8 @@
                                         {{csrf_field()}}
                                         {{method_field('GET')}}
                                         <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: black">
-                                            <i class="material-icons">mode_edit</i>
+                                                class="mdl-button mdl-js-button mdl-button--raised">
+                                            Editar
                                         </button>
                                     </form>
                                 </td>
@@ -91,9 +90,8 @@
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
                                         <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: red">
-                                            <i class="material-icons">clear</i>
+                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                            Remover
                                         </button>
                                     </form>
                                 </td>

@@ -23,7 +23,7 @@ class Ventilacao extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, "id", "id_usuario");
+        return $this->hasOne(Usuario::class, "id", "id_usuario");
     }
 
 }

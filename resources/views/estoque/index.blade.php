@@ -24,19 +24,19 @@
                             <th>Preço</th>
                             <th>Tipo Produto</th>
                             <th>Observações</th>
-                            <th>Editar</th>
-                            <th>Remover</th>
+                            <th data-orderable="false">Editar</th>
+                            <th data-orderable="false">Remover</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         @foreach($listaDados as $linha)
                             <tr>
-                                <td>{{$linha->produto()->nome}}</td>
+                                <td>{{$linha->produto->nome}}</td>
                                 <td>{{$linha->quantidade}}</td>
                                 <td>{{$linha->preco}}</td>
-                                <td>{{$linha->produto()->tipo_produto}}</td>
-                                <td>{{$linha->produto()->observacoes}}</td>
+                                <td>{{$linha->produto->tipo_produto}}</td>
+                                <td>{{$linha->produto->observacoes}}</td>
                                 <td>
                                     <form action="{{action("ControlaEstoque@edit", ["id" => $linha->id])}}"
                                           method="POST">

@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Estoque extends Model {
+class Estoque extends Model
+{
 
     protected $fillable = [
         "id",
@@ -15,8 +16,9 @@ class Estoque extends Model {
     ];
     protected $table = "estoque";
 
-    public function produto() {
-        return $this->hasMany(Produto::class, "id", "id_produto");
+    public function produto()
+    {
+        return $this->hasOne(Produto::class, "id", "id_produto");
     }
 
 }
