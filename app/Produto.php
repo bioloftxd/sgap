@@ -11,6 +11,7 @@ class Produto extends Model
         "id",
         "nome",
         "marca",
+        "tipo_produto",
         "observacoes",
         "ativo"
     ];

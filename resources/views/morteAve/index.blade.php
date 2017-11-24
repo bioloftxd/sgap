@@ -1,6 +1,6 @@
 @extends("_layouts.principal")
 
-@section("title", "ALIMENTAÇÃO DAS AVES")
+@section("title", "MORTE DE AVES")
 
 @section("content")
 
@@ -14,9 +14,9 @@
 
                 <div class="mdl-layout-spacer"></div>
 
-                <a href="{{action("ControlaAlimentacao@create")}}"
+                <a href="{{action("ControlaMorteAve@create")}}"
                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone">
-                    Registrar Alimentação
+                    Registrar Morte
                 </a>
 
                 <div class="mdl-layout-spacer"></div>
@@ -32,21 +32,19 @@
                     <table id="tabela" class="display">
                         <thead>
                         <tr>
-                            <th>Data/Hora</th>
+                            <th>Data/Hora Registro</th>
                             <th>Gaiola</th>
-                            <th>Quantidade Ração</th>
-                            <th>Tipo Ração</th>
+                            <th>Nº Aves</th>
                             <th>Responsável</th>
                             <th>Observações</th>
-                            <th>Editar</th>
-                            <th>Remover</th>
+                            <th data-orderable="false">Editar</th>
+                            <th data-orderable="false">Remover</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         @foreach($listaDados as $linha)
                             <tr>
-
                                 @php
                                     $data = DateTime::createFromFormat('Y-m-d', $linha->data);
                                     $data = date_format($data, 'd/m/Y');
@@ -55,32 +53,30 @@
                                 @endphp
 
                                 <td>{{$data}} {{$hora}} h</td>
-                                <td>Tenho que pensar...</td>
-                                <td>{{number_format($linha->quantidade_alimento,1,',','')}} L</td>
-                                <td>{{$linha->tipo_racao->tipo}}</td>
+                                <td>{{$linha->gaiola->numero_gaiola}}</td>
+                                <td>{{$linha->quantidade_aves}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
+
                                 <td>
-                                    <form action="{{action("ControlaAlimentacao@edit", ["id" => $linha->id])}}"
+                                    <form action="{{action("ControlaMorteAve@edit", ["id" => $linha->id])}}"
                                           method="POST">
                                         {{csrf_field()}}
                                         {{method_field('GET')}}
                                         <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: black">
-                                            <i class="material-icons">mode_edit</i>
+                                                class="mdl-button mdl-js-button mdl-button--raised">
+                                            Editar
                                         </button>
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="{{action("ControlaAlimentacao@destroy", ["id" => $linha->id])}}"
+                                    <form action="{{action("ControlaMorteAve@destroy", ["id" => $linha->id])}}"
                                           method="POST">
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
                                         <button type="submit"
-                                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
-                                                style="width: 30px; height: 30px; min-width: initial; background-color: red">
-                                            <i class="material-icons">clear</i>
+                                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                            Remover
                                         </button>
                                     </form>
                                 </td>

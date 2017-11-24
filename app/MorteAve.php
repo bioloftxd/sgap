@@ -18,16 +18,16 @@ class MorteAve extends Model
         "ativo",
         "visualizado"
     ];
-    protected $table = "morte_ave";
+    protected $table = "morte_aves";
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, "id", "id_usuario");
+        return $this->hasOne(Usuario::class, "id", "id_usuario");
     }
 
     public function gaiola()
     {
-        return $this->hasMany(Gaiola::class, "id", "id_gaiola");
+        return $this->hasOne(Gaiola::class, "id", "id_gaiola");
     }
 
 }

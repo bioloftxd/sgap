@@ -1,29 +1,29 @@
 @extends("_layouts.principal")
 
-@section("title", "EDITAR ALIMENTAÇÃO DAS AVES")
+@section("title", "EDITAR FORNECEDOR")
 
 @section("content")
 
     <link rel="stylesheet" href="/css/select.css"/>
 
-    <div class="mdl-grid" >
+    <div class="mdl-grid">
 
         <div class="mdl-layout-spacer"></div>
 
         <div class="mdl-cell mdl-cell--11-col">
 
-            <form method="POST" action="{{action('ControlaAlimentacao@update',["id"=>$dados->id])}}">
-                {{method_field("PUT")}}
+            <form method="POST" action="{{action('ControlaFornecedor@update',["id"=>$dados->id])}}">
                 {{csrf_field()}}
+                {{method_field("PUT")}}
 
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-cell textoCentralizado mdl-layout--small-screen-only" style="white-space: nowrap">
-                        <h5>Editar Alimentação das Aves</h5>
+                        <h5>Editar Fornecedor</h5>
                     </div>
                     <div class="mdl-cell textoCentralizado mdl-layout--large-screen-only">
-                        <h4>Editar Alimentação das Aves</h4>
+                        <h4>Editar Fornecedor</h4>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>
@@ -34,38 +34,32 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
-                        <input class="mdl-textfield__input" type="date" autofocus id="data" name="data"
-                               value="{{$dados->data}}">
-                        <label class=" mdl-textfield__label" for="data">Data</label>
+                        <input class="mdl-textfield__input" type="text" id="nome" autofocus name="nome"
+                               @isset($dados)value="{{$dados->nome}}" @endisset
+                               @empty($dados)value=""@endempty >
+                        <label class=" mdl-textfield__label" for="nome">Nome Fornecedor</label>
                     </div>
 
-                    <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
-
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
-                        <input class="mdl-textfield__input" type="time" id="hora" name="hora"
-                               value="{{$dados->hora}}">
-                        <label class="mdl-textfield__label" for="hora">Hora</label>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
+                        <input class="mdl-textfield__input" type="text" id="cpf_cnpj" name="cpf_cnpj"
+                               @isset($dados)value="{{$dados->cpf_cnpj}}" @endisset
+                               @empty($dados)value=""@endempty >
+                        <label class=" mdl-textfield__label" for="cpf_cnpj">CPF ou CNPJ</label>
                     </div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
-                        <input class="mdl-textfield__input" type="number" id="quantidade_alimento"
-                               name="quantidade_alimento"
-                               value="{{$dados->quantidade_alimento}}">
-                        <label class="mdl-textfield__label" for="quantidade_alimento">Quatidade alimento (Kg)</label>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
+                        <input class="mdl-textfield__input" type="text" id="telefone" name="telefone"
+                               @isset($dados)value="{{$dados->telefone}}" @endisset
+                               @empty($dados)value=""@endempty >
+                        <label class=" mdl-textfield__label" for="telefone">Telefone</label>
                     </div>
 
-                    <div class="mdl-layout-spacer mdl-layout--small-screen-only"></div>
-
-                    <select class="form-control mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
-                            name="id_tipo_racao" id="id_tipo_racao">
-                        @foreach($listaDados as $linha)
-                            @if($linha->id == $dados->id_tipo_racao)
-                                <option value="{{$linha->id}}" selected>{{$linha->tipo}}</option>
-                            @else
-                                <option value="{{$linha->id}}">{{$linha->tipo}}</option>
-                            @endif
-                        @endforeach
-                    </select>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
+                        <input class="mdl-textfield__input" type="text" id="endereco" name="endereco"
+                               @isset($dados)value="{{$dados->endereco}}" @endisset
+                               @empty($dados)value=""@endempty >
+                        <label class=" mdl-textfield__label" for="endereco">Endereço</label>
+                    </div>
 
                     <div class="mdl-layout-spacer"></div>
 
@@ -75,9 +69,9 @@
 
                     <div class="mdl-layout-spacer"></div>
 
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--11-col-desktop">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col-desktop mdl-cell--4-col-phone mdl-cell--8-col-tablet">
                         <textarea class="mdl-textfield__input" type="text" rows="3" id="observacoes"
-                                  name="observacoes">{{$dados->observacoes}}</textarea>
+                                  name="observacoes">@isset($dados){{$dados->observacoes}}@endisset</textarea>
                         <label class="mdl-textfield__label" for="observacoes">Observações</label>
                     </div>
 
@@ -88,13 +82,13 @@
                 <div class="mdl-grid">
                     <div class="mdl-layout-spacer"></div>
                     <button type="submit"
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--5-col-tablet">
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet">
                         Salvar
                     </button>
 
                     <div class="mdl-layout-spacer"></div>
 
-                    <a href="{{action("ControlaAlimentacao@index")}}"
+                    <a href="{{action("ControlaFornecedor@index")}}"
                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
                        style="background-color: red">
                         Cancelar

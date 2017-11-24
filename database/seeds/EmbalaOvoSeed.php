@@ -25,7 +25,7 @@ class EmbalaOvoSeed extends Seeder
                 "quantidade_embalada" => rand(5, 120),
                 "tipo_embalagem" => $tipo_embalagem[rand(0, 1)],
                 "id_usuario" => rand(1, 30),
-                "observacoes" => $faker->sentence(),
+                "observacoes" => $faker->sentence
             ]);
         }
     }

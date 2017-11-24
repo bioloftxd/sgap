@@ -15,8 +15,8 @@ class ControlaFornecedor extends Controller
      */
     public function index()
     {
-        $dados = Fornecedor::all()->where("ativo", "!=", 0);
-        return view("fornecedor.index", ["dados" => $dados]);
+        $listaDados = Fornecedor::all()->where("ativo", "!=", 0);
+        return view("fornecedor.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -37,6 +37,20 @@ class ControlaFornecedor extends Controller
      */
     public function store(Request $request)
     {
+        $dados = new Fornecedor();
+        $dados->nome = ($request->nome) ? $request->nome : null;
+        $dados->cpf_cnpj = ($request->cpf_cnpj) ? $request->cpf_cnpj : null;
+        $dados->telefone = ($request->telefone) ? $request->telefone : "-";
+        $dados->endereco = ($request->endereco) ? $request->endereco : "-";
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
+        if ($request->nome == null) {
+            session()->put("info", "Insira o nome do fornecedor!");
+            return view("fornecedor.create", ["dados" => $dados]);
+        }
+        if ($request->cpf_cnpj == null) {
+            session()->put("info", "Insira o CPF ou CNPJ!");
+            return view("fornecedor.create", ["dados" => $dados]);
+        }
         DB::beginTransaction();
         try {
             $dados->save();
@@ -85,6 +99,20 @@ class ControlaFornecedor extends Controller
      */
     public function update(Request $request, $id)
     {
+        $dados = Fornecedor::find($id);
+        $dados->nome = ($request->nome) ? $request->nome : $dados->nome;
+        $dados->cpf_cnpj = ($request->cpf_cnpj) ? $request->cpf_cnpj : $dados->cpf_cnpj;
+        $dados->telefone = ($request->telefone) ? $request->telefone : $dados->telefone;
+        $dados->endereco = ($request->endereco) ? $request->endereco : $dados->endereco;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
+        if ($request->nome == null) {
+            session()->put("info", "Insira o nome do fornecedor!");
+            return view("fornecedor.edit", ["dados" => $dados]);
+        }
+        if ($request->cpf_cnpj == null) {
+            session()->put("info", "Insira o CPF ou CNPJ!");
+            return view("fornecedor.edit", ["dados" => $dados]);
+        }
         DB::beginTransaction();
         try {
             $dados->save();

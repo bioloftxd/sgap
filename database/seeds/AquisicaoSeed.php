@@ -34,7 +34,7 @@ class AquisicaoSeed extends Seeder
                 "idade" => rand(15, 735),
                 "preco" => rand(5000, 60000),
                 "id_usuario" => rand(1, 30),
-                "observacoes" => $faker->sentence()
+                "observacoes" => $faker->sentence
             ]);
         }
     }

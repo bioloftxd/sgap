@@ -13,6 +13,10 @@ class CriaTabelaFornecedor extends Migration
             $table->increments('id'); //Id de cadastro
             $table->string("nome"); //Nome do fornecedor
             $table->string("cpf_cnpj"); //CPF ou CNPJ do fornecedor
+            $table->string("telefone"); //Telefone do fornecedor
+            $table->string("endereco"); //Endereço do fornecedor
+            $table->string("observacoes"); //Observações do fornecedor
+            $table->boolean("ativo")->default(1); //Exclusão simulada
             $table->timestamps();
         });
     }

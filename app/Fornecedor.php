@@ -9,8 +9,12 @@ class Fornecedor extends Model
 
     protected $fillable = [
         "id",
-        "nome",
-        "cpf_cnpj"
+"nome",
+"cpf_cnpj",
+"telefone",
+"endereco",
+"observacoes",
+        "ativo"
     ];
     protected $table = "fornecedor";
 

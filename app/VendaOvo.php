@@ -15,21 +15,16 @@ class VendaOvo extends Model
         "nome_comprador",
         "lote",
         "preco",
-        "id_tipo_embalagem",
+        "tipo_embalagem",
         "id_usuario",
         "observacoes",
         "ativo"
     ];
-    protected $table = "venda_ovo";
-
-    public function tipo_embalagem()
-    {
-        return $this->hasOne(TipoEmbalagem::class, "id", "id_tipo_embalagem");
-    }
+    protected $table = "venda_ovos";
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, "id", "id_usuario");
+        return $this->hasOne(Usuario::class, "id", "id_usuario");
     }
 
 }

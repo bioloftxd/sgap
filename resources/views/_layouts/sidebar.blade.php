@@ -7,6 +7,7 @@
 
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="aviario">
         <a class="mdl-menu__item" href="{{action("ControlaColetaExcremento@index")}}">COLETA DE EXCREMENTO</a>
+        <a class="mdl-menu__item" href="{{action("ControlaGaiola@index")}}">GAIOLAS</a>
         <a class="mdl-menu__item" href="{{action("ControlaManutencaoAviario@index")}}">MANUTENÇÃO</a>
         <a class="mdl-menu__item" href="{{action("ControlaVentilacao@index")}}">VENTILAÇÃO</a>
     </ul>
@@ -28,7 +29,6 @@
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="estoque">
         <a class="mdl-menu__item" href="{{action("ControlaEstoque@index")}}">ESTOQUE</a>
         <a class="mdl-menu__item" href="{{action("ControlaProduto@index")}}">PRODUTOS</a>
-        <a class="mdl-menu__item" href="{{action("ControlaTipoProduto@index")}}">TIPO DE PRODUTOS</a>
     </ul>
 
     <a id="ovos" class="mdl-navigation__link" href="#">

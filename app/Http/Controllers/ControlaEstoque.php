@@ -26,7 +26,8 @@ class ControlaEstoque extends Controller
      */
     public function create()
     {
-        return view("estoque.create");
+        $listaDados = Estoque::all()->where("ativo", "!=", 0);
+        return view("estoque.index", ["listaDados" => $listaDados]);
     }
 
     /**
@@ -37,18 +38,7 @@ class ControlaEstoque extends Controller
      */
     public function store(Request $request)
     {
-        DB::beginTransaction();
-        try {
-            $dados->save();
-            DB::commit();
-        } catch (\Throwable $e) {
-            DB::rollback();
-            $erro = $e->errorInfo[1];
-            session()->put("info", "Erro ao salvar! ($erro)");
-            return view("estoque.create", ["dados" => $dados]);
-        }
         $listaDados = Estoque::all()->where("ativo", "!=", 0);
-        session()->put("info", "Registro salvo!");
         return view("estoque.index", ["listaDados" => $listaDados]);
     }
 
@@ -85,6 +75,18 @@ class ControlaEstoque extends Controller
      */
     public function update(Request $request, $id)
     {
+        $dados = Estoque::find($id);
+        $dados->quantidade = ($request->quantidade) ? $request->quantidade : $dados->quantidade;
+        $dados->preco = ($request->preco) ? $request->preco : $dados->preco;
+        if ($request->quantidade == null) {
+            session()->put("info", "Insira a quantiade de produto no estoque!");
+            return view("estoque.edit", ["dados" => $dados]);
+        }
+        if ($request->preco == null) {
+            session()->put("info", "Insira a preco do produto!");
+            return view("estoque.edit", ["dados" => $dados]);
+        }
+
         DB::beginTransaction();
         try {
             $dados->save();

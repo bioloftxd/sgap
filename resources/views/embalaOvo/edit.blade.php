@@ -1,6 +1,6 @@
 @extends("_layouts.principal")
 
-@section("title", "EDITAR EMBALAGEM DE OVOs")
+@section("title", "EDITAR EMBALAGEM DE OVOS")
 
 @section("content")
 

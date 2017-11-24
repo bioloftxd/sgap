@@ -120,7 +120,7 @@ class ControlaEmbalaOvo extends Controller
         $dados->tipo_embalagem = ($request->tipo_embalagem) ? $request->tipo_embalagem : $dados->tipo_embalagem;
         $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : $dados->id_usuario;
         $dados->quantidade_embalada = ($request->quantidade_embalada) ? $request->quantidade_embalada : $dados->quantidade_embalada;
-        $dados->observacoes = ($request->observacoes) ? $request->observacoes : $dados->observacoes;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         if ($request->lote == null) {
             session()->put("info", "Insira o lote da embalagem!");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);

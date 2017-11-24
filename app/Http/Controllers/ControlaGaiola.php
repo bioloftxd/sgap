@@ -37,6 +37,24 @@ class ControlaGaiola extends Controller
      */
     public function store(Request $request)
     {
+        $dados = new Gaiola();
+        $dados->numero_gaiola = ($request->numero_gaiola) ? $request->numero_gaiola : null;
+        $dados->quantidade_aves = ($request->quantidade_aves >= 0) ? $request->quantidade_aves : null;
+        $verifica = Gaiola::all()->where("ativo", "!=", 0);
+        foreach ($verifica as $gaiola) {
+            if ($gaiola->numero_gaiola == $request->numero_gaiola) {
+                session()->put("info", "Nº de gaiola já cadastrado!");
+                return view("gaiola.create", ["dados" => $dados]);
+            }
+        }
+        if ($request->numero_gaiola == null) {
+            session()->put("info", "Insira número da gaiola!");
+            return view("gaiola.create", ["dados" => $dados]);
+        }
+        if ($request->quantidade_aves == null || $request->quantidade_aves < 0) {
+            session()->put("info", "Insira número de aves!");
+            return view("gaiola.create", ["dados" => $dados]);
+        }
         DB::beginTransaction();
         try {
             $dados->save();
@@ -85,6 +103,26 @@ class ControlaGaiola extends Controller
      */
     public function update(Request $request, $id)
     {
+        $dados = Gaiola::find($id);
+        $dados->quantidade_aves = ($request->quantidade_aves >= 0) ? $request->quantidade_aves : $dados->quantidade_aves;
+        if ($dados->numero_gaiola != $request->numero_gaiola) {
+            $verifica = Gaiola::all()->where("ativo", "!=", 0);
+            foreach ($verifica as $gaiola) {
+                if ($gaiola->numero_gaiola == $request->numero_gaiola) {
+                    session()->put("info", "Nº de gaiola já cadastrado!");
+                    return view("gaiola.edit", ["dados" => $dados]);
+                }
+            }
+            $dados->numero_gaiola = ($request->numero_gaiola) ? $request->numero_gaiola : $dados->numero_gaiola;
+        }
+        if ($request->numero_gaiola == null) {
+            session()->put("info", "Insira número da gaiola!");
+            return view("gaiola.edit", ["dados" => $dados]);
+        }
+        if ($request->quantidade_aves == null || $request->quantidade_aves < 0) {
+            session()->put("info", "Insira número de aves!");
+            return view("gaiola.edit", ["dados" => $dados]);
+        }
         DB::beginTransaction();
         try {
             $dados->save();

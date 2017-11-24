@@ -13,7 +13,7 @@ class CriaTabelaEstoque extends Migration {
             $table->decimal("preco", 15, 2); //Preço unitário do produto
             $table->integer("id_produto")->unsigned(); //Id do produto
             $table->foreign("id_produto")->references("id")->on("produto");
-            $table->boolean("ativo"); //Exclusão simulada
+            $table->boolean("ativo")->default(1); //Exclusão simulada
             $table->timestamps();
         });
     }

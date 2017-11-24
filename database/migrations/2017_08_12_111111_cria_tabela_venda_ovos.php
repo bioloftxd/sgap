@@ -17,8 +17,7 @@ class CriaTabelaVendaOvos extends Migration
             $table->string("nome_comprador"); //Nome do comprador
             $table->integer("lote"); //Lote de embalagem vendida
             $table->decimal("preco", 15, 2); //Preço de venda
-            $table->integer("id_tipo_embalagem")->unsigned(); //Tipo de embalagem
-            $table->foreign("id_tipo_embalagem")->references("id")->on("tipo_embalagem");
+            $table->string("tipo_embalagem"); //Tipo de embalagem
             $table->integer("id_usuario")->unsigned(); //Usuário autenticado
             $table->foreign("id_usuario")->references("id")->on("usuario");
             $table->string("observacoes"); //Observações sobre venda

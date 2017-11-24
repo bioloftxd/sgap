@@ -90,7 +90,7 @@ class ControlaColetaOvo extends Controller
     {
         $dados = ColetaOvo::find($id);
         $listaDados = Usuario::all()->where("ativo", "!=", 0);
-        return view("coletaOvo.edit", ["dados" => $dados, "listaDados" => $listaDados   ]);
+        return view("coletaOvo.edit", ["dados" => $dados, "listaDados" => $listaDados]);
     }
 
     /**
@@ -108,7 +108,7 @@ class ControlaColetaOvo extends Controller
         $dados->quantidade_coletado = ($request->quantidade_coletado) ? $request->quantidade_coletado : $dados->quantidade_coletado;
         $dados->quantidade_quebrado = ($request->quantidade_quebrado) ? $request->quantidade_quebrado : $dados->quantidade_quebrado;
         $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : $dados->id_usuario;
-        $dados->observacoes = ($request->observacoes) ? $request->observacoes : $dados->observacoes;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         if ($request->quantidade_coletado == 0) {
             session()->put("info", "Insira o total de ovos coletados!");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);

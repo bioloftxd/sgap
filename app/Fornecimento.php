@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Fornecimento extends Model {
+class Fornecimento extends Model
+{
 
     protected $fillable = [
         "id",
@@ -23,15 +24,18 @@ class Fornecimento extends Model {
     ];
     protected $table = "fornecimento";
 
-    public function produto() {
-        return $this->hasMany(Produto::class, "id", "id_produto");
+    public function produto()
+    {
+        return $this->hasOne(Produto::class, "id", "id_produto");
     }
 
-    public function usuario() {
+    public function usuario()
+    {
         return $this->hasOne(Usuario::class, "id", "id_usuario");
     }
 
-    public function fornecedor() {
+    public function fornecedor()
+    {
         return $this->hasOne(Fornecedor::class, "id", "id_fornecedor");
     }
 

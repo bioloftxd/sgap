@@ -22,7 +22,7 @@ class ColetaExcrementoSeed extends Seeder
                 "hora" => $faker->time($format = "H:i", $max = "now"),
                 "litros" => rand(1, 40),
                 "id_usuario" => rand(1, 30),
-                "observacoes" => $faker->sentence()
+                "observacoes" => $faker->sentence
             ]);
         }
     }
