@@ -20,10 +20,10 @@
                     <div class="mdl-layout-spacer"></div>
 
                     <div class="mdl-cell textoCentralizado mdl-layout--small-screen-only" style="white-space: nowrap">
-                        <h5>Registrar Ventilação</h5>
+                        <h5>Editar Ventilação</h5>
                     </div>
                     <div class="mdl-cell textoCentralizado mdl-layout--large-screen-only">
-                        <h4>Registrar Ventilação</h4>
+                        <h4>Editar Ventilação</h4>
                     </div>
 
                     <div class="mdl-layout-spacer"></div>

@@ -55,6 +55,7 @@
     </a>
 
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="relatorios">
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@alimentacao")}}">ALIMENTAÇÃO DAS AVES</a>
         <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">AQUISIÇÃO DE AVES</a>
         <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">COLETA DE EXCREMENTO</a>
         <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">COLETA DE OVOS</a>

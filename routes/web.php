@@ -25,5 +25,6 @@ Route::group(['middleware' => ['logado']], function () {
     Route::resource('tipoProduto', 'ControlaTipoProduto');
     Route::resource('vendaOvo', 'ControlaVendaOvo');
     Route::resource('ventilacao', 'ControlaVentilacao');
+    Route::get('alimentacao', 'ControlaRelatorios@alimentacao');
 });
 ?>
