@@ -1,6 +1,6 @@
 @extends("_layouts.principal")
 
-@section("title", "RELATÓRIO DE AQUISIÇÃO DE AVES")
+@section("title", "RELATÓRIO DE ALIMENTAÇÃO DAS AVES")
 
 @section("content")
 
@@ -10,10 +10,10 @@
         <div class="mdl-layout-spacer"></div>
 
         <div class="mdl-cell textoCentralizado mdl-layout--small-screen-only" style="white-space: nowrap">
-            <h5>Relatório de Aquisição de Aves</h5>
+            <h5>Relatório de Alimentação das Aves</h5>
         </div>
         <div class="mdl-cell textoCentralizado mdl-layout--large-screen-only">
-            <h4>Relatório de Aquisição de Aves</h4>
+            <h4>Relatório de Alimentação das Aves</h4>
         </div>
 
         <div class="mdl-layout-spacer"></div>
@@ -31,7 +31,7 @@
 
                 <div class="mdl-cell--11-col">
 
-                    <form action="{{action("ControlaRelatorios@relatorioAquisicao")}}" method="POST">
+                    <form action="{{action("ControlaRelatorios@relatorioAlimentacao")}}" method="POST">
                         {{csrf_field()}}
 
                         <div class="mdl-grid">
@@ -43,10 +43,10 @@
                                 <option selected disabled value="null">Data Inicial</option>
                                 @foreach($listaDatas as $linha)
                                     @php
-                                        $data = DateTime::createFromFormat('Y-m-d', $linha->data_chegada);
+                                        $data = DateTime::createFromFormat('Y-m-d', $linha->data);
                                         $data = date_format($data, 'd/m/Y');
                                     @endphp
-                                    <option value="{{$linha->data_chegada}}">{{$data}}</option>
+                                    <option value="{{$linha->data}}">{{$data}}</option>
                                 @endforeach
                             </select>
 
@@ -55,10 +55,10 @@
                                 <option selected disabled value="null">Data Inicial</option>
                                 @foreach($listaDatas as $linha)
                                     @php
-                                        $data = DateTime::createFromFormat('Y-m-d', $linha->data_chegada);
+                                        $data = DateTime::createFromFormat('Y-m-d', $linha->data);
                                         $data = date_format($data, 'd/m/Y');
                                     @endphp
-                                    <option value="{{$linha->data_chegada}}">{{$data}}</option>
+                                    <option value="{{$linha->data}}">{{$data}}</option>
                                 @endforeach
                             </select>
 
@@ -89,75 +89,48 @@
                     <table id="tabela" class="display">
                         <thead>
                         <tr>
-                            <th>Data Recebimento</th>
-                            <th>Data Saída</th>
-                            <th>Total de Aves</th>
-                            <th>Aves Mortas</th>
-                            <th>Raça</th>
-                            <th>Vacinas</th>
-                            <th>Idade</th>
-                            <th>Preço</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th>Quantidade Ração</th>
+                            <th>Tipo Ração</th>
+                            <th>Ração</th>
                             <th>Responsável</th>
                             <th>Observações</th>
                         </tr>
                         </thead>
                         <tbody>
-
+                        @php
+                            $totalRacao = 0;
+                        @endphp
                         @foreach($listaDados as $linha)
                             <tr>
                                 @php
-                                    $data_chegada = DateTime::createFromFormat('Y-m-d', $linha->data_chegada);
-                                    $data_chegada = date_format($data_chegada, 'd/m/Y');
-                                    $data_saida = DateTime::createFromFormat('Y-m-d', $linha->data_saida);
-                                    $data_saida = date_format($data_saida, 'd/m/Y');
+                                    $data = DateTime::createFromFormat('Y-m-d', $linha->data);
+                                    $data = date_format($data, 'd/m/Y');
+                                    $hora = DateTime::createFromFormat('H:i:s', $linha->hora);
+                                    $hora = date_format($hora, 'H:i');
                                 @endphp
-
-                                <td>{{$data_chegada}}</td>
-                                <td>{{$data_saida}}</td>
-                                <td>{{$linha->quantidade_total}}</td>
-                                <td>{{$linha->quantidade_morta}}</td>
-                                <td>{{$linha->raca}}</td>
-                                <td>{{$linha->vacinas}}</td>
-
-                                @if ($linha->idade < 30)
-                                    @php
-                                        $dias = $linha->idade;
-                                    @endphp
-                                    <td>{{$dias}}d</td>
-                                @elseif ($linha->idade > 30 && $linha->idade < 365)
-                                    @php
-                                        $meses = intdiv($linha->idade, 30);
-                                        $dias = $linha->idade % 30;
-                                    @endphp
-                                    @if($dias ==0)
-                                        <td>{{$meses}}m</td>
-                                    @else
-                                        <td>{{$dias}}d.{{$meses}}m</td>
-                                    @endif
-                                @else ($linha->idade > 365)
-                                    @php
-                                        $anos = intdiv($linha->idade, 365);
-                                        $meses = ($linha->idade) - ($anos * 365);
-                                        $meses = intdiv($meses, 30);
-                                        $dias = $linha->idade % 365;
-                                        $dias = $dias % 30;
-                                    @endphp
-                                    @if($dias ==0)
-                                        <td>{{$meses}}m.{{$anos}}a</td>
-                                    @else
-                                        <td>{{$dias}}d.{{$meses}}m.{{$anos}}a</td>
-                                    @endif
-                                @endif
-
-                                <td>R${{number_format($linha->preco,2,',','')}}</td>
+                                <td>{{$data}}</td>
+                                <td>{{$hora}}h</td>
+                                <td>{{number_format($linha->quantidade_alimento,2,',','')}} Kg</td>
+                                <td>{{$linha->tipo_racao}}</td>
+                                <td>{{$linha->produto->nome}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
+                                @php
+                                    $totalRacao += $linha->quantidade_alimento;
+                                @endphp
                             </tr>
                         @endforeach
                         </tbody>
                         <tfoot>
-                        <td>Registros</td>
+                        <td><b>Registros</b></td>
                         <td>{{sizeof($listaDados)}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>Ração Consumida</b></td>
+                        <td>{{number_format($totalRacao,2,',','')}} Kg</td>
                         </tfoot>
                     </table>
 

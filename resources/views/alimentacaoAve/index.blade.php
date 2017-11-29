@@ -32,27 +32,21 @@
                     <table id="tabela" class="display">
                         <thead>
                         <tr>
-                            <th>Data/Hora</th>
+                            <th>Data</th>
+                            <th>Hora</th>
                             <th>Quantidade Ração</th>
                             <th>Tipo Ração</th>
-                            <th>Responsável</th>
-                            <th>Observações</th>
+                            <th>Ração</th>
+                            <th class="none">Responsável</th>
+                            <th class="none">Observações</th>
                             <th data-orderable="false">Editar</th>
                             <th data-orderable="false">Remover</th>
                         </tr>
                         </thead>
+
                         <tbody>
-
-                        {{--<th class="all">Name</th>--}}
-                        {{--<th class="min-phone-l">Position</th>--}}
-                        {{--<th class="min-tablet">Office</th>--}}
-                        {{--<th class="never">Start date</th>--}}
-                        {{--<th class="desktop">Salary</th>--}}
-                        {{--<th class="none">Extn.</th>--}}
-
                         @foreach($listaDados as $linha)
                             <tr>
-
                                 @php
                                     $data = DateTime::createFromFormat('Y-m-d', $linha->data);
                                     $data = date_format($data, 'd/m/Y');
@@ -60,9 +54,11 @@
                                     $hora = date_format($hora, 'H:i');
                                 @endphp
 
-                                <td>{{$data}} {{$hora}} h</td>
+                                <td>{{$data}}</td>
+                                <td>{{$hora}}h</td>
                                 <td>{{number_format($linha->quantidade_alimento,2,',','')}} Kg</td>
                                 <td>{{$linha->tipo_racao}}</td>
+                                <td>{{$linha->produto->nome}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                                 <td>

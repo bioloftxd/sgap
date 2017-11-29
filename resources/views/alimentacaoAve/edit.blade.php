@@ -52,7 +52,7 @@
                         <label class="mdl-textfield__label" for="quantidade_alimento">Quatidade alimento (Kg)</label>
                     </div>
 
-                    <select class="form-control mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
+                    <select class="form-control mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
                             name="tipo_racao" id="tipo_racao">
                         <option disabled selected value="null">Tipo de Ração</option>
                         <option value="Inicial"
@@ -73,6 +73,15 @@
                                 @isset($dados)@if($dados->tipo_racao == "Recria") selected @endif @endisset>
                             Recria
                         </option>
+                    </select>
+
+                    <select class="form-control mdl-cell mdl-cell--2-col-desktop mdl-cell--4-col-phone mdl-cell--8-col-tablet"
+                            name="id_racao" id="id_racao">
+                        <option selected disabled value="null">Ração</option>
+                        @foreach($listaRacoes as $linha)
+                            <option value="{{$linha->id}}"
+                                    @isset($dados) @if($linha->id == $dados->id_racao) selected @endif @endisset>{{$linha->nome}}</option>
+                        @endforeach
                     </select>
 
                     <div class="mdl-layout-spacer"></div>

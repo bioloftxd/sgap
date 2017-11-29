@@ -55,19 +55,21 @@
     </a>
 
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="relatorios">
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@alimentacao")}}">ALIMENTAÇÃO DAS AVES</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">AQUISIÇÃO DE AVES</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">COLETA DE EXCREMENTO</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">COLETA DE OVOS</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">CUSTO GERAL</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">EMBALAGEM DE OVOS</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">ESTOQUE</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">FORNECIMENTO</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">MANUTENÇÃO</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">MORTALIDADE DE AVES</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">PRODUÇÃO</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">PRODUTOS</a>
-        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@index")}}">VENDA DE OVOS</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioAlimentacao")}}">ALIMENTAÇÃO DAS AVES</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioAquisicao")}}">AQUISIÇÃO DE AVES</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioColetaExcremento")}}">COLETA DE
+            EXCREMENTO</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioColetaOvo")}}">COLETA DE OVOS</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioEmbalaOvo")}}">EMBALAGEM DE OVOS</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioEstoque")}}">ESTOQUE</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioFornecedor")}}">FORNECEDOR</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioFornecimento")}}">FORNECIMENTO</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioGaiola")}}">GAIOLAS</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioManutencao")}}">MANUTENÇÃO</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioMortalidade")}}">MORTALIDADE DE AVES</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioProduto")}}">PRODUTOS</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioVendaOvo")}}">VENDA DE OVOS</a>
+        <a class="mdl-menu__item" href="{{action("ControlaRelatorios@relatorioVentilacao")}}">VENTILAÇÃO</a>
     </ul>
 
 </nav>

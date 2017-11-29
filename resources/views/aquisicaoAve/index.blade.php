@@ -32,8 +32,10 @@
                     <table id="tabela" class="display">
                         <thead>
                         <tr>
-                            <th>Data/Hora Recebimento</th>
-                            <th>Data/Hora Saída</th>
+                            <th>Data Recebimento</th>
+                            <th>Hora Recebimento</th>
+                            <th>Data Saída</th>
+                            <th>Hora Saída</th>
                             <th>Nº GTA</th>
                             <th>Nº NF</th>
                             <th>Total de Aves</th>
@@ -63,8 +65,10 @@
                                     $hora_saida = date_format($hora_saida, 'H:i');
                                 @endphp
 
-                                <td>{{$data_chegada}} {{$hora_chegada}} h</td>
-                                <td>{{$data_saida}} {{$hora_saida}} h</td>
+                                <td>{{$data_chegada}}</td>
+                                <td>{{$hora_chegada}} h</td>
+                                <td>{{$data_saida}}</td>
+                                <td>{{$hora_saida}} h</td>
                                 <td>{{$linha->numero_gta}}</td>
                                 <td>{{$linha->numero_nf}}</td>
                                 <td>{{$linha->quantidade_total}}</td>
@@ -77,7 +81,6 @@
                                         $dias = $linha->idade;
                                     @endphp
                                     <td>{{$dias}}d</td>
-
                                 @elseif ($linha->idade > 30 && $linha->idade < 365)
                                     @php
                                         $meses = intdiv($linha->idade, 30);
@@ -85,9 +88,9 @@
                                     @endphp
                                     @if($dias ==0)
                                         <td>{{$meses}}m</td>
+                                    @else
+                                        <td>{{$dias}}d.{{$meses}}m</td>
                                     @endif
-                                    <td>{{$dias}}d.{{$meses}}m</td>
-
                                 @else ($linha->idade > 365)
                                     @php
                                         $anos = intdiv($linha->idade, 365);
@@ -98,8 +101,9 @@
                                     @endphp
                                     @if($dias ==0)
                                         <td>{{$meses}}m.{{$anos}}a</td>
+                                    @else
+                                        <td>{{$dias}}d.{{$meses}}m.{{$anos}}a</td>
                                     @endif
-                                    <td>{{$dias}}d.{{$meses}}m.{{$anos}}a</td>
                                 @endif
 
                                 <td>R${{number_format($linha->preco,2,',','')}}</td>

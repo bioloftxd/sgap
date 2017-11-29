@@ -1,6 +1,6 @@
 @extends("_layouts.principal")
 
-@section("title", "RELATÓRIO DE FORNECIMENTO")
+@section("title", "RELATÓRIO DE VENTILAÇÃO")
 
 @section("content")
 
@@ -10,10 +10,10 @@
         <div class="mdl-layout-spacer"></div>
 
         <div class="mdl-cell textoCentralizado mdl-layout--small-screen-only" style="white-space: nowrap">
-            <h5>Relatório de Fornecimento</h5>
+            <h5>Relatório de Ventilação</h5>
         </div>
         <div class="mdl-cell textoCentralizado mdl-layout--large-screen-only">
-            <h4>Relatório de Fornecimento</h4>
+            <h4>Relatório de Ventilação</h4>
         </div>
 
         <div class="mdl-layout-spacer"></div>
@@ -31,7 +31,7 @@
 
                 <div class="mdl-cell--11-col">
 
-                    <form action="{{action("ControlaRelatorios@relatorioFornecimento")}}" method="POST">
+                    <form action="{{action("ControlaRelatorios@relatorioVentilacao")}}" method="POST">
                         {{csrf_field()}}
 
                         <div class="mdl-grid">
@@ -43,10 +43,10 @@
                                 <option selected disabled value="null">Data Inicial</option>
                                 @foreach($listaDatas as $linha)
                                     @php
-                                        $data = DateTime::createFromFormat('Y-m-d', $linha->data_fornecimento);
+                                        $data = DateTime::createFromFormat('Y-m-d', $linha->data_abertura);
                                         $data = date_format($data, 'd/m/Y');
                                     @endphp
-                                    <option value="{{$linha->data_fornecimento}}">{{$data}}</option>
+                                    <option value="{{$linha->data_abertura}}">{{$data}}</option>
                                 @endforeach
                             </select>
 
@@ -55,10 +55,10 @@
                                 <option selected disabled value="null">Data Inicial</option>
                                 @foreach($listaDatas as $linha)
                                     @php
-                                        $data = DateTime::createFromFormat('Y-m-d', $linha->data_fornecimento);
+                                        $data = DateTime::createFromFormat('Y-m-d', $linha->data_abertura);
                                         $data = date_format($data, 'd/m/Y');
                                     @endphp
-                                    <option value="{{$linha->data_fornecimento}}">{{$data}}</option>
+                                    <option value="{{$linha->data_abertura}}">{{$data}}</option>
                                 @endforeach
                             </select>
 
@@ -86,48 +86,55 @@
                 <div class="mdl-cell mdl-cell--11-col-desktop mdl-cell--4-col-phone mdl-cell--7-col-tablet table-responsive">
 
                     <table id="tabela" class="display">
+
                         <thead>
+
                         <tr>
-                            <th>Data Fornecimento</th>
-                            <th>Fornecedor</th>
-                            <th>Produto</th>
-                            <th>Quantidade</th>
-                            <th>Preço</th>
-                            <th>Fabricação</th>
-                            <th>Validade</th>
-                            <th>Nº NF</th>
-                            <th>Lote</th>
-                            <th>Responsável</th>
+                            <th>Data Abertura</th>
+                            <th>Hora Abertura</th>
+                            <th>Data Fechamento</th>
+                            <th>Hora Fechamento</th>
+                            <th>Temperatura Mínima</th>
+                            <th>Temperatura Média</th>
+                            <th>Temperatura Máxima</th>
                             <th>Observações</th>
+                            <th>Responsável</th>
                         </tr>
+
                         </thead>
+
                         <tbody>
 
                         @foreach($listaDados as $linha)
-                            @php
-                                $dataFab = DateTime::createFromFormat('Y-m-d', $linha->data_fabricacao);
-                                $dataFab= date_format($dataFab, 'd/m/Y');
-                                $dataVal = DateTime::createFromFormat('Y-m-d', $linha->data_validade);
-                                $dataVal= date_format($dataVal, 'd/m/Y');
-                                $dataForn = DateTime::createFromFormat('Y-m-d', $linha->data_fornecimento);
-                                $dataForn= date_format($dataForn, 'd/m/Y');
-                            @endphp
-
                             <tr>
-                                <td>{{$dataForn}}</td>
-                                <td>{{$linha->fornecedor->nome}}</td>
-                                <td>{{$linha->produto->nome}}</td>
-                                <td>{{$linha->quantidade}}</td>
-                                <td>R${{number_format($linha->preco,2,',','')}}</td>
-                                <td>{{$dataFab}}</td>
-                                <td>{{$dataVal}}</td>
-                                <td>{{$linha->numero_nf}}</td>
-                                <td>{{$linha->lote}}</td>
-                                <td>{{$linha->usuario->nome}}</td>
+
+                                @php
+                                    $data_abertura = DateTime::createFromFormat('Y-m-d', $linha->data_abertura);
+                                    $data_abertura = date_format($data_abertura, 'd/m/Y');
+                                    $data_fechamento = DateTime::createFromFormat('Y-m-d', $linha->data_fechamento);
+                                    $data_fechamento = date_format($data_fechamento, 'd/m/Y');
+                                    $hora_abertura = DateTime::createFromFormat('H:i:s', $linha->hora_abertura);
+                                    $hora_abertura = date_format($hora_abertura, 'H:i');
+                                    $hora_fechamento = DateTime::createFromFormat('H:i:s', $linha->hora_fechamento);
+                                    $hora_fechamento = date_format($hora_fechamento, 'H:i');
+                                    $temperatura_media = ($linha->temperatura_maxima+$linha->temperatura_minima)/2;
+                                @endphp
+
+                                <td>{{$data_abertura}}</td>
+                                <td>{{$hora_abertura}}h</td>
+                                <td>{{$data_fechamento}}</td>
+                                <td>{{$hora_fechamento}}h</td>
+                                <td>{{number_format($linha->temperatura_minima,1,',','')}} Cº</td>
+                                <td>{{number_format($temperatura_media,1,',','')}} Cº</td>
+                                <td>{{number_format($linha->temperatura_maxima,1,',','')}} Cº</td>
                                 <td>{{$linha->observacoes}}</td>
+                                <td>{{$linha->usuario->nome}}</td>
                             </tr>
                         @endforeach
+
+
                         </tbody>
+
                     </table>
 
                 </div>

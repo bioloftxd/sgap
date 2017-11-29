@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AlimentacaoAve;
+use App\Produto;
 use App\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class ControlaAlimentacao extends Controller
      */
     public function index()
     {
-        $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0);
+        $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0)->sortByDesc("data");
         return view("alimentacaoAve.index", ["listaDados" => $listaDados]);
     }
 
@@ -28,7 +29,8 @@ class ControlaAlimentacao extends Controller
     public function create()
     {
         $listaDados = Usuario::all()->where("ativo", "!=", 0);
-        return view("alimentacaoAve.create", ["listaDados" => $listaDados]);
+        $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
+        return view("alimentacaoAve.create", ["listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
     }
 
     /**
@@ -44,12 +46,20 @@ class ControlaAlimentacao extends Controller
         $dados->hora = ($request->hora) ? $request->hora : date("H:i");
         $dados->tipo_racao = ($request->tipo_racao) ? $request->tipo_racao : "-";
         $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
+        $dados->id_racao = ($request->id_racao) ? $request->id_racao : null;
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         $dados->quantidade_alimento = ($request->quantidade_alimento > 0) ? $request->quantidade_alimento : 1;
         if ($request->tipo_racao == null) {
             session()->put("info", "Selecione o tipo de ração!");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
-            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
+            $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
+            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
+        }
+        if ($request->id_racao == null) {
+            session()->put("info", "Selecione a ração!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
+            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
         }
         DB::beginTransaction();
         try {
@@ -60,9 +70,10 @@ class ControlaAlimentacao extends Controller
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
-            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
+            $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
+            return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
         }
-        $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0);
+        $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0)->sortByDesc("data");
         session()->put("info", "Registro salvo!");
         return view("alimentacaoAve.index", ["listaDados" => $listaDados]);
     }
@@ -89,7 +100,8 @@ class ControlaAlimentacao extends Controller
     {
         $dados = AlimentacaoAve::find($id);
         $listaDados = Usuario::all()->where("ativo", "!=", 0);
-        return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados]);
+        $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
+        return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
     }
 
     /**
@@ -106,11 +118,20 @@ class ControlaAlimentacao extends Controller
         $dados->hora = ($request->hora) ? $request->hora : $dados->hora;
         $dados->tipo_racao = ($request->tipo_racao) ? $request->tipo_racao : $dados->tipo_racao;
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
+        $dados->id_racao = ($request->id_racao) ? $request->id_racao : null;
         $dados->quantidade_alimento = ($request->quantidade_alimento > 0) ? $request->quantidade_alimento : $dados->quantidade_alimento;
         if ($request->tipo_racao == null) {
             session()->put("info", "Selecione o tipo de ração!");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
-            return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados]);
+            $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
+            return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
+        }
+        if ($request->id_racao == null) {
+            session()->put("info", "Selecione a ração!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
+            return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
         }
         DB::beginTransaction();
         try {
@@ -121,10 +142,11 @@ class ControlaAlimentacao extends Controller
             $erro = $e->errorInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
-            return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados]);
+            $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
+            return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
         }
 
-        $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0);
+        $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0)->sortByDesc("data");
         session()->put("info", "Registro alterado!");
         return view("alimentacaoAve.index", ["listaDados" => $listaDados]);
     }
@@ -149,7 +171,7 @@ class ControlaAlimentacao extends Controller
             $erro = $e->erroInfo[1];
             session()->put("info", "Erro ao salvar! ($erro)");
         }
-        $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0);
+        $listaDados = AlimentacaoAve::all()->where("ativo", "!=", 0)->sortByDesc("data");
         return view("alimentacaoAve.index", ["listaDados" => $listaDados]);
 
     }

@@ -14,6 +14,7 @@ class AlimentacaoAve extends Model
         "quantidade_alimento",
         "tipo_racao",
         "id_usuario",
+        "id_racao",
         "observacoes",
         "ativo"
     ];
@@ -22,6 +23,11 @@ class AlimentacaoAve extends Model
     public function usuario()
     {
         return $this->hasOne(Usuario::class, "id", "id_usuario");
+    }
+
+    public function produto()
+    {
+        return $this->hasOne(Produto::class, "id", "id_racao");
     }
 
 }

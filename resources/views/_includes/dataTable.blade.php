@@ -7,35 +7,6 @@
             "columnDefs": [
                 {"className": "dt-center", "targets": "_all"}
             ],
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'pdf',
-                    exportOptions: {
-                        columns: ':visible'
-                    },
-                    text: 'Salvar(PDF)',
-                    key: {
-                        key: 's',
-                        altkey: true
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: ':visible'
-                    },
-                    text: 'Imprimir',
-                    key: {
-                        key: 'p',
-                        altkey: true
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    text: 'Mostrar colunas'
-                },
-            ],
             "language": {
                 "decimal": "",
                 "emptyTable": "Nenhum registros para exibir!",

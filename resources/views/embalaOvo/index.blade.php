@@ -57,7 +57,7 @@
                                 <td>{{$data}} {{$hora}} h</td>
                                 <td>{{$linha->lote}}</td>
                                 <td>{{$linha->quantidade_embalada}}</td>
-                                <td>{{$linha->quantidade_embalada}}</td>
+                                <td>{{$linha->tipo_embalagem}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                                 <td>

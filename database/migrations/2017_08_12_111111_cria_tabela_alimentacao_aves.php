@@ -17,6 +17,8 @@ class CriaTabelaAlimentacaoAves extends Migration
             $table->string("tipo_racao"); //Tipo de alimento distribuido
             $table->integer("id_usuario")->unsigned(); //Id de usuário autenticado
             $table->foreign("id_usuario")->references("id")->on("usuario");
+            $table->integer("id_racao")->unsigned(); //Id da ração ultilizada
+            $table->foreign("id_racao")->references("id")->on("usuario");
             $table->string("observacoes"); //Observações sobre alimentação
             $table->boolean("ativo")->default(1); //Exclusão simulada
             $table->timestamps();
