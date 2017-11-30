@@ -52,7 +52,7 @@
 
                             <select class="form-control mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
                                     name="data_final" id="data_final">
-                                <option selected disabled value="null">Data Inicial</option>
+                                <option selected disabled value="null">Data Final</option>
                                 @foreach($listaDatas as $linha)
                                     @php
                                         $data = DateTime::createFromFormat('Y-m-d', $linha->data);
@@ -96,7 +96,9 @@
                         </tr>
                         </thead>
                         <tbody>
-
+                        @php
+                            $totalExcremento =0;
+                        @endphp
                         @foreach($listaDados as $linha)
                             <tr>
 
@@ -113,8 +115,18 @@
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                             </tr>
+                            @php
+                                $totalExcremento +=$linha->litros;
+                            @endphp
                         @endforeach
                         </tbody>
+                        <tfoot>
+                        <td><b>Registros</b></td>
+                        <td><b>{{sizeof($listaDados)}}</b></td>
+                        <td></td>
+                        <td><b>Coleta Total</b></td>
+                        <td><b>{{number_format($totalExcremento,1,',','')}} L</b></td>
+                        </tfoot>
                     </table>
 
                 </div>

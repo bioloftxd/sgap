@@ -51,10 +51,14 @@ class ControlaAutenticacao extends Controller
         foreach ($usuarios as $usuario) {
 
             if ($usuario->usuario == $autentica->usuario) {
+                if ($usuario->ativo == 0) {
+                    session()->flush();
+                    session()->put("info", "Conta desativada!");
+                    return redirect()->action("ControlaUsuario@index");
+                }
                 if ($usuario->senha == $autentica->senha) {
                     session()->flush();
                     session()->put("usuario", $usuario);
-                    echo "entrou";
                     return redirect()->action("ControlaAutenticacao@index");
                 } else {
                     session()->flush();

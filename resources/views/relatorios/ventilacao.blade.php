@@ -52,7 +52,7 @@
 
                             <select class="form-control mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
                                     name="data_final" id="data_final">
-                                <option selected disabled value="null">Data Inicial</option>
+                                <option selected disabled value="null">Data Final</option>
                                 @foreach($listaDatas as $linha)
                                     @php
                                         $data = DateTime::createFromFormat('Y-m-d', $linha->data_abertura);
@@ -104,10 +104,11 @@
                         </thead>
 
                         <tbody>
+@php
 
+@endphp
                         @foreach($listaDados as $linha)
                             <tr>
-
                                 @php
                                     $data_abertura = DateTime::createFromFormat('Y-m-d', $linha->data_abertura);
                                     $data_abertura = date_format($data_abertura, 'd/m/Y');
@@ -119,7 +120,6 @@
                                     $hora_fechamento = date_format($hora_fechamento, 'H:i');
                                     $temperatura_media = ($linha->temperatura_maxima+$linha->temperatura_minima)/2;
                                 @endphp
-
                                 <td>{{$data_abertura}}</td>
                                 <td>{{$hora_abertura}}h</td>
                                 <td>{{$data_fechamento}}</td>
@@ -131,9 +131,18 @@
                                 <td>{{$linha->usuario->nome}}</td>
                             </tr>
                         @endforeach
-
-
                         </tbody>
+                        <tfoot>
+                        <td><b>Registros</b></td>
+                        <td><b>{{sizeof($listaDados)}}</b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        </tfoot>
 
                     </table>
 

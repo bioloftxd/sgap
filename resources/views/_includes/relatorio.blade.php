@@ -21,6 +21,8 @@
                 {
                     extend: 'pdf',
                     footer: true,
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
                     exportOptions: {
                         columns: ':visible'
                     },

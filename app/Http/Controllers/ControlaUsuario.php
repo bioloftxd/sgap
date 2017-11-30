@@ -166,7 +166,22 @@ class ControlaUsuario extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dados = Usuario::find($id);
+        $dados->ativo = 0;
+        DB::beginTransaction();
+        try {
+            $dados->save();
+            DB::commit();
+            session()->flush();
+            session()->put("info", "Conta desativada!");
+            return redirect()->action("ControlaUsuario@index");
+        } catch (\Throwable $e) {
+            DB::rollback();
+            dd($e);
+            $erro = $e->errorInfo[1];
+            session()->put("info", "Erro ao desativar! ($erro)");
+            return view("usuario.edit", ['usuario' => $dados]);
+        }
     }
 
 }

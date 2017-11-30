@@ -37,14 +37,23 @@
                     </tr>
                     </thead>
                     <tbody>
-
+                    @php
+                        $aves =0;
+                    @endphp
                     @foreach($listaDados as $linha)
                         <tr>
                             <td>{{$linha->numero_gaiola}}</td>
                             <td>{{$linha->quantidade_aves}}</td>
                         </tr>
+                        @php
+                            $aves += $linha->quantidade_aves;
+                        @endphp
                     @endforeach
                     </tbody>
+                    <tfoot>
+                    <td><b>Registros  {{sizeof($listaDados)}}</b></td>
+                    <td><b>Tota de Aves  {{$aves}}</b></td>
+                    </tfoot>
                 </table>
 
             </div>

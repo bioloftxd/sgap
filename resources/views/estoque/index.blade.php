@@ -34,7 +34,7 @@
                             <tr>
                                 <td>{{$linha->produto->nome}}</td>
                                 <td>{{$linha->quantidade}}</td>
-                                <td>{{$linha->preco}}</td>
+                                <td>R${{number_format($linha->preco,2,',','')}}</td>
                                 <td>{{$linha->produto->tipo_produto}}</td>
                                 <td>{{$linha->produto->observacoes}}</td>
                                 <td>

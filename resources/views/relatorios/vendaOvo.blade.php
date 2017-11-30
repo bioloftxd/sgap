@@ -52,7 +52,7 @@
 
                             <select class="form-control mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
                                     name="data_final" id="data_final">
-                                <option selected disabled value="null">Data Inicial</option>
+                                <option selected disabled value="null">Data Final</option>
                                 @foreach($listaDatas as $linha)
                                     @php
                                         $data = DateTime::createFromFormat('Y-m-d', $linha->data_venda);
@@ -100,7 +100,11 @@
                         </tr>
                         </thead>
                         <tbody>
-
+                        @php
+                            $total12 =0;
+                            $total30=0;
+                            $totalVendas=0;
+                        @endphp
                         @foreach($listaDados as $linha)
                             <tr>
                                 @php
@@ -120,8 +124,24 @@
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                             </tr>
+                            @php
+                                $total12 = ($linha->tipo_embalagem == "12 Unidades") ? $total12+$linha->quantidade : $total12;
+                                $total30 = ($linha->tipo_embalagem == "30 Unidades") ? $total30+$linha->quantidade : $total30;
+                                $totalVendas +=$linha->preco;
+                            @endphp
                         @endforeach
                         </tbody>
+                        <tfoot>
+                        <td><b>Registros</b></td>
+                        <td><b>{{sizeof($listaDados)}}</b></td>
+                        <td><b>Valor total</b></td>
+                        <td><b>R${{number_format($totalVendas,2,',','')}}</b></td>
+                        <td><b>30 Unidades</b></td>
+                        <td><b>{{$total30}}</b></td>
+                        <td><b>12 Unidades</b></td>
+                        <td><b>{{$total12}}</b></td>
+                        <td><b></b></td>
+                        </tfoot>
                     </table>
 
                 </div>

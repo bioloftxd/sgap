@@ -94,16 +94,27 @@
                         </tr>
                         </thead>
                         <tbody>
-
+                        @php
+                            $valorTotal=0;
+                        @endphp
                         @foreach($listaDados as $linha)
                             <tr>
                                 <td>{{$linha->produto->nome}}</td>
                                 <td>{{$linha->quantidade}}</td>
-                                <td>{{$linha->preco}}</td>
+                                <td>R${{number_format($linha->preco,2,',','')}}</td>
                                 <td>{{$linha->produto->tipo_produto}}</td>
                                 <td>{{$linha->produto->observacoes}}</td>
                             </tr>
+                        @php
+                            $valorTotal+=$linha->preco;
+                        @endphp
                         @endforeach
+                        <tbody>
+                        <td><b>Registros</b></td>
+                        <td><b>{{sizeof($listaDados)}}</b></td>
+                        <td><b>Valor Total</b></td>
+                        <td><b>R${{number_format($valorTotal,2,',','')}}</b></td>
+                        <td><b></b></td>
                         </tbody>
                     </table>
 

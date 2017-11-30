@@ -52,7 +52,7 @@
 
                             <select class="form-control mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
                                     name="data_final" id="data_final">
-                                <option selected disabled value="null">Data Inicial</option>
+                                <option selected disabled value="null">Data Final</option>
                                 @foreach($listaDatas as $linha)
                                     @php
                                         $data = DateTime::createFromFormat('Y-m-d', $linha->data);
@@ -97,7 +97,10 @@
                         </tr>
                         </thead>
                         <tbody>
-
+                        @php
+                            $ovosQuebrados =0;
+                            $ovosColetados =0;
+                        @endphp
                         @foreach($listaDados as $linha)
                             <tr>
 
@@ -115,8 +118,20 @@
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
                             </tr>
+                            @php
+                                $ovosQuebrados +=$linha->quantidade_quebrado;
+                                $ovosColetados +=$linha->quantidade_coletado;
+                            @endphp
                         @endforeach
                         </tbody>
+                        <tfoot>
+                        <td><b>Registros {{sizeof($listaDados)}}</b></td>
+                        <td><b>Ovos Coletados</b></td>
+                        <td><b>{{$ovosColetados}}</b></td>
+                        <td><b>Ovos Quebrados / Ovos Inteiros</b></td>
+                        <td><b>{{$ovosQuebrados}} </b></td>
+                        <td><b>{{$ovosColetados-$ovosQuebrados}}</b></td>
+                        </tfoot>
                     </table>
 
                 </div>

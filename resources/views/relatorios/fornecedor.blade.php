@@ -53,6 +53,13 @@
                             </tr>
                         @endforeach
                         </tbody>
+                        <tfoot>
+                        <td><b>Regitros</b></td>
+                        <td><b>{{sizeof($listaDados)}}</b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        </tfoot>
                     </table>
 
                 </div>

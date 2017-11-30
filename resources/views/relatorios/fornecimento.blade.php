@@ -52,7 +52,7 @@
 
                             <select class="form-control mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-phone mdl-cell--3-col-tablet"
                                     name="data_final" id="data_final">
-                                <option selected disabled value="null">Data Inicial</option>
+                                <option selected disabled value="null">Data Final</option>
                                 @foreach($listaDatas as $linha)
                                     @php
                                         $data = DateTime::createFromFormat('Y-m-d', $linha->data_fornecimento);
@@ -98,11 +98,13 @@
                             <th>Nº NF</th>
                             <th>Lote</th>
                             <th>Responsável</th>
-                            <th>Observações</th>
                         </tr>
                         </thead>
                         <tbody>
-
+                        @php
+                            $quantidade =0;
+                            $valorTota =0;
+                        @endphp
                         @foreach($listaDados as $linha)
                             @php
                                 $dataFab = DateTime::createFromFormat('Y-m-d', $linha->data_fabricacao);
@@ -124,10 +126,25 @@
                                 <td>{{$linha->numero_nf}}</td>
                                 <td>{{$linha->lote}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
-                                <td>{{$linha->observacoes}}</td>
                             </tr>
+                            @php
+                                $quantidade +=$linha->quantidade;
+                                $valorTota +=$linha->preco;
+                            @endphp
                         @endforeach
                         </tbody>
+                        <tfoot>
+                        <td><b>Registros</b></td>
+                        <td><b>{{sizeof($listaDados)}}</b></td>
+                        <td><b>Quantidade</b></td>
+                        <td><b>{{number_format($quantidade,2,',','')}}</b></td>
+                        <td><b>Valor Total</b></td>
+                        <td><b>R${{number_format($valorTota,2,',','')}}</b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        <td><b></b></td>
+                        </tfoot>
                     </table>
 
                 </div>
