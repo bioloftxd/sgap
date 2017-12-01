@@ -19,7 +19,7 @@ class ControlaUsuario extends Controller
     public function index()
     {
         if (session()->exists("usuario")) {
-            return view("inicio");
+            return redirect()->action("ControlaManutencaoAviario@index");
         } else {
             return view("autentica");
         }

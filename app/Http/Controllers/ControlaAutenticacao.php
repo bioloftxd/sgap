@@ -54,16 +54,16 @@ class ControlaAutenticacao extends Controller
                 if ($usuario->ativo == 0) {
                     session()->flush();
                     session()->put("info", "Conta desativada!");
-                    return redirect()->action("ControlaUsuario@index");
+                    return back();
                 }
                 if ($usuario->senha == $autentica->senha) {
                     session()->flush();
                     session()->put("usuario", $usuario);
-                    return redirect()->action("ControlaAutenticacao@index");
+                    return back();
                 } else {
                     session()->flush();
                     session()->put("info", "Senha Incorreta!");
-                    return redirect()->action("ControlaUsuario@index");
+                    return back();
                 }
             } else {
                 session()->flush();
