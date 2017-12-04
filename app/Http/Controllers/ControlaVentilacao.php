@@ -48,15 +48,15 @@ class ControlaVentilacao extends Controller
         $dados->temperatura_minima = ($request->temperatura_minima) ? $request->temperatura_minima : null;
         $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
-        if ($request->temperatura_maxima == null) {
-            session()->put("info", "Insira a temperatura máxima!");
-            $listaDados = Usuario::all()->where("ativo", "!=", 0);
-            return view("ventilacao.create", ["listaDados" => $listaDados]);
-        }
         if ($request->temperatura_minima == null) {
             session()->put("info", "Insira a temperatura mínima!");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
-            return view("ventilacao.create", ["listaDados" => $listaDados]);
+            return view("ventilacao.create", ["listaDados" => $listaDados, "dados" => $dados]);
+        }
+        if ($request->temperatura_maxima == null) {
+            session()->put("info", "Insira a temperatura máxima!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("ventilacao.create", ["listaDados" => $listaDados, "dados" => $dados]);
         }
         DB::beginTransaction();
         try {

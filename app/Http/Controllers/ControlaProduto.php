@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Estoque;
 use App\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +40,7 @@ class ControlaProduto extends Controller
     {
         $produtos = Produto::all()->where("ativo", "!=", 0);
         $dados = new Produto();
+        $estoque = new Estoque();
         $dados->nome = ($request->nome) ? $request->nome : null;
         $dados->marca = ($request->marca) ? $request->marca : "-";
         $dados->tipo_produto = ($request->tipo_produto) ? $request->tipo_produto : null;
@@ -62,6 +64,10 @@ class ControlaProduto extends Controller
         DB::beginTransaction();
         try {
             $dados->save();
+            $estoque->quantidade = 0;
+            $estoque->preco = 0;
+            $estoque->id_produto = $dados->id;
+            $estoque->save();
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollback();
@@ -109,6 +115,17 @@ class ControlaProduto extends Controller
     {
         $produtos = Produto::all()->where("ativo", "!=", 0);
         $dados = Produto::find($id);
+        if ($request->nome != $dados->nome) {
+
+            foreach ($produtos as $produto) {
+                if ($produto->nome == $dados->nome && $produto->marca == $dados->marca) {
+                    if ($produto->tipo_produto == $dados->tipo_produto) {
+                        session()->put("info", "Produto já registrado!");
+                        return view("produto.edit", ["dados" => $dados]);
+                    }
+                }
+            }
+        }
         $dados->nome = ($request->nome) ? $request->nome : $dados->nome;
         $dados->marca = ($request->marca) ? $request->marca : "-";
         $dados->tipo_produto = ($request->tipo_produto) ? $request->tipo_produto : $dados->tipo_produto;
@@ -120,14 +137,6 @@ class ControlaProduto extends Controller
         if ($request->tipo_produto == null) {
             session()->put("info", "Selecione o tipo de produto!");
             return view("produto.edit", ["dados" => $dados]);
-        }
-        foreach ($produtos as $produto) {
-            if ($produto->nome == $dados->nome && $produto->marca == $dados->marca) {
-                if ($produto->tipo_produto == $dados->tipo_produto) {
-                    session()->put("info", "Produto já registrado!");
-                    return view("produto.edit", ["dados" => $dados]);
-                }
-            }
         }
         DB::beginTransaction();
         try {
@@ -154,9 +163,12 @@ class ControlaProduto extends Controller
     {
         $dados = Produto::find($id);
         $dados->ativo = 0;
+        $estoque = Estoque::where("id_produto", "=", $id)->first();
+        $estoque->ativo = 0;
         DB::beginTransaction();
         try {
             $dados->save();
+            $estoque->save();
             DB::commit();
             session()->put("info", "Registro removido!");
         } catch (\Throwable $e) {

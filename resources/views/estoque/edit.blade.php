@@ -54,7 +54,7 @@
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="number" id="preco" name="preco"
-                               @isset($dados)value="{{$dados->hora}}" @endisset
+                               @isset($dados)value="{{$dados->preco}}" @endisset
                                @empty($dados)value="" @endempty step="0.01">
                         <label class="mdl-textfield__label" for="preco">Preço do Produto</label>
                     </div>

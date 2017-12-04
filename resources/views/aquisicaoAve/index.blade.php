@@ -100,7 +100,11 @@
                                         $dias = $dias % 30;
                                     @endphp
                                     @if($dias ==0)
-                                        <td>{{$meses}}m.{{$anos}}a</td>
+                                        @if($meses==0)
+                                            <td>{{$anos}}a</td>
+                                        @else
+                                            <td>{{$meses}}m.{{$anos}}a</td>
+                                        @endif
                                     @else
                                         <td>{{$dias}}d.{{$meses}}m.{{$anos}}a</td>
                                     @endif

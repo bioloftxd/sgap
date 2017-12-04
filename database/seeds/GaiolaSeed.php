@@ -17,7 +17,7 @@ class GaiolaSeed extends Seeder
         foreach (range(1, 30) as $cont => $gaiola) {
             Gaiola::create([
                 "numero_gaiola" => $cont,
-                "quantidade_aves" => rand(10, 20)
+                "quantidade_aves" => 4
             ]);
         }
     }

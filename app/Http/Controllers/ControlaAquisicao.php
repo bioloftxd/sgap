@@ -66,7 +66,7 @@ class ControlaAquisicao extends Controller
         $dias += $request->anos * 365;
         $dados->idade = ($dias) ? $dias : null;
         $dados->preco = ($request->preco) ? $request->preco : null;
-        $dados->id_usuario = session()->get("usuario")->id;
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         if ($request->quantidade_total == null || $request->quantidade_total == 0) {
             session()->put("info", "Insira o total de aves recebida!");
@@ -75,11 +75,6 @@ class ControlaAquisicao extends Controller
         }
         if ($request->preco == null || $request->preco == 0) {
             session()->put("info", "Insira o valor total da aquisição!");
-            $listaDados = Usuario::all()->where("ativo", "!=", 0);
-            return view("aquisicaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
-        }
-        if ($request->raca == null) {
-            session()->put("info", "Insira a raça do lote!");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
             return view("aquisicaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
         }
@@ -93,7 +88,11 @@ class ControlaAquisicao extends Controller
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
             return view("aquisicaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
         }
-
+        if ($request->raca == null) {
+            session()->put("info", "Insira a raça do lote!");
+            $listaDados = Usuario::all()->where("ativo", "!=", 0);
+            return view("aquisicaoAve.create", ["dados" => $dados, "listaDados" => $listaDados]);
+        }
         DB::beginTransaction();
         try {
             $dados->save();
@@ -154,6 +153,9 @@ class ControlaAquisicao extends Controller
         $dados->quantidade_total = ($request->quantidade_total) ? $request->quantidade_total : $dados->quantidade_total;
         $dados->quantidade_morta = ($request->quantidade_morta) ? $request->quantidade_morta : $dados->quantidade_morta;
         $dados->raca = ($request->raca) ? $request->raca : $dados->raca;
+        $dados->preco = ($request->preco) ? $request->preco : null;
+        $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : $dados->id_usuario;
+        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         if ($request->vacinas != null) {
             $dados->vacinas = "";
             for ($i = 0; $i < sizeof($request->vacinas); $i++) {
@@ -170,9 +172,7 @@ class ControlaAquisicao extends Controller
         $dias += $request->meses * 30;
         $dias += $request->anos * 365;
         $dados->idade = ($dias) ? $dias : null;
-        $dados->preco = ($request->preco) ? $request->preco : null;
-        $dados->id_usuario = session()->get("usuario")->id;
-        $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
+
 
         if ($request->quantidade_total == null || $request->quantidade_total == 0) {
             session()->put("info", "Insira o total de aves recebida!");

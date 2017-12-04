@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Estoque;
 use App\Fornecedor;
 use App\Fornecimento;
 use App\Produto;
@@ -90,9 +91,13 @@ class ControlaFornecimento extends Controller
             $listaUsuarios = Usuario::all()->where("ativo", "!=", 0);
             return view("fornecimento.create", ["listaProdutos" => $listaProdutos, "listaFornecedores" => $listaFornecedores, "listaUsuarios" => $listaUsuarios, "dados" => $dados]);
         }
+        $estoque = Estoque::where("id_produto", "=", $dados->id_produto)->first();
+        $estoque->preco = $dados->preco / $dados->quantidade;
+        $estoque->quantidade += $dados->quantidade;
         DB::beginTransaction();
         try {
             $dados->save();
+            $estoque->save();
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollback();
@@ -191,9 +196,19 @@ class ControlaFornecimento extends Controller
             $listaUsuarios = Usuario::all()->where("ativo", "!=", 0);
             return view("fornecimento.edit", ["listaProdutos" => $listaProdutos, "listaFornecedores" => $listaFornecedores, "listaUsuarios" => $listaUsuarios, "dados" => $dados]);
         }
+        $estoque = Estoque::where("id_produto", "=", $dados->id_produto)->first();
+        $estoque->preco = $dados->preco / $dados->quantidade;
+        if ($request->quantidade < $dados->quantidade) {
+            $estoque->quantidade -= $dados->quantidade - $request->quantidade;
+            $dados->quantidade -= $request->quantidade;
+        } else {
+            $estoque->quantidade += $request->quantidade - $dados->quantidade;
+            $dados->quantidade = $request->quantidade;
+        }
         DB::beginTransaction();
         try {
             $dados->save();
+            $estoque->save();
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollback();
@@ -216,9 +231,12 @@ class ControlaFornecimento extends Controller
     {
         $dados = Fornecimento::find($id);
         $dados->ativo = 0;
+        $estoque = Estoque::where("id_produto", "=", $dados->id_produto)->first();
+        $estoque->quantidade -= $dados->quantidade;
         DB::beginTransaction();
         try {
             $dados->save();
+            $estoque->save();
             DB::commit();
             session()->put("info", "Registro removido!");
         } catch (\Throwable $e) {

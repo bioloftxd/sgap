@@ -32,7 +32,8 @@
                     <table id="tabela" class="display">
                         <thead>
                         <tr>
-                            <th>Data/Hora</th>
+                            <th>Data</th>
+                            <th>Hora</th>
                             <th>Ovos Coletados</th>
                             <th>Ovos Quebrados</th>
                             <th>Responsável</th>
@@ -53,7 +54,8 @@
                                     $hora = date_format($hora, 'H:i');
                                 @endphp
 
-                                <td>{{$data}} {{$hora}} h</td>
+                                <td>{{$data}}</td>
+                                <td>{{$hora}} h</td>
                                 <td>{{$linha->quantidade_coletado}}</td>
                                 <td>{{$linha->quantidade_quebrado}}</td>
                                 <td>{{$linha->usuario->nome}}</td>

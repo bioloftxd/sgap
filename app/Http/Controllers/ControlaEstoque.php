@@ -76,8 +76,8 @@ class ControlaEstoque extends Controller
     public function update(Request $request, $id)
     {
         $dados = Estoque::find($id);
-        $dados->quantidade = ($request->quantidade) ? $request->quantidade : $dados->quantidade;
-        $dados->preco = ($request->preco) ? $request->preco : $dados->preco;
+        $dados->quantidade = ($request->quantidade != null) ? $request->quantidade : $dados->quantidade;
+        $dados->preco = ($request->preco != null) ? $request->preco : $dados->preco;
         if ($request->quantidade == null) {
             session()->put("info", "Insira a quantiade de produto no estoque!");
             return view("estoque.edit", ["dados" => $dados]);
@@ -116,7 +116,7 @@ class ControlaEstoque extends Controller
         try {
             $dados->save();
             DB::commit();
-            session()->put("info", "Registro salvo!");
+            session()->put("info", "Registro removido!");
         } catch (\Throwable $e) {
             DB::rollback();
             $erro = $e->errorInfo[1];

@@ -456,7 +456,8 @@
                             name="id_usuario" id="id_usuario">
                         <option selected disabled value="null">Usuário Responsável</option>
                         @foreach($listaDados as $linha)
-                            <option value="{{$linha->id}}">{{$linha->nome}}</option>
+                            <option value="{{$linha->id}}"
+                                    @isset($dados) @if($linha->id == $dados->id_usuario) selected @endif @endisset>{{$linha->nome}}</option>
                         @endforeach
                     </select>
 
