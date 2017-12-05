@@ -151,7 +151,6 @@ class ControlaFornecimento extends Controller
     {
         $dados = Fornecimento::find($id);
         $dados->lote = ($request->lote) ? $request->lote : $dados->lote;
-        $dados->quantidade = ($request->quantidade) ? $request->quantidade : $dados->quantidade;
         $dados->data_fornecimento = ($request->data_fornecimento) ? $request->data_fornecimento : $dados->data_fornecimento;
         $dados->preco = ($request->preco) ? $request->preco : $dados->preco;
         $dados->data_fabricacao = ($request->data_fabricacao) ? $request->data_fabricacao : $dados->data_fabricacao;
@@ -198,11 +197,12 @@ class ControlaFornecimento extends Controller
         }
         $estoque = Estoque::where("id_produto", "=", $dados->id_produto)->first();
         $estoque->preco = $dados->preco / $dados->quantidade;
+
         if ($request->quantidade < $dados->quantidade) {
-            $estoque->quantidade -= $dados->quantidade - $request->quantidade;
-            $dados->quantidade -= $request->quantidade;
+            $estoque->quantidade += $dados->quantidade - $request->quantidade;
+            $dados->quantidade = $request->quantidade;
         } else {
-            $estoque->quantidade += $request->quantidade - $dados->quantidade;
+            $estoque->quantidade -= $request->quantidade - $dados->quantidade;
             $dados->quantidade = $request->quantidade;
         }
         DB::beginTransaction();

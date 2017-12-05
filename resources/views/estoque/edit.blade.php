@@ -48,7 +48,7 @@
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-phone mdl-cell--4-col-tablet">
                         <input class="mdl-textfield__input" type="number" id="quantidade" autofocus name="quantidade"
                                @isset($dados)value="{{$dados->quantidade}}" @endisset
-                               @empty($dados)value=""@endempty >
+                               @empty($dados)value=""@endempty step="0.01" >
                         <label class=" mdl-textfield__label" for="quantidade">Quantidade em Estoque</label>
                     </div>
 

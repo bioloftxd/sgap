@@ -108,7 +108,7 @@
                                            for="resolvido">
                                         <input type="radio" id="resolvido" name="resolvido"
                                                class="mdl-radio__button"
-                                               value="1"@if($dados->resolvido==1) @php echo "checked" @endphp @endif>
+                                               value="1" @if($dados->resolvido==1) checked @endif>
                                         <span class="mdl-radio__label">Resolvido</span>
                                     </label>
                                 </td>
@@ -117,7 +117,7 @@
                                            for="naoResolvido">
                                         <input type="radio" id="naoResolvido" name="resolvido"
                                                class="mdl-radio__button"
-                                               value="0" @if($dados->resolvido==0) @php echo "checked" @endphp @endif>
+                                               value="0" @if($dados->resolvido==0)checked @endif>
                                         <span class="mdl-radio__label">Não Resolvido</span>
                                     </label>
                                 </td>

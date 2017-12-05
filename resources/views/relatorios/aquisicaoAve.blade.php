@@ -104,7 +104,7 @@
                         <tbody>
 
                         @php
-                            $totalAvesVivas=0;
+                            $totalAves=0;
                             $totalAvesMortas=0;
                             $totalPreco=0;
                         @endphp
@@ -159,7 +159,7 @@
                                 <td>{{$linha->observacoes}}</td>
                             </tr>
                             @php
-                                $totalAvesVivas += $linha->quantidade_total;
+                                $totalAves += $linha->quantidade_total;
                                 $totalAvesMortas += $linha->quantidade_morta;
                                 $totalPreco += $linha->preco;
                             @endphp
@@ -169,11 +169,11 @@
                         <td><b>Registros</b></td>
                         <td><b>{{sizeof($listaDados)}}</b></td>
                         <td><b>Aves Vivas</b></td>
-                        <td><b>{{$totalAvesVivas}}</b></td>
+                        <td><b>{{$totalAves-$totalAvesMortas}}</b></td>
                         <td><b>Aves Mortas</b></td>
                         <td><b>{{$totalAvesMortas}}</b></td>
                         <td><b>Total de Aves</b></td>
-                        <td><b>{{$totalAvesVivas-$totalAvesMortas}}</b></td>
+                        <td><b>{{$totalAves}}</b></td>
                         <td><b>Preço Total</b></td>
                         <td><b>R${{number_format($totalPreco,2,',','')}}</b></td>
 

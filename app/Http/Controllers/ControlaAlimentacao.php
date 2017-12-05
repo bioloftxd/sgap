@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AlimentacaoAve;
+use App\Estoque;
 use App\Produto;
 use App\Usuario;
 use Illuminate\Http\Request;
@@ -61,9 +62,12 @@ class ControlaAlimentacao extends Controller
             $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
             return view("alimentacaoAve.create", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
         }
+        $racao = Estoque::where("id_produto", "=", $dados->id_racao)->first();
+        $racao->quantidade -= $dados->quantidade_alimento;
         DB::beginTransaction();
         try {
             $dados->save();
+            $racao->save();
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollback();
@@ -120,7 +124,6 @@ class ControlaAlimentacao extends Controller
         $dados->observacoes = ($request->observacoes) ? $request->observacoes : "-";
         $dados->id_usuario = ($request->id_usuario) ? $request->id_usuario : session()->get("usuario")->id;
         $dados->id_racao = ($request->id_racao) ? $request->id_racao : null;
-        $dados->quantidade_alimento = ($request->quantidade_alimento > 0) ? $request->quantidade_alimento : $dados->quantidade_alimento;
         if ($request->tipo_racao == null) {
             session()->put("info", "Selecione o tipo de ração!");
             $listaDados = Usuario::all()->where("ativo", "!=", 0);
@@ -133,9 +136,20 @@ class ControlaAlimentacao extends Controller
             $listaRacoes = Produto::all()->where("ativo", "!=", 0)->where("tipo_produto", "==", "Ração");
             return view("alimentacaoAve.edit", ["dados" => $dados, "listaDados" => $listaDados, "listaRacoes" => $listaRacoes]);
         }
+        $racao = Estoque::where("id_produto", "=", $dados->id_racao)->first();
+
+        if ($request->quantidade_alimento < $dados->quantidade_alimento) {
+            $racao->quantidade += $dados->quantidade_alimento - $request->quantidade_alimento;
+            $dados->quantidade_alimento = $request->quantidade_alimento;
+        } else {
+            $racao->quantidade -= $request->quantidade_alimento - $dados->quantidade_alimento;
+            $dados->quantidade_alimento = $request->quantidade_alimento;
+        }
+
         DB::beginTransaction();
         try {
             $dados->save();
+            $racao->save();
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollback();
@@ -161,9 +175,12 @@ class ControlaAlimentacao extends Controller
     {
         $dados = AlimentacaoAve::find($id);
         $dados->ativo = 0;
+        $racao = Estoque::where("id_produto", "=", $dados->id_racao)->first();
+        $racao->quantidade += $dados->quantidade_alimento;
         DB::beginTransaction();
         try {
             $dados->save();
+            $racao->save();
             DB::commit();
             session()->put("info", "Registro removido!");
         } catch (\Throwable $e) {

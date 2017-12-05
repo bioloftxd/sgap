@@ -32,7 +32,8 @@
                     <table id="tabela" class="display">
                         <thead>
                         <tr>
-                            <th>Data/Hora</th>
+                            <th>Data</th>
+                            <th>Hora</th>
                             <th>Litros</th>
                             <th>Responsável</th>
                             <th>Observações</th>
@@ -52,7 +53,8 @@
                                     $hora = date_format($hora, 'H:i');
                                 @endphp
 
-                                <td>{{$data}} {{$hora}} h</td>
+                                <td>{{$data}}</td>
+                                <td>{{$hora}} h</td>
                                 <td>{{number_format($linha->litros,1,',','')}} L</td>
                                 <td>{{$linha->usuario->nome}}</td>
                                 <td>{{$linha->observacoes}}</td>
