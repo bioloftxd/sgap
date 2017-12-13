@@ -106,7 +106,7 @@
                                 <td>{{$linha->produto->observacoes}}</td>
                             </tr>
                         @php
-                            $valorTotal+=$linha->preco;
+                            $valorTotal+=$linha->preco*$linha->quantidade;
                         @endphp
                         @endforeach
                         <tbody>

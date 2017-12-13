@@ -104,9 +104,11 @@
                         </thead>
 
                         <tbody>
-@php
-
-@endphp
+                        @php
+                            $mediaMinima =0;
+                            $mediaMedia =0;
+                            $mediaMaxima =0;
+                        @endphp
                         @foreach($listaDados as $linha)
                             <tr>
                                 @php
@@ -130,18 +132,28 @@
                                 <td>{{$linha->observacoes}}</td>
                                 <td>{{$linha->usuario->nome}}</td>
                             </tr>
+                            @php
+                                $mediaMinima +=$linha->temperatura_minima;
+                                $mediaMedia +=$temperatura_media;
+                                $mediaMaxima +=$linha->temperatura_maxima;
+                            @endphp
                         @endforeach
+                        @php
+                            $mediaMinima =$mediaMinima/sizeof($listaDados) ;
+                            $mediaMedia =$mediaMedia/sizeof($listaDados) ;
+                            $mediaMaxima =$mediaMaxima/sizeof($listaDados) ;
+                        @endphp
                         </tbody>
                         <tfoot>
                         <td><b>Registros</b></td>
                         <td><b>{{sizeof($listaDados)}}</b></td>
                         <td><b></b></td>
-                        <td><b></b></td>
-                        <td><b></b></td>
-                        <td><b></b></td>
-                        <td><b></b></td>
-                        <td><b></b></td>
-                        <td><b></b></td>
+                        <td><b>Méd. Mínima</b></td>
+                        <td><b>{{number_format($mediaMinima,1,',','')}} Cº</b></td>
+                        <td><b>Méd. Média</b></td>
+                        <td><b>{{number_format($mediaMedia,1,',','')}} Cº</b></td>
+                        <td><b>Méd . Máxima</b></td>
+                        <td><b>{{number_format($mediaMaxima,1,',','')}} Cº</b></td>
                         </tfoot>
 
                     </table>
